@@ -1,0 +1,57 @@
+"""SSAT vocab practice app. `bazel run //:app` to play, `bazel test //...` to test."""
+
+module(name = "ssat_vocab")
+
+bazel_dep(name = "rules_python", version = "2.4.6")
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(python_version = "3.13", is_default = True)
+
+rules_python_config = use_extension("@rules_python//python/extensions:config.bzl", "config")
+rules_python_config.explicit_init_py(default = True)
+
+# Python deps come from uv: `uv lock && uv export --all-groups --no-emit-project -o requirements_lock.txt`
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "pypi",
+    python_version = "3.13",
+    requirements_lock = "//:requirements_lock.txt",
+)
+use_repo(pip, "pypi")
+
+# Browser libraries, straight from the npm registry (no Node toolchain needed).
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+NPM_BUILD = 'exports_files(glob(["**"]))'
+
+http_archive(
+    name = "npm_vue",
+    build_file_content = NPM_BUILD,
+    sha256 = "c2ec36a9b719e4277785f1ad36a1bb0424d8d32f0bea24abcce862e26821d585",
+    strip_prefix = "package",
+    url = "https://registry.npmjs.org/vue/-/vue-3.5.45.tgz",
+)
+
+http_archive(
+    name = "npm_gsap",
+    build_file_content = NPM_BUILD,
+    sha256 = "c70a3bcf656015f32b4f6456e686034564c90d64280db535cfbd84de4497d988",
+    strip_prefix = "package",
+    url = "https://registry.npmjs.org/gsap/-/gsap-3.15.1.tgz",
+)
+
+http_archive(
+    name = "npm_tone",
+    build_file_content = NPM_BUILD,
+    sha256 = "86dec0a9521dd69a59e7b824a83b132afd1ef8284bda1e7799449ab9d84d9f62",
+    strip_prefix = "package",
+    url = "https://registry.npmjs.org/tone/-/tone-15.1.22.tgz",
+)
+
+http_archive(
+    name = "npm_canvas_confetti",
+    build_file_content = NPM_BUILD,
+    sha256 = "c7c7d003c8b444d4f8e340e0b2c2a474abf2803ce34d184f783c1107217853e2",
+    strip_prefix = "package",
+    url = "https://registry.npmjs.org/canvas-confetti/-/canvas-confetti-1.9.4.tgz",
+)

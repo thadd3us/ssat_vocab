@@ -1,0 +1,24 @@
+# Copy the vendored browser libraries next to our own files so the server
+# can serve one directory.
+VENDOR = {
+    "@npm_vue//:dist/vue.esm-browser.prod.js": "vue.esm-browser.prod.js",
+    "@npm_gsap//:dist/gsap.min.js": "gsap.min.js",
+    "@npm_tone//:build/Tone.js": "Tone.js",
+    "@npm_canvas_confetti//:dist/confetti.module.mjs": "confetti.module.js",
+}
+
+[
+    genrule(
+        name = "vendor_" + out.replace(".", "_"),
+        srcs = [src],
+        outs = ["vendor/" + out],
+        cmd = "cp $< $@",
+    )
+    for src, out in VENDOR.items()
+]
+
+filegroup(
+    name = "web",
+    srcs = glob(["*.html", "*.js", "*.css", "sounds/*.wav"]) + ["vendor/" + out for out in VENDOR.values()],
+    visibility = ["//visibility:public"],
+)
