@@ -1,13 +1,13 @@
 load("@pypi//:requirements.bzl", "requirement")
 load("@rules_python//python:defs.bzl", "py_binary", "py_library", "py_test")
 
-exports_files(["ssat_vocab_410.jsonl"])
+exports_files(["ssat_vocab.jsonl"])
 
 py_library(
     name = "ssat_vocab",
     srcs = glob(["ssat_vocab/*.py"]),
     data = [
-        "ssat_vocab_410.jsonl",
+        "ssat_vocab.jsonl",
         "//web",
     ],
     imports = ["."],
