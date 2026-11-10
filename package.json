@@ -1,0 +1,12 @@
+{
+  "name": "ssat-vocab",
+  "private": true,
+  "type": "module",
+  "description": "Word Bank: SSAT vocab practice that runs entirely in the browser",
+  "scripts": {
+    "test": "node --test tests/",
+    "vendor": "sh scripts/vendor.sh",
+    "dev": "node scripts/dev_server.mjs",
+    "dev:fake-sheet": "node scripts/dev_server.mjs --fake-sheet"
+  }
+}

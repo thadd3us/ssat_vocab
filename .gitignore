@@ -1,7 +1,2 @@
-bazel-*
-.venv/
-data/
-__pycache__/
-web/vendor/
-.pytest_cache/
+node_modules/
 .claude/launch.json
