@@ -12,4 +12,4 @@ import "../web/coins.js";
 export const WB = globalThis.WB;
 // The tests read the .jsonl itself; tests/assets.test.js checks words.js carries the same text.
 export const vocab = WB.Vocab.parse(
-  readFileSync(new URL("../web/ssat_vocab_410.jsonl", import.meta.url), "utf8"));
+  readFileSync(new URL("../web/ssat_vocab.jsonl", import.meta.url), "utf8"));

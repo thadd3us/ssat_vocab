@@ -163,7 +163,7 @@ test("the question shown does not leak the answer", () => {
   const q = Session.start({ vocab, log, user: "Ada", group: 1, mode: DEF_TO_WORD }).question;
   assert.deepEqual(Object.keys(q).sort(), ["mode", "options", "prompt", "seq"]);
   const w = Session.start({ vocab, log, user: "Ada", group: 1, mode: WORD_TO_DEF }).question;
-  assert.equal(w.prompt, "abundant");
+  assert.equal(w.prompt, "salacious");
   assert.ok(!("pos" in w) && !("answerIndex" in w));
 });
 

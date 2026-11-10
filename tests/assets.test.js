@@ -7,8 +7,8 @@ import { WB } from "./web.mjs";
 const read = (p, enc) => readFileSync(new URL(`../web/${p}`, import.meta.url), enc);
 const RERUN = "out of date: run scripts/embed_assets.sh";
 
-test("words.js carries ssat_vocab_410.jsonl verbatim", () => {
-  assert.equal(WB.WORDS_JSONL.trim(), read("ssat_vocab_410.jsonl", "utf8").trim(), RERUN);
+test("words.js carries ssat_vocab.jsonl verbatim", () => {
+  assert.equal(WB.WORDS_JSONL.trim(), read("ssat_vocab.jsonl", "utf8").trim(), RERUN);
 });
 
 test("sounds/kaching.js carries kaching.wav", () => {

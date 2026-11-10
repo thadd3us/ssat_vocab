@@ -7,7 +7,7 @@ so nobody using it needs a Google account.
 Everything is plain `<script>` tags (no ES modules) because browsers won't run modules, or `fetch()`
 files, from a page opened from disk. So the two data files are also wrapped as `.js`:
 
-- **Word list:** edit `web/ssat_vocab_410.jsonl`, then run `scripts/embed_assets.sh` to regenerate `web/words.js`
+- **Word list:** edit `web/ssat_vocab.jsonl`, then run `scripts/embed_assets.sh` to regenerate `web/words.js`
   (the same JSONL text inside a JS string).
 - **Ka-ching:** `web/sounds/kaching.wav` becomes the data: URL in `web/sounds/kaching.js`, by the same script.
 
@@ -50,7 +50,7 @@ but not storage for apps on the Home Screen, so the outbox and saved scores are 
 
 ## How a session works
 
-The 410 words are split into groups of 20 in rank order (group 21 has 10). A session drills one group.
+The 505 words in `ssat_vocab.jsonl` are split into groups of 20 in file order (group 26 has 5). A session drills one group.
 
 | Answer | Word moves to | Stage |
 |---|---|---|

@@ -6,13 +6,13 @@ const { Vocab, DEF_TO_WORD, WORD_TO_DEF, MIXED, N_OPTIONS, NEAR_SYNONYMS, seeded
 
 test("groups preserve order", () => {
   const g = vocab.groups;
-  assert.equal(g.length, 21);
-  assert.deepEqual(g.slice(0, -1).map((x) => x.length), Array(20).fill(20));
-  assert.equal(g.at(-1).length, 10);
-  assert.deepEqual(g.flat().map((e) => e.rank), Array.from({ length: 410 }, (_, i) => i + 1));
-  assert.equal(vocab.group(1)[0].word, "abundant");
+  assert.equal(g.length, 26);
+  assert.deepEqual(g.slice(0, -1).map((x) => x.length), Array(25).fill(20));
+  assert.equal(g.at(-1).length, 5);
+  assert.deepEqual(g.flat().map((e) => e.rank), Array.from({ length: 505 }, (_, i) => i + 1));
+  assert.equal(vocab.group(1)[0].word, "salacious");
   assert.throws(() => vocab.group(0));
-  assert.throws(() => vocab.group(22));
+  assert.throws(() => vocab.group(27));
 });
 
 for (const mode of [WORD_TO_DEF, DEF_TO_WORD]) {
@@ -77,7 +77,11 @@ test("shared definitions never appear together", () => {
 });
 
 for (const [a, b] of [["rash", "impetuous"], ["scorn", "spurn"], ["spurn", "rebuff"], ["coerce", "compel"],
-                      ["wary", "prudent"], ["avid", "zealous"], ["frugal", "thrifty"], ["eradicate", "obliterate"]]) {
+                      ["wary", "prudent"], ["avid", "zealous"], ["frugal", "thrifty"], ["eradicate", "obliterate"],
+                      ["loquacious", "garrulous"], ["lugubrious", "melancholy"], ["obsequious", "servile"],
+                      ["laconic", "terse"], ["placate", "appease"], ["exonerate", "vindicate"],
+                      ["equivocal", "ambiguous"], ["pugnacious", "belligerent"], ["egregious", "flagrant"],
+                      ["clandestine", "covert"], ["paucity", "dearth"]]) {
   test(`near synonyms never offered together: ${a}/${b}`, () => {
     const rng = seededRandom(5);
     const target = vocab.get(a);
