@@ -1,5 +1,9 @@
 // Sound and visual effects. Tone.js and GSAP are loaded as globals in index.html.
-import confetti from "./vendor/confetti.module.js";
+(() => {
+"use strict";
+const WB = (globalThis.WB ||= {});
+
+const confetti = globalThis.confetti;
 
 const Tone = window.Tone;
 const gsap = window.gsap;
@@ -7,16 +11,17 @@ const gsap = window.gsap;
 let muted = false;
 try { muted = localStorage.getItem("muted") === "1"; } catch {}
 
-export function isMuted() { return muted; }
-export function setMuted(m) {
+function isMuted() { return muted; }
+function setMuted(m) {
   muted = m;
   try { localStorage.setItem("muted", m ? "1" : "0"); } catch {}
 }
 
 // The ka-ching is a real antique register (CC0, see sounds/README.md), decoded
-// up front so the first correct answer already has it. If it fails to load,
-// we fall back to the synthesized register below.
-const kachingBuffer = Tone ? new Tone.ToneAudioBuffer("sounds/kaching.wav") : null;
+// up front so the first correct answer already has it. It comes from a data: URL
+// in sounds/kaching.js, since a page opened from disk can't fetch the .wav. If it
+// fails to load, we fall back to the synthesized register below.
+const kachingBuffer = Tone && WB.KACHING_URL ? new Tone.ToneAudioBuffer(WB.KACHING_URL) : null;
 
 // Synthesized fallback: an old-fashioned cash register, in three mechanical layers:
 //   "ka"    the key lever: a wooden knock plus two ratchet clicks
@@ -96,7 +101,7 @@ async function ready() {
   return getSynths();
 }
 
-export async function kaching() {
+async function kaching() {
   const s = await ready();
   if (!s) return;
   const t = Tone.now() + 0.01;
@@ -110,7 +115,7 @@ export async function kaching() {
   }
 }
 
-export async function buzzer() {
+async function buzzer() {
   const s = await ready();
   if (!s) return;
   const t = Tone.now() + 0.01;
@@ -118,40 +123,44 @@ export async function buzzer() {
   s.buzzB.triggerAttackRelease(116.5, 0.55, t);
 }
 
-// Fly a dollar bill with the word from `fromEl` into `toEl`.
-export function flyBill(word, fromEl, toEl, onLanded) {
+// Mint an old coin (see coins.js) with the word under it at `fromEl`, then fly it into `toEl`.
+function flyCoin(coin, word, fromEl, toEl, onLanded) {
   if (!gsap || !fromEl || !toEl) { onLanded?.(); return; }
-  const bill = document.createElement("div");
-  bill.className = "bill flying";
-  bill.innerHTML = `<span class="corner tl">1</span><span class="corner br">1</span>
-    <span class="seal">$</span><span class="bill-word"></span>`;
-  bill.querySelector(".bill-word").textContent = word;
-  document.body.appendChild(bill);
+  const token = document.createElement("div");
+  token.className = "coin-fly";
+  token.innerHTML = `<img alt=""><span class="coin-word"></span><span class="coin-name"></span>`;
+  token.querySelector("img").src = coin.src;
+  token.querySelector(".coin-word").textContent = word;
+  token.querySelector(".coin-name").textContent = `${coin.name} · ${coin.where}, ${coin.when}`;
+  document.body.appendChild(token);
 
   const a = fromEl.getBoundingClientRect();
   const b = toEl.getBoundingClientRect();
-  const w = bill.offsetWidth, h = bill.offsetHeight;
+  const w = token.offsetWidth, h = token.offsetHeight;
   const x0 = a.left + a.width / 2 - w / 2, y0 = a.top + a.height / 2 - h / 2;
   const x1 = b.left + b.width / 2 - w / 2, y1 = b.top + b.height / 2 - h / 2;
 
   gsap.timeline({
     onComplete() {
-      bill.remove();
+      token.remove();
       gsap.fromTo(toEl, { scale: 1.12 }, { scale: 1, duration: 0.45, ease: "elastic.out(1, 0.4)" });
       onLanded?.();
     },
   })
-    .set(bill, { x: x0, y: y0, scale: 0.2, rotation: -25, opacity: 0 })
-    .to(bill, { scale: 1.15, rotation: 4, opacity: 1, duration: 0.35, ease: "back.out(2)" })
-    .to(bill, { scale: 1, rotation: 0, duration: 0.15 })
-    .to(bill, {
-      x: x1, y: y1, scale: 0.25, rotation: 540, opacity: 0.85,
-      duration: 0.7, ease: "power2.in",
-    }, "+=0.25");
+    .set(token, { x: x0, y: y0, scale: 0.2, opacity: 0 })
+    // Flip in like a tossed coin, settle, then spin into the bank.
+    .to(token, { scale: 1.15, opacity: 1, duration: 0.35, ease: "back.out(2)" })
+    .fromTo(token.querySelector("img"), { rotationY: -540 }, { rotationY: 0, duration: 0.5, ease: "power2.out" }, "<")
+    .to(token, { scale: 1, duration: 0.15 })
+    .to(token.querySelectorAll(".coin-word, .coin-name"), { opacity: 0, duration: 0.15 }, "+=0.35")
+    .to(token, {
+      x: x1, y: y1, scale: 0.2, rotation: 360, opacity: 0.9,
+      duration: 0.6, ease: "power2.in",
+    }, "<");
 }
 
 // Pop a big red X over `el` and shake it.
-export function redX(el) {
+function redX(el) {
   if (!gsap || !el) return;
   const x = document.createElement("div");
   x.className = "red-x";
@@ -165,7 +174,7 @@ export function redX(el) {
   gsap.fromTo(el, { x: -10 }, { x: 0, duration: 0.5, ease: "elastic.out(1.2, 0.25)" });
 }
 
-export function celebrate() {
+function celebrate() {
   const end = Date.now() + 1200;
   (function frame() {
     confetti({ particleCount: 6, angle: 60, spread: 60, origin: { x: 0 }, colors: ["#2e7d32", "#c9a227", "#ffffff"] });
@@ -173,3 +182,6 @@ export function celebrate() {
     if (Date.now() < end) requestAnimationFrame(frame);
   })();
 }
+
+WB.fx = { isMuted, setMuted, kaching, buzzer, flyCoin, redX, celebrate };
+})();

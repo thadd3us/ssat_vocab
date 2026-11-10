@@ -13,3 +13,6 @@ Made from the site's high-quality MP3 preview: 69.56–71.80 s (key-lever rush, 
       -c:a pcm_s16le -ar 48000 -ac 1 kaching.wav
 
 The strike at about 62.7 s in the same recording is a good alternative.
+
+The page plays it from `kaching.js`, a base64 `data:` URL of this file (a page opened from disk can't
+fetch the `.wav`). After changing `kaching.wav`, run `scripts/embed_assets.sh`.

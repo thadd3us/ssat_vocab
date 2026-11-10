@@ -39,13 +39,26 @@ header {
   display: flex; align-items: center; gap: 16px; padding: 12px 20px;
   max-width: 980px; margin: 0 auto;
 }
-header h1 { font-size: 1.4rem; margin: 0; letter-spacing: -.01em; }
+header h1 { font-size: 1.4rem; margin: 0; letter-spacing: -.01em; display: flex; align-items: center; gap: .35em; }
+header h1 .logo { width: 1.5em; height: 1.5em; }
 header nav { display: flex; gap: 4px; background: var(--card); padding: 4px; border-radius: 12px; border: 1px solid var(--line); }
 header nav button { border: 0; background: none; padding: .35em .9em; border-radius: 9px; }
 header nav button.active { background: var(--ink); color: var(--bg); }
 header .who { margin-left: auto; color: var(--muted); font-size: .9rem; }
 header .icon { margin-left: auto; border: 0; background: none; font-size: 1.3rem; }
 header .who + .icon { margin-left: 0; }
+header .sync {
+  margin-left: auto; border: 1px solid var(--line); background: var(--card); color: var(--muted);
+  border-radius: 999px; padding: .15em .7em; font-size: .8rem;
+}
+header .who + .sync { margin-left: 0; }
+header .sync + .icon { margin-left: 0; }
+header .sync::before { content: "●"; margin-right: .35em; }
+header .sync.ok::before { color: var(--green); }
+header .sync.busy::before { color: var(--gold); }
+header .sync.err { color: var(--red); border-color: var(--red); }
+header .sync.err::before { color: var(--red); }
+header .sync.local::before { color: var(--muted); }
 
 main { max-width: 980px; margin: 0 auto; padding: 0 20px 40px; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px 24px; }
@@ -91,10 +104,10 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
 .bank .vault { font-size: 1.8rem; }
 .bank .amount { font-weight: 800; font-size: 1.4rem; color: var(--green); font-variant-numeric: tabular-nums; }
 .bank .pile { position: absolute; right: 8px; bottom: -6px; height: 16px; width: 60px; }
-.mini-bill {
-  position: absolute; right: calc(var(--i) * 3px); bottom: calc(var(--i) * 1.2px); width: 26px; height: 12px;
-  background: var(--money); border: 1px solid var(--money-dark); border-radius: 2px;
-  transform: rotate(calc((var(--i) - 5) * 3deg));
+.bank .amount small { font-size: .8rem; font-weight: 600; color: var(--muted); }
+.mini-coin {
+  position: absolute; right: calc(var(--i) * 4px); bottom: calc(var(--i) * 1px); width: 18px; height: 18px;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,.4));
 }
 .banner { background: var(--green-soft); border: 2px solid var(--green); border-radius: 12px; padding: 10px 16px; margin-bottom: 12px; font-weight: 600; }
 
@@ -104,7 +117,7 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
 .question .prompt.word_to_def { font-size: 2.6rem; font-family: Georgia, "Times New Roman", serif; }
 
 .options { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 10px; }
-.options.def_to_word { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.options.def_to_word { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
 .options button {
   width: 100%; display: flex; align-items: center; gap: 12px; text-align: left;
   background: var(--card); border: 2px solid var(--line); border-radius: 12px; padding: 12px 14px;
@@ -129,6 +142,13 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
 }
 .feedback.good { border-color: var(--green); background: var(--green-soft); }
 .feedback.bad { border-color: var(--red); background: var(--red-soft); }
+.feedback.idk { border-color: var(--accent); }
+.idk {
+  display: block; margin: 12px auto 0; border: 2px dashed var(--line); background: none; color: var(--muted);
+  border-radius: 12px; padding: .5em 1.2em;
+}
+.idk:not(:disabled):hover { border-color: var(--accent); color: var(--ink); }
+.idk:disabled { opacity: .4; cursor: default; }
 .feedback .syn { color: var(--muted); }
 .feedback .chosen { font-size: .95rem; }
 .feedback button { justify-self: end; }
@@ -139,27 +159,19 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
 .chip.missed { color: var(--red); }
 .chip.learned { color: var(--green); }
 
-/* Dollar bill */
-.bill {
-  position: fixed; left: 0; top: 0; z-index: 50; pointer-events: none;
-  min-width: 280px; height: 112px; padding: 0 30px 0 78px; border-radius: 6px;
-  background:
-    radial-gradient(ellipse at center, rgba(255,255,255,.35), transparent 60%),
-    repeating-linear-gradient(45deg, rgba(0,0,0,.035) 0 2px, transparent 2px 6px),
-    linear-gradient(135deg, #a8c99a, #7fa874);
-  border: 3px solid var(--money-dark);
-  box-shadow: inset 0 0 0 5px #a8c99a, inset 0 0 0 7px var(--money-dark), 0 10px 30px rgba(0,0,0,.25);
-  display: grid; place-items: center; color: #1d3a1a;
+/* Coin */
+.coin-fly {
+  position: fixed; left: 0; top: 0; z-index: 50; pointer-events: none; width: 220px;
+  display: grid; justify-items: center; gap: 4px; perspective: 600px;
 }
-.bill .bill-word { font: 700 1.7rem Georgia, serif; letter-spacing: .02em; text-shadow: 0 1px 0 rgba(255,255,255,.5); }
-.bill .seal {
-  position: absolute; left: 22px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%;
-  border: 2px solid var(--money-dark); display: grid; place-items: center; font: 700 1.2rem Georgia, serif; background: rgba(255,255,255,.25);
+.coin-fly img { width: 120px; height: 120px; filter: drop-shadow(0 8px 14px rgba(0,0,0,.35)); }
+.coin-fly .coin-word {
+  font: 700 1.5rem Georgia, serif; color: #3b2a0c; background: #f3dfa6; border: 2px solid var(--gold);
+  border-radius: 999px; padding: .05em .8em; box-shadow: 0 4px 12px rgba(0,0,0,.2); white-space: nowrap;
 }
-.bill .corner { position: absolute; font: 800 1.1rem Georgia, serif; }
-.bill .corner.tl { left: 12px; top: 8px; }
-.bill .corner.br { right: 12px; bottom: 6px; }
-
+.coin-fly .coin-name {
+  font-size: .75rem; color: var(--muted); background: var(--card); border-radius: 6px; padding: 0 .5em; white-space: nowrap;
+}
 .red-x {
   position: fixed; z-index: 50; pointer-events: none; font: 900 110px/1 system-ui; color: var(--red);
   text-shadow: 0 4px 0 rgba(0,0,0,.15), 0 0 30px rgba(198,40,40,.35);
@@ -169,6 +181,11 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
 .summary { text-align: center; }
 .summary .big-num { font-size: 2.4rem; font-weight: 800; color: var(--green); margin: 8px 0; }
 .summary .row { justify-content: center; margin-top: 16px; }
+.collection { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin: 12px 0; }
+.collection figure { margin: 0; width: 92px; text-align: center; font-size: .8rem; line-height: 1.2; }
+.collection img { width: 72px; height: 72px; filter: drop-shadow(0 3px 5px rgba(0,0,0,.3)); }
+.collection figcaption small { color: var(--muted); }
+.collection figcaption b { display: block; color: var(--gold); }
 
 /* Scores */
 .scores .filters { margin-bottom: 8px; }
@@ -187,7 +204,12 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
   main { padding: 0 16px 32px; }
   .topbar { flex-direction: column; align-items: stretch; }
   .question .prompt.word_to_def { font-size: 2rem; }
-  .bill { min-width: 220px; height: 88px; padding: 0 20px 0 64px; }
-  .bill .seal { left: 14px; }
-  .scores .def, .scores th:nth-child(6), .scores td:nth-child(6) { display: none; }
+  .coin-fly img { width: 96px; height: 96px; }
+  .scores .def, .scores th:nth-child(7), .scores td:nth-child(7) { display: none; }
+}
+
+/* 4x4 word grid on narrow screens */
+@media (max-width: 560px) {
+  .options.def_to_word button { font-size: 1rem; padding-left: .5em; padding-right: .4em; gap: .4em; }
+  .options.def_to_word .letter { display: none; }
 }
