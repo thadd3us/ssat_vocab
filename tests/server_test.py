@@ -45,8 +45,8 @@ def test_index_and_vendor_files_are_served(client):
 
 def test_groups(client):
     groups = client.get("/api/groups").json()
-    assert len(groups) == 21
-    assert groups[0]["first"] == "abundant"
+    assert len(groups) == 26
+    assert groups[0]["first"] == "salacious"
 
 
 def test_users_created_on_first_session(client):
@@ -73,7 +73,7 @@ def test_question_does_not_leak_answer(client):
 
 def test_word_to_def_question_hides_part_of_speech(client):
     q = start(client, mode="word_to_def")["question"]
-    assert q["prompt"] == "abundant" and "pos" not in q
+    assert q["prompt"] == "salacious" and "pos" not in q
 
 
 def play(client, s, n, right_pattern):
@@ -143,7 +143,7 @@ def test_unknown_session(client):
 
 def test_scores_for_unknown_user_does_not_create_db(client, data_dir):
     rows = client.get("/api/scores", params={"user": "Nobody"}).json()
-    assert len(rows) == 410 and all(r["right"] == r["wrong"] == 0 for r in rows)
+    assert len(rows) == 505 and all(r["right"] == r["wrong"] == 0 for r in rows)
     assert not (data_dir / "Nobody.sqlite").exists()
 
 

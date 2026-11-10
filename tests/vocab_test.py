@@ -6,7 +6,7 @@ import pytest
 
 from ssat_vocab.vocab import DEF_TO_WORD, MIXED, N_OPTIONS, WORD_TO_DEF, Vocab
 
-WORDS = Path(__file__).parent.parent / "ssat_vocab_410.jsonl"
+WORDS = Path(__file__).parent.parent / "ssat_vocab.jsonl"
 
 
 @pytest.fixture(scope="module")
@@ -16,16 +16,16 @@ def vocab():
 
 def test_groups_preserve_order(vocab):
     groups = vocab.groups
-    assert len(groups) == 21
-    assert [len(g) for g in groups[:-1]] == [20] * 20
-    assert len(groups[-1]) == 10
+    assert len(groups) == 26
+    assert [len(g) for g in groups[:-1]] == [20] * 25
+    assert len(groups[-1]) == 5
     flat = [e for g in groups for e in g]
-    assert [e.rank for e in flat] == list(range(1, 411))
-    assert vocab.group(1)[0].word == "abundant"
+    assert [e.rank for e in flat] == list(range(1, 506))
+    assert vocab.group(1)[0].word == "salacious"
     with pytest.raises(KeyError):
         vocab.group(0)
     with pytest.raises(KeyError):
-        vocab.group(22)
+        vocab.group(27)
 
 
 @pytest.mark.parametrize("mode", [WORD_TO_DEF, DEF_TO_WORD])
@@ -94,7 +94,11 @@ def test_shared_definitions_never_appear_together():
 
 @pytest.mark.parametrize("a,b", [("rash", "impetuous"), ("scorn", "spurn"), ("spurn", "rebuff"),
                                  ("coerce", "compel"), ("wary", "prudent"), ("avid", "zealous"),
-                                 ("frugal", "thrifty"), ("eradicate", "obliterate")])
+                                 ("frugal", "thrifty"), ("eradicate", "obliterate"),
+                                 ("loquacious", "garrulous"), ("lugubrious", "melancholy"),
+                                 ("obsequious", "servile"), ("laconic", "terse"), ("placate", "appease"),
+                                 ("exonerate", "vindicate"), ("equivocal", "ambiguous"), ("pugnacious", "belligerent"),
+                                 ("egregious", "flagrant"), ("clandestine", "covert"), ("paucity", "dearth")])
 def test_near_synonyms_never_offered_together(vocab, a, b):
     rng = random.Random(5)
     target = vocab.by_word[a]

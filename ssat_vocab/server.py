@@ -21,7 +21,7 @@ from ssat_vocab.vocab import GROUP_SIZE, MODES, Vocab
 
 # Not resolve()d: under `bazel run` this keeps us inside the runfiles tree.
 ROOT = Path(__file__).parent.parent
-DEFAULT_WORDS = ROOT / "ssat_vocab_410.jsonl"
+DEFAULT_WORDS = ROOT / "ssat_vocab.jsonl"
 DEFAULT_WEB = ROOT / "web"
 
 
