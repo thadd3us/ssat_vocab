@@ -51,6 +51,15 @@ class Session {
     return this.question;
   }
 
+  // Switch question type mid-session. The unanswered question is rebuilt for the same
+  // word in the new mode (the queue doesn't move), and later questions use it too.
+  setMode(mode) {
+    if (!MODES.includes(mode)) throw new Error(`mode must be one of ${MODES.join(", ")}`);
+    if (mode === this.mode) return this.question;
+    this.mode = mode;
+    return this.nextQuestion();
+  }
+
   // What the page shows: no answer, no part of speech (a hint), and the target
   // word only when it's the prompt (word_to_def).
   get question() {

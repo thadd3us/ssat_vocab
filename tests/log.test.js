@@ -185,6 +185,28 @@ test("a session survives a page reload", () => {
   assert.equal(r.progress().asked, 10);
 });
 
+test("switching mode mid-session re-asks the same word the new way", () => {
+  const { log } = setup({ url: "" });
+  const s = Session.start({ vocab, log, user: "Ada", group: 2, mode: WORD_TO_DEF, rng: seededRandom(5) });
+  play(s, 4, (i) => i % 2 === 0);
+  const before = s.progress();
+  const word = s.queue.current;
+  const q = s.setMode(SENTENCE);
+  assert.equal(q.mode, SENTENCE);
+  assert.ok(q.seq > before.asked, "a new seq, so the page re-renders the options");
+  assert.equal(s.queue.current, word);
+  assert.deepEqual(s.progress(), before);
+  assert.equal(s.setMode(SENTENCE).seq, q.seq, "same mode is a no-op");
+  assert.throws(() => s.setMode("nope"), /mode must be/);
+  play(s, 3, () => true);
+  const answers = log.outbox.filter((r) => r.event === "answer").slice(-3);
+  assert.ok(answers.every((r) => r.mode === SENTENCE && r.detail.session_mode === SENTENCE));
+  s.setMode("mixed");
+  const r = Session.fromJSON(JSON.parse(JSON.stringify(s)), { vocab, log });
+  assert.equal(r.mode, "mixed");
+  assert.deepEqual(r.question, s.question);
+});
+
 test("Code.gs rejects junk", () => {
   const script = loadAppsScript();
   assert.equal(script.post("not json").ok, false);

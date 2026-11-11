@@ -123,6 +123,13 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
   position: absolute; right: calc(var(--i) * 4px); bottom: calc(var(--i) * 1px); width: 18px; height: 18px;
   filter: drop-shadow(0 1px 1px rgba(0,0,0,.4));
 }
+.mode-switch { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px; }
+.mode-switch button {
+  background: none; border: 1px solid var(--line); border-radius: 999px; padding: .25em .85em;
+  font-size: .85rem; color: var(--muted);
+}
+.mode-switch button:hover { color: var(--ink); }
+.mode-switch button.selected { border-color: var(--green); background: var(--green-soft); color: var(--ink); font-weight: 600; }
 .banner { background: var(--green-soft); border: 2px solid var(--green); border-radius: 12px; padding: 10px 16px; margin-bottom: 12px; font-weight: 600; }
 
 .question { text-align: center; padding: 28px 24px; }

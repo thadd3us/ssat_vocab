@@ -104,7 +104,9 @@ when right, after the buzzer when wrong, on its own after "I don't know". 🔊 n
 as a miss; on the Scores page it has its own column and counts against accuracy.
 
 Word→Meaning questions have 5 options; Meaning→Word has 16, in a 4×4 grid; Fill the blank shows the
-word's `sentence` and 8 words to pick from. "Mix it up" picks one of the three for each question. Keys:
+word's `sentence` and 8 words to pick from. "Mix it up" picks one of the three for each question. The
+buttons above the question switch type mid-session: the word on screen is re-asked the new way (or, if the
+answer is showing, the next one is), and nothing else about the session changes. Keys:
 letters A–P, or 1–9. About half the wrong options come from the word's curated `distractors` (4 of the 7
 in Fill the blank), the rest are random words from the same group. In Fill the blank a wrong word is always
 the same part of speech as the answer (when it's in the list, so we know), so grammar doesn't give it away. Word→Meaning mode can only use distractors that are themselves in the list (we need

@@ -262,6 +262,21 @@ const Practice = {
       fx.sayWord(result.value.word, { force: true });
     }
 
+    // Change question type mid-session. While feedback is showing, the question already
+    // queued up behind it is the one that changes; otherwise the one on screen does.
+    const mode = ref(s.mode);
+    function switchMode(m) {
+      if (m === s.mode || busy.value) return;
+      const q = s.setMode(m);
+      mode.value = m;
+      store.set("mode", m); // the Start screen remembers it too
+      saveSession(s);
+      if (result.value) { result.value = { ...result.value, next: q }; return; }
+      question.value = q;
+      picked.value = null;
+      nextTick(() => { shownAt.value = performance.now(); });
+    }
+
     function end() {
       clearTimeout(advanceTimer);
       emit("end", { ...s.end(), coins: [...s.earned] });
@@ -304,8 +319,8 @@ const Practice = {
       return [before, after.join("___")];
     });
 
-    return { s, question, progress, result, picked, earned, pile, optionEls, promptEl, bankEl,
-             choose, next, end, sayWord, optionClass, stageCounts, blankParts, LETTERS, KIND, MODE_LABELS };
+    return { s, question, progress, result, picked, earned, pile, optionEls, promptEl, bankEl, mode,
+             choose, next, end, sayWord, switchMode, optionClass, stageCounts, blankParts, LETTERS, KIND, MODE_LABELS };
   },
   template: `
   <section class="practice">
@@ -319,6 +334,11 @@ const Practice = {
         <div class="amount">{{ earned.length }} <small>{{ earned.length === 1 ? 'coin' : 'coins' }}</small></div>
         <div class="pile"><img v-for="(c, i) in pile" :key="i" class="mini-coin" :src="c.src" alt="" :style="{ '--i': i }"></div>
       </div>
+    </div>
+
+    <div class="mode-switch" role="radiogroup" aria-label="Question type">
+      <button v-for="(label, key) in MODE_LABELS" :key="key" role="radio" :aria-checked="mode === key"
+              :class="{ selected: mode === key }" @click="switchMode(key)">{{ label }}</button>
     </div>
 
     <div v-if="progress.complete && !result" class="banner">
