@@ -16,3 +16,6 @@ The strike at about 62.7 s in the same recording is a good alternative.
 
 The page plays it from `kaching.js`, a base64 `data:` URL of this file (a page opened from disk can't
 fetch the `.wav`). After changing `kaching.wav`, run `scripts/embed_assets.sh`.
+
+`words/<word>.mp3` is each word said aloud, recorded by `scripts/make_pronunciations.mjs` (Google
+Translate's voice by default; see the main README), and `pronunciations.js` wraps them all as data: URLs.

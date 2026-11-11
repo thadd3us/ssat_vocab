@@ -3,6 +3,7 @@
 import { readFileSync } from "node:fs";
 import "../web/words.js";
 import "../web/sounds/kaching.js";
+import "../web/sounds/pronunciations.js";
 import "../web/engine.js";
 import "../web/vocab.js";
 import "../web/log.js";
