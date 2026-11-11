@@ -90,9 +90,11 @@ in `web/engine.js`, with tests in `tests/engine.test.js`.
 "I don't know" (the button, or `?`) shows the answer with no buzzer and is logged as `unknown`, not
 as a miss; on the Scores page it has its own column and counts against accuracy.
 
-Word→Meaning questions have 5 options; Meaning→Word has 16, in a 4×4 grid. Keys: letters A–P, or 1–9.
-About half the wrong options come from the word's curated `distractors`, the rest are random words from the
-same group. Word→Meaning mode can only use distractors that are themselves in the list (we need
+Word→Meaning questions have 5 options; Meaning→Word has 16, in a 4×4 grid; Fill the blank shows the
+word's `sentence` and 8 words to pick from. "Mix it up" picks one of the three for each question. Keys:
+letters A–P, or 1–9. About half the wrong options come from the word's curated `distractors` (4 of the 7
+in Fill the blank), the rest are random words from the same group. In Fill the blank a wrong word is always
+the same part of speech as the answer (when it's in the list, so we know), so grammar doesn't give it away. Word→Meaning mode can only use distractors that are themselves in the list (we need
 their definitions). Options that would also be correct (same definition, listed synonyms, or the
 `NEAR_SYNONYMS` in `web/vocab.js`) are never offered together.
 
