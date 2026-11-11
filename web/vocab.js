@@ -85,7 +85,8 @@ const NEAR_SYNONYMS = [
   ["mendacious", "devious", "perfidious"],
   ["nefarious", "malevolent"],
   ["parsimonious", "frugal", "thrifty"],
-  ["pugnacious", "belligerent", "truculent"],
+  ["pugnacious", "belligerent", "truculent", "hostile"],
+  ["pugnacious", "irascible"],
   ["recalcitrant", "obstinate", "defiant", "truculent"],
   ["erudite", "sage", "pedantic"],
   ["plethora", "superfluous"],
@@ -94,6 +95,9 @@ const NEAR_SYNONYMS = [
   ["oblivious", "complacent"],
   ["abate", "mitigate", "alleviate"],
   ["irascible", "petulant", "sullen", "morose"],
+  ["perspicacious", "perceptive", "astute", "shrewd", "keen"],
+  ["intractable", "recalcitrant", "obstinate", "unruly", "defiant"],
+  ["pompous", "bombastic", "haughty", "ostentatious"],
 ].map((g) => new Set(g));
 
 // Small seedable PRNG (mulberry32) so tests are repeatable. Returns floats in [0, 1).
@@ -119,7 +123,7 @@ function shuffle(arr, rng = Math.random) {
 const lower = (s) => s.toLowerCase();
 
 class Vocab {
-  // entries: [{rank, word, pos, definition, synonyms, antonyms, distractors}]
+  // entries: [{rank, word, pos, definition, synonyms, antonyms, distractors, sentence}]
   constructor(entries) {
     this.entries = [...entries].sort((a, b) => a.rank - b.rank);
     this.byWord = new Map(this.entries.map((e) => [lower(e.word), e]));
@@ -141,6 +145,7 @@ class Vocab {
         synonyms: d.synonyms || [],
         antonyms: d.antonyms || [],
         distractors: d.distractors || [],
+        sentence: d.sentence || "", // fill-in-the-blank; "___" marks the word
       };
     });
     return new Vocab(entries);

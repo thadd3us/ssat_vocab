@@ -8,8 +8,8 @@ test("groups preserve order", () => {
   const g = vocab.groups;
   assert.equal(g.length, 26);
   assert.deepEqual(g.slice(0, -1).map((x) => x.length), Array(25).fill(20));
-  assert.equal(g.at(-1).length, 5);
-  assert.deepEqual(g.flat().map((e) => e.rank), Array.from({ length: 505 }, (_, i) => i + 1));
+  assert.equal(g.at(-1).length, 8);
+  assert.deepEqual(g.flat().map((e) => e.rank), Array.from({ length: 508 }, (_, i) => i + 1));
   assert.equal(vocab.group(1)[0].word, "salacious");
   assert.throws(() => vocab.group(0));
   assert.throws(() => vocab.group(27));
@@ -96,4 +96,16 @@ for (const [a, b] of [["rash", "impetuous"], ["scorn", "spurn"], ["spurn", "rebu
 
 test("near-synonym words exist", () => {
   for (const g of NEAR_SYNONYMS) for (const w of g) assert.ok(vocab.get(w), w);
+});
+
+test("every word has a fill-in-the-blank sentence", () => {
+  for (const e of vocab.entries) {
+    assert.equal(e.sentence.split("___").length, 2, `${e.word}: exactly one blank`);
+    assert.ok(!/\ban?\s+___/i.test(e.sentence), `${e.word}: "a/an" before the blank gives away the first letter`);
+    assert.ok(!e.sentence.toLowerCase().includes(e.word.toLowerCase()), `${e.word}: sentence contains the answer`);
+  }
+});
+
+test("added words are present", () => {
+  for (const w of ["pugnacious", "perspicacious", "recalcitrant", "intractable", "sycophant", "pompous"]) assert.ok(vocab.get(w), w);
 });
