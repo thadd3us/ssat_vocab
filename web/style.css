@@ -91,6 +91,20 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
 .mode input { display: none; }
 .mode.selected { border-color: var(--green); background: var(--green-soft); font-weight: 600; }
 
+.coin-sets { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 8px; }
+.coin-set {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px; cursor: pointer;
+  border: 2px solid var(--line); border-radius: 12px; padding: 10px 12px;
+}
+.coin-set input { display: none; }
+.coin-set small { color: var(--muted); font-size: .8rem; }
+.coin-set.selected { border-color: var(--green); background: var(--green-soft); }
+.coin-set .fan { position: relative; display: block; height: 44px; width: 96px; margin-bottom: 4px; }
+.coin-set .fan img {
+  position: absolute; left: calc(var(--i) * 26px); top: 0; width: 44px; height: 44px;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.3));
+}
+
 /* Practice */
 .topbar { display: flex; align-items: center; gap: 20px; margin-bottom: 16px; }
 .progress { flex: 1; }
@@ -198,6 +212,31 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
 .scores .bad { color: var(--red); font-weight: 700; }
 .scores tr.unseen { opacity: .55; }
 .scores .acc { width: 90px; margin-top: 8px; }
+
+.coin-book { margin: 4px 0 18px; }
+.coin-book h3 { margin: 4px 0 8px; }
+.coin-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.coin-tabs button {
+  border: 2px solid var(--line); background: var(--card); border-radius: 10px; padding: .4em .8em; text-align: left;
+}
+.coin-tabs button small { display: block; color: var(--muted); font-size: .75rem; }
+.coin-tabs button.active { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 14%, var(--card)); font-weight: 600; }
+.coin-book .made-up { margin: 0 0 8px; font-size: .85rem; }
+.coin-cards {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px;
+}
+.coin-cards li {
+  display: flex; gap: 12px; align-items: flex-start;
+  border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: var(--bg);
+}
+.coin-cards img { flex: none; width: 64px; height: 64px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.3)); }
+.coin-cards .coin-info { min-width: 0; }
+.coin-cards .coin-info > small { display: block; color: var(--muted); font-size: .8rem; }
+.coin-cards .count { color: var(--gold); font-weight: 800; }
+.coin-cards .fact { margin: 4px 0 0; font-size: .88rem; line-height: 1.35; }
+.coin-cards li.missing img { filter: grayscale(1); opacity: .45; }
+.coin-cards li.missing b { color: var(--muted); }
 
 @media (max-width: 600px) {
   header { flex-wrap: wrap; padding: 10px 16px; }

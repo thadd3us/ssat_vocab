@@ -8,7 +8,7 @@ const { StudyQueue, MODES, DEF_TO_WORD, newId } = WB;
 
 class Session {
   constructor({ vocab, log, user, group, mode, rng = Math.random, queue = null, id = newId(),
-                seq = 0, tally = { right: 0, wrong: 0, unknown: 0 }, earned = [] }) {
+                seq = 0, tally = { right: 0, wrong: 0, unknown: 0 }, earned = [], coinSet = null }) {
     if (!MODES.includes(mode)) throw new Error(`mode must be one of ${MODES.join(", ")}`);
     this.vocab = vocab;
     this.log = log;
@@ -21,15 +21,16 @@ class Session {
     this.id = id;
     this.seq = seq;
     this.tally = { unknown: 0, ...tally };
-    this.earned = earned; // coin ids banked this session (the page picks them; see coins.js)
+    this.earned = earned; // coin ids banked this session, in order
+    this.coinSet = coinSet || WB.DEFAULT_COIN_SET; // which coins a right answer can bank (coins.js)
     this.q = null; // full current question, including the answer
   }
 
-  static start({ vocab, log, user, group, mode, rng }) {
+  static start({ vocab, log, user, group, mode, rng, coinSet }) {
     user = log.canonicalName(user);
-    const s = new Session({ vocab, log, user, group, mode, rng });
+    const s = new Session({ vocab, log, user, group, mode, rng, coinSet });
     log.append({ user, session_id: s.id, event: "session_start", grp: group, mode,
-                 detail: { words: s.words } });
+                 detail: { words: s.words, coin_set: s.coinSet } });
     s.nextQuestion();
     return s;
   }
@@ -69,12 +70,17 @@ class Session {
     const t = unknown ? this.queue.dontKnow() : this.queue.answer(correct);
     this.tally[{ correct: "right", wrong: "wrong", unknown: "unknown" }[outcome]]++;
     const chosenWord = unknown ? null : q.optionWords[choice];
+    // A right answer banks a coin; it rides along in the log row so the Scores page can count them.
+    // (Math.random, not this.rng, so seeded question order doesn't depend on the coin set.)
+    const coin = correct && WB.pickCoin ? WB.pickCoin(this.earned.at(-1), this.coinSet) : null;
+    if (coin) this.earned.push(coin.id);
     this.log.append({
       user: this.user, session_id: this.id, event: "answer", grp: this.group, mode: q.mode,
       word: q.word, outcome, response_ms: responseMs,
       chosen: unknown ? null : q.options[choice], prompt: q.prompt, options: q.options,
       stage_before: t.stageBefore, stage_after: t.stageAfter,
-      detail: { chosen_word: chosenWord, slot: t.slot, seq: this.seq, session_mode: this.mode },
+      detail: { chosen_word: chosenWord, slot: t.slot, seq: this.seq, session_mode: this.mode,
+                ...(coin ? { coin: coin.id } : {}) },
     });
     const entry = this.vocab.get(q.word);
     const chosen = chosenWord && this.vocab.get(chosenWord);
@@ -82,6 +88,7 @@ class Session {
     return {
       correct,
       unknown,
+      coin,
       answer_index: q.answerIndex,
       word: entry.word,
       pos: entry.pos,
@@ -106,12 +113,12 @@ class Session {
   // For surviving a page reload mid-session (kept in sessionStorage).
   toJSON() {
     return { user: this.user, group: this.group, mode: this.mode, id: this.id, seq: this.seq,
-             tally: this.tally, earned: this.earned, queue: this.queue.toJSON(), q: this.q };
+             tally: this.tally, earned: this.earned, coinSet: this.coinSet, queue: this.queue.toJSON(), q: this.q };
   }
 
   static fromJSON(d, { vocab, log, rng }) {
     const s = new Session({ vocab, log, rng, user: d.user, group: d.group, mode: d.mode, id: d.id,
-                            seq: d.seq, tally: d.tally, earned: d.earned || [],
+                            seq: d.seq, tally: d.tally, earned: d.earned || [], coinSet: d.coinSet,
                             queue: StudyQueue.fromJSON(d.queue) });
     s.q = d.q;
     if (!s.q || s.q.word !== s.queue.current) s.nextQuestion();

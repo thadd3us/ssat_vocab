@@ -45,6 +45,30 @@ function tally(rows, into = {}) {
   return into;
 }
 
+// Coins banked, per user: {user: {coin_id: n}}, from answer rows' detail.coin.
+// Keep in sync with summary_() in apps_script/Code.gs.
+function coinTally(rows, into = {}) {
+  for (const r of rows) {
+    if (!r.user || r.event !== "answer") continue;
+    let d = r.detail;
+    if (typeof d === "string") { try { d = JSON.parse(d); } catch { continue; } }
+    const id = d?.coin;
+    if (!id) continue;
+    const byCoin = (into[r.user] ||= {});
+    byCoin[id] = (byCoin[id] || 0) + 1;
+  }
+  return into;
+}
+
+function addCoins(a = {}, b = {}) {
+  const out = structuredClone(a);
+  for (const [user, coins] of Object.entries(b)) {
+    const u = (out[user] ||= {});
+    for (const [id, n] of Object.entries(coins)) u[id] = (u[id] || 0) + n;
+  }
+  return out;
+}
+
 function addTallies(a, b) {
   const out = structuredClone(a);
   for (const [user, words] of Object.entries(b)) {
@@ -68,7 +92,7 @@ class Log {
     this.timers = timers;
     this.onChange = onChange;
     this.outbox = storage.get("outbox", []);
-    this.summary = storage.get("summary", { users: [], tallies: {} });
+    this.summary = { coins: {}, ...storage.get("summary", { users: [], tallies: {} }) };
     this.error = "";
     this.syncing = false;
     this._inflight = null;
@@ -89,6 +113,11 @@ class Log {
   tallies(user) {
     const t = addTallies(this.summary.tallies, tally(this.outbox));
     return t[user] || {};
+  }
+
+  // {coin_id: n} banked by one user, Sheet + outbox.
+  coins(user) {
+    return addCoins(this.summary.coins, coinTally(this.outbox))[user] || {};
   }
 
   // Validate a name; reuse an existing user's spelling if it matches case-insensitively.
@@ -145,6 +174,7 @@ class Log {
       this.summary = {
         users: [...new Set([...this.summary.users, ...acked.map((r) => r.user)])].sort(),
         tallies: addTallies(this.summary.tallies, tally(acked)),
+        coins: addCoins(this.summary.coins, coinTally(acked)),
       };
       this.storage.set("outbox", this.outbox);
       this.storage.set("summary", this.summary);
@@ -159,7 +189,8 @@ class Log {
       // Send first so the summary we get back already includes our rows.
       await this.flush();
       const s = await this._call("GET");
-      this.summary = { users: s.users, tallies: s.tallies };
+      // An older Code.gs sends no coins; keep the ones this device has counted.
+      this.summary = { users: s.users, tallies: s.tallies, coins: s.coins ?? this.summary.coins };
       this.storage.set("summary", this.summary);
       this.onChange();
     } catch (e) {
@@ -184,5 +215,5 @@ class Log {
   }
 }
 
-Object.assign(WB, { NAME_RE, browserStorage, newId, tally, Log });
+Object.assign(WB, { NAME_RE, browserStorage, newId, tally, coinTally, Log });
 })();
