@@ -4,7 +4,7 @@ const WB = (globalThis.WB ||= {});
 
 const { createApp, ref, computed, onMounted, onUnmounted, nextTick, watch, markRaw } = Vue;
 const { fx, Vocab, Log, checkSheetUrl, browserStorage: store, Session, scoreRows,
-        COINS, COIN_BY_ID, pickCoin, preloadCoins } = WB;
+        COINS, COIN_BY_ID, COIN_SETS, COIN_SET_BY_ID, DEFAULT_COIN_SET, preloadCoins } = WB;
 
 // The Sheet's web app URL isn't in the code. It's pasted in once (SetupScreen) and kept
 // in localStorage: null = never asked, "" = this device only. A link ending in
@@ -99,7 +99,9 @@ const StartScreen = {
     const addingNew = ref(props.users.length === 0);
     const group = ref(store.get("group", 1));
     const mode = ref(store.get("mode", "mixed"));
+    const coinSet = ref(COIN_SET_BY_ID[store.get("coinSet")] ? store.get("coinSet") : DEFAULT_COIN_SET);
     const error = ref("");
+    watch(coinSet, (id) => { store.set("coinSet", id); preloadCoins(id); });
 
     const effectiveUser = computed(() => (addingNew.value ? newName.value.trim() : props.user));
 
@@ -130,10 +132,11 @@ const StartScreen = {
       if (!u) { error.value = "Pick your name first!"; return; }
       store.set("group", group.value);
       store.set("mode", mode.value);
-      emit("start", { user: u, group: group.value, mode: mode.value, onError: (m) => (error.value = m) });
+      emit("start", { user: u, group: group.value, mode: mode.value, coinSet: coinSet.value,
+                      onError: (m) => (error.value = m) });
     }
 
-    return { newName, addingNew, group, mode, groupStats, error, onPick, start, MODE_LABELS };
+    return { newName, addingNew, group, mode, coinSet, groupStats, error, onPick, start, MODE_LABELS, COIN_SETS };
   },
   template: `
   <section class="start card">
@@ -163,6 +166,16 @@ const StartScreen = {
     <div class="modes">
       <label v-for="(label, key) in MODE_LABELS" :key="key" class="mode" :class="{ selected: mode === key }">
         <input type="radio" :value="key" v-model="mode"> {{ label }}
+      </label>
+    </div>
+
+    <h2>Which coins?</h2>
+    <div class="coin-sets">
+      <label v-for="cs in COIN_SETS" :key="cs.id" class="coin-set" :class="{ selected: coinSet === cs.id }">
+        <input type="radio" :value="cs.id" v-model="coinSet">
+        <span class="fan"><img v-for="(c, i) in cs.coins.slice(0, 3)" :key="c.id" :src="c.src" alt="" :style="{ '--i': i }"></span>
+        <b>{{ cs.name }}</b>
+        <small>{{ cs.blurb }}</small>
       </label>
     </div>
 
@@ -202,9 +215,7 @@ const Practice = {
         progress.value = r.progress;
         if (r.correct) {
           fx.kaching();
-          const coin = pickCoin(s.earned.at(-1));
-          s.earned.push(coin.id); // banked now, so a reload mid-flight keeps it
-          saveSession(s);
+          const coin = r.coin; // the session banked it, so a reload mid-flight keeps it
           fx.flyCoin(coin, r.word, optionEls.value[i], bankEl.value, () => {
             earned.value = [...s.earned];
           });
@@ -372,6 +383,7 @@ const Scores = {
   setup(props) {
     const who = ref(props.user || props.users[0] || "");
     const group = ref(store.get("group", 0));
+    const coinTab = ref(COIN_SET_BY_ID[store.get("coinSet")] ? store.get("coinSet") : DEFAULT_COIN_SET);
     const sortKey = ref("wrong");
     const onlySeen = ref(false);
     // Load the student's tab whenever the table switches to them.
@@ -405,7 +417,18 @@ const Scores = {
                    seen: t.seen + (tries(r) > 0) }),
       { right: 0, wrong: 0, unknown: 0, seen: 0 }));
 
-    return { who, group, sorted, sortKey, onlySeen, totals, acc, tries };
+    // The student's coins: how many of each, by set. Counts come from the log (Sheet + unsent rows).
+    const coinCounts = computed(() => { version.value; return who.value ? log.coins(who.value) : {}; });
+    const coinTotal = computed(() => Object.values(coinCounts.value).reduce((a, b) => a + b, 0));
+    const coinSets = computed(() => COIN_SETS.map((cs) => {
+      const coins = cs.coins.map((c) => ({ ...c, n: coinCounts.value[c.id] || 0 }));
+      return { ...cs, coins, found: coins.filter((c) => c.n).length,
+               total: coins.reduce((a, c) => a + c.n, 0) };
+    }));
+    const shownSet = computed(() => coinSets.value.find((cs) => cs.id === coinTab.value) || coinSets.value[0]);
+
+    return { who, group, sorted, sortKey, onlySeen, totals, acc, tries,
+             coinTotal, coinSets, shownSet, coinTab };
   },
   template: `
   <section class="card scores">
@@ -420,7 +443,28 @@ const Scores = {
       <label><input type="checkbox" v-model="onlySeen"> Only practiced</label>
     </div>
     <p v-if="!users.length">No one has studied yet.</p>
-    <p v-else class="muted">{{ totals.seen }} words practiced · {{ totals.right }} right · {{ totals.wrong }} missed · {{ totals.unknown }} didn't know</p>
+    <div v-else class="coin-book">
+      <h3>🏦 {{ who }}'s coins: {{ coinTotal }}</h3>
+      <div class="coin-tabs" role="tablist">
+        <button v-for="cs in coinSets" :key="cs.id" role="tab" :aria-selected="coinTab === cs.id"
+                :class="{ active: coinTab === cs.id }" @click="coinTab = cs.id">
+          {{ cs.name }} <small>{{ cs.found }}/{{ cs.coins.length }} found · {{ cs.total }} banked</small>
+        </button>
+      </div>
+      <p v-if="shownSet.id === 'fantasy'" class="muted made-up">These coins are made up, and so are their stories.</p>
+      <ul class="coin-cards">
+        <li v-for="c in shownSet.coins" :key="c.id" :class="{ missing: !c.n }">
+          <img :src="c.src" :alt="c.name">
+          <div class="coin-info">
+            <b>{{ c.name }}</b> <span class="count" v-if="c.n">×{{ c.n }}</span>
+            <small>{{ c.where }} · {{ c.when }}</small>
+            <p class="fact">{{ c.fact }}</p>
+            <small v-if="!c.n" class="muted">Not found yet</small>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <p v-if="users.length" class="muted">{{ totals.seen }} words practiced · {{ totals.right }} right · {{ totals.wrong }} missed · {{ totals.unknown }} didn't know</p>
     <table v-if="sorted.length">
       <thead><tr>
         <th @click="sortKey='rank'" class="num">#</th>
@@ -473,7 +517,7 @@ createApp({
     });
 
     onMounted(async () => {
-      preloadCoins();
+      preloadCoins(session.value?.coinSet || store.get("coinSet", DEFAULT_COIN_SET));
       if (!WB.WORDS_JSONL) { loadError.value = "Couldn't load the word list (words.js)."; return; }
       vocab = Vocab.parse(WB.WORDS_JSONL);
       groups.value = groupList();
@@ -485,9 +529,10 @@ createApp({
       log.refresh(user.value);
     });
 
-    function start({ user: u, group, mode, onError }) {
+    function start({ user: u, group, mode, coinSet, onError }) {
       try {
-        const s = Session.start({ vocab, log, user: u, group, mode });
+        const s = Session.start({ vocab, log, user: u, group, mode, coinSet });
+        preloadCoins(coinSet);
         user.value = s.user;
         store.set("user", s.user);
         saveSession(s);

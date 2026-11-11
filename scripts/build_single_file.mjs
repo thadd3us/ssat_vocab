@@ -7,7 +7,7 @@
 // The file works opened from disk on a computer, or put on any static host (a
 // Safari on iPad only runs pages it loads over http/https; see README.md).
 
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, extname, join } from "node:path";
 import { parseArgs } from "node:util";
 
@@ -26,15 +26,11 @@ function inlineable(text, path, tag) {
   return text.replace(new RegExp(`</(${tag})`, "gi"), "<\\/$1");
 }
 
-// Every image the page or scripts refer to by path under coins/.
+// Every coin image, by the path coins.js and index.html use (coins.js looks them up in WB.ASSETS).
 const html = read("index.html", "utf8");
 const scripts = [...html.matchAll(/<script src="([^"]+)"[^>]*><\/script>/g)].map((m) => m[1]);
-const assetPaths = new Set();
-for (const text of [html, ...scripts.map((s) => read(s, "utf8"))]) {
-  for (const m of text.matchAll(/coins\/[a-z0-9-]+\.webp/g)) assetPaths.add(m[0]);
-}
-for (const id of read("coins.js", "utf8").matchAll(/\bid: "([a-z0-9-]+)"/g)) assetPaths.add(`coins/${id[1]}.webp`);
-const assets = Object.fromEntries([...assetPaths].sort().map((p) => [p, dataUrl(p)]));
+const assets = Object.fromEntries(readdirSync(join(WEB, "coins")).filter((f) => MIME[extname(f)]).sort()
+  .map((f) => [`coins/${f}`, dataUrl(`coins/${f}`)]));
 
 let out = html
   .replace(/<link rel="stylesheet" href="([^"]+)">/g, (_, p) => `<style>\n${inlineable(read(p, "utf8"), p, "style")}</style>`)

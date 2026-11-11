@@ -101,8 +101,11 @@ their definitions). Options that would also be correct (same definition, listed 
 - `web/` — the app: Vue 3 (global build, templates compiled in the browser), GSAP animations, Tone.js sounds,
   canvas-confetti, all in `web/vendor/`. Scripts share one global, `WB`, and load in the order `index.html` lists
   - `engine.js` spaced repetition, `vocab.js` questions, `session.js` one session, `log.js` the log and Sheet sync
-  - `coins.js` + `coins/` — each right answer banks a random old coin (Athens to the Morgan dollar);
-    public-domain/CC0 photos, credits in [`web/coins/README.md`](web/coins/README.md)
+  - `coins.js` + `coins/` — each right answer banks a random coin from the set the student picks: through
+    history (Athens to the Morgan dollar), ancient Greek, or fantasy realms. Real coins are public-domain/CC0
+    photos, credits in [`web/coins/README.md`](web/coins/README.md); fantasy ones are drawn by
+    `scripts/make_fantasy_coins.mjs`. Each answer row's `detail.coin` records the coin, and the Scores page
+    shows each student's collection with a true fact about every real coin
 - `apps_script/Code.gs` — the Google Sheet side
 - `scripts/vendor.sh` — re-fetches `web/vendor/` from pinned npm tarballs, sha256-checked; no npm needed
 - `scripts/embed_assets.sh` — regenerates `web/words.js` and `web/sounds/kaching.js`

@@ -36,7 +36,8 @@ var COLUMNS = [
   "response_ms", "chosen", "prompt", "options", "stage_before", "stage_after", "detail",
 ];
 // What GET ?action=rows sends back. The rest stays in the Sheet for you to look at.
-var READ_COLUMNS = ["id", "ts", "session_id", "event", "grp", "mode", "word", "outcome", "response_ms"];
+// (detail carries the coin each right answer banked.)
+var READ_COLUMNS = ["id", "ts", "session_id", "event", "grp", "mode", "word", "outcome", "response_ms", "detail"];
 // Same rule as NAME_RE in web/log.js. Also keeps tab names plain.
 var NAME_RE = /^[A-Za-z][A-Za-z0-9 _-]{0,23}$/;
 // Before tabs-per-student, everything went in one tab called "log". It's split up

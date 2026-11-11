@@ -48,6 +48,29 @@ function tally(rows, into = {}) {
   return into;
 }
 
+// Coins banked, per user: {user: {coin_id: n}}, from answer rows' detail.coin.
+function coinTally(rows, into = {}) {
+  for (const r of rows) {
+    if (!r.user || r.event !== "answer") continue;
+    let d = r.detail;
+    if (typeof d === "string") { try { d = JSON.parse(d); } catch { continue; } }
+    const id = d?.coin;
+    if (!id) continue;
+    const byCoin = (into[r.user] ||= {});
+    byCoin[id] = (byCoin[id] || 0) + 1;
+  }
+  return into;
+}
+
+function addCoins(a = {}, b = {}) {
+  const out = structuredClone(a);
+  for (const [user, coins] of Object.entries(b)) {
+    const u = (out[user] ||= {});
+    for (const [id, n] of Object.entries(coins)) u[id] = (u[id] || 0) + n;
+  }
+  return out;
+}
+
 function addTallies(a, b) {
   const out = structuredClone(a);
   for (const [user, words] of Object.entries(b)) {
@@ -71,8 +94,8 @@ class Log {
     this.timers = timers;
     this.onChange = onChange;
     this.outbox = storage.get("outbox", []);
-    // What we know of the Sheet: its student tabs, and each loaded tab's tallies.
-    this.summary = storage.get("summary", { users: [], tallies: {} });
+    // What we know of the Sheet: its student tabs, and each loaded tab's word tallies and coins.
+    this.summary = { coins: {}, ...storage.get("summary", { users: [], tallies: {} }) };
     this.sheetIds = new Set(); // ids seen in the Sheet this visit; never counted twice
     this.error = "";
     this.syncing = false;
@@ -90,7 +113,7 @@ class Log {
   setUrl(url) {
     if (url === this.url) return;
     this.url = url;
-    this.summary = { users: [], tallies: {} };
+    this.summary = { users: [], tallies: {}, coins: {} };
     this.sheetIds = new Set();
     this.storage.set("summary", this.summary);
     this.error = "";
@@ -109,6 +132,12 @@ class Log {
   tallies(user) {
     const unsent = this.outbox.filter((r) => r.user === user && !this.sheetIds.has(r.id));
     return addTallies({ [user]: this.summary.tallies[user] || {} }, tally(unsent))[user];
+  }
+
+  // {coin_id: n} banked by one user, Sheet + outbox.
+  coins(user) {
+    const unsent = this.outbox.filter((r) => r.user === user && !this.sheetIds.has(r.id));
+    return addCoins({ [user]: this.summary.coins[user] || {} }, coinTally(unsent))[user];
   }
 
   // Validate a name; reuse an existing user's spelling if it matches case-insensitively.
@@ -169,6 +198,7 @@ class Log {
       this.summary = {
         users: [...new Set([...this.summary.users, ...acked.map((r) => r.user)])].sort(),
         tallies: addTallies(this.summary.tallies, tally(fresh)),
+        coins: addCoins(this.summary.coins, coinTally(fresh)),
       };
       this.storage.set("outbox", this.outbox);
       this.storage.set("summary", this.summary);
@@ -192,14 +222,18 @@ class Log {
       ]);
       if (url !== this.url) return; // switched Sheets meanwhile
       const tallies = { ...this.summary.tallies };
+      const coins = { ...this.summary.coins };
       for (const tab of tabs) {
         const rows = sheetRows(tab);
         for (const r of rows) this.sheetIds.add(r.id);
         tallies[tab.user] = tally(rows)[tab.user] || {};
+        coins[tab.user] = coinTally(rows)[tab.user] || {};
       }
       const names = new Set(list.users);
-      for (const u of Object.keys(tallies)) if (!names.has(u)) delete tallies[u]; // tab gone
-      this.summary = { users: list.users, tallies };
+      for (const t of [tallies, coins]) {
+        for (const u of Object.keys(t)) if (!names.has(u)) delete t[u]; // tab gone
+      }
+      this.summary = { users: list.users, tallies, coins };
       this.storage.set("summary", this.summary);
     } catch (e) {
       if (url === this.url) this.error = `Couldn't reach the Sheet (${e.message}); showing saved scores.`;
@@ -262,5 +296,5 @@ async function checkSheetUrl(url, fetch = globalThis.fetch.bind(globalThis)) {
   return (await parseReply(res)).users;
 }
 
-Object.assign(WB, { NAME_RE, browserStorage, newId, tally, sheetRows, checkSheetUrl, Log });
+Object.assign(WB, { NAME_RE, browserStorage, newId, tally, coinTally, sheetRows, checkSheetUrl, Log });
 })();

@@ -190,6 +190,38 @@ test("Code.gs rejects junk", () => {
   assert.equal(script.post(JSON.stringify({ rows: [{ id: "x", user: "../etc" }] })).ok, false);
 });
 
+test("each right answer banks a coin from the chosen set, and the student's tab counts them", async () => {
+  const { script, log } = setup();
+  const s = Session.start({ vocab, log, user: "Ada", group: 1, mode: WORD_TO_DEF, rng: seededRandom(4),
+                            coinSet: "greek" });
+  const results = play(s, 12, (i) => i % 3 !== 0);
+  const greek = new Set(WB.COIN_SET_BY_ID.greek.coins.map((c) => c.id));
+  for (const r of results) {
+    if (r.correct) assert.ok(greek.has(r.coin.id), r.coin.id);
+    else assert.equal(r.coin, null);
+  }
+  assert.equal(s.earned.length, 8);
+  const want = {};
+  for (const id of s.earned) want[id] = (want[id] || 0) + 1;
+  assert.deepEqual(log.coins("Ada"), want); // still in the outbox
+
+  await log.flush();
+  assert.deepEqual(log.coins("Ada"), want); // moved into the cached summary, not counted twice
+  await log.refresh("Ada");
+  assert.deepEqual(log.coins("Ada"), want); // from Ada's tab
+  assert.equal(JSON.parse(sheetRows(script, "Ada")[0].detail).coin_set, "greek");
+
+  // Another device, nothing cached, loads the same coins from Ada's tab.
+  const ipad = new Log({ url: "x", storage: memoryStorage(), fetch: fakeFetch(script), timers: noTimers });
+  await ipad.refresh("Ada");
+  assert.deepEqual(ipad.coins("Ada"), want);
+  assert.deepEqual(ipad.coins("Bo"), {});
+
+  // The coin set survives a reload mid-session.
+  const again = Session.fromJSON(JSON.parse(JSON.stringify(s)), { vocab, log });
+  assert.equal(again.coinSet, "greek");
+});
+
 test("\"I don't know\" re-drills like a miss but is logged and scored separately", async () => {
   const { script, log } = setup();
   const s = Session.start({ vocab, log, user: "Ada", group: 1, mode: DEF_TO_WORD, rng: seededRandom(7) });
@@ -294,7 +326,7 @@ test("switching Sheets forgets the old Sheet's scores but keeps unsent rows", as
   await log.refresh("Ada");
   assert.equal(log.tallies("Ada").abundant.right, 1);
   log.setUrl("");
-  assert.deepEqual(log.summary, { users: [], tallies: {} });
+  assert.deepEqual(log.summary, { users: [], tallies: {}, coins: {} });
   assert.deepEqual(log.tallies("Ada"), {});
   log.append({ user: "Ada", event: "answer", word: "hostile", outcome: "wrong", response_ms: 5 });
   assert.equal(log.tallies("Ada").hostile.wrong, 1);
