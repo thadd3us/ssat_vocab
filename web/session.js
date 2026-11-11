@@ -4,7 +4,7 @@
 "use strict";
 const WB = (globalThis.WB ||= {});
 
-const { StudyQueue, MODES, DEF_TO_WORD, newId } = WB;
+const { StudyQueue, MODES, WORD_TO_DEF, newId } = WB;
 
 class Session {
   constructor({ vocab, log, user, group, mode, rng = Math.random, queue = null, id = newId(),
@@ -51,11 +51,11 @@ class Session {
     return this.question;
   }
 
-  // What the page shows: no answer, no part of speech (a hint), and in
-  // def_to_word no target word either.
+  // What the page shows: no answer, no part of speech (a hint), and the target
+  // word only when it's the prompt (word_to_def).
   get question() {
     const { mode, prompt, options, word } = this.q;
-    return { seq: this.seq, mode, prompt, options, ...(mode === DEF_TO_WORD ? {} : { word }) };
+    return { seq: this.seq, mode, prompt, options, ...(mode === WORD_TO_DEF ? { word } : {}) };
   }
 
   // choice: index into the options, or null for "I don't know".

@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { WB, vocab } from "./web.mjs";
 import { loadAppsScript, fakeFetch } from "../scripts/fake_apps_script.mjs";
 
-const { seededRandom, DEF_TO_WORD, WORD_TO_DEF, Log, Session, scoreRows, checkSheetUrl } = WB;
+const { seededRandom, DEF_TO_WORD, WORD_TO_DEF, SENTENCE, Log, Session, scoreRows, checkSheetUrl } = WB;
 
 function memoryStorage() {
   const m = new Map();
@@ -167,6 +167,9 @@ test("the question shown does not leak the answer", () => {
   assert.deepEqual(Object.keys(q).sort(), ["mode", "options", "prompt", "seq"]);
   const w = Session.start({ vocab, log, user: "Ada", group: 1, mode: WORD_TO_DEF }).question;
   assert.equal(w.prompt, "salacious");
+  const f = Session.start({ vocab, log, user: "Ada", group: 1, mode: SENTENCE }).question;
+  assert.deepEqual(Object.keys(f).sort(), ["mode", "options", "prompt", "seq"]);
+  assert.ok(f.prompt.includes("___") && !f.prompt.includes("salacious"));
   assert.ok(!("pos" in w) && !("answerIndex" in w));
 });
 

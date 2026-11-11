@@ -8,12 +8,14 @@ const GROUP_SIZE = 20;
 // Question modes.
 const WORD_TO_DEF = "word_to_def"; // show the word, pick its definition
 const DEF_TO_WORD = "def_to_word"; // show the definition, pick the word
+const SENTENCE = "sentence";       // show the fill-in-the-blank sentence, pick the word
 const MIXED = "mixed";
-const MODES = [WORD_TO_DEF, DEF_TO_WORD, MIXED];
+const MODES = [WORD_TO_DEF, DEF_TO_WORD, SENTENCE, MIXED];
 
 // Options per question: SSAT-style A-E for definitions; words are short, so
-// picking the word from a definition gets a 4x4 grid.
-const N_OPTIONS = { [WORD_TO_DEF]: 5, [DEF_TO_WORD]: 16 };
+// picking the word from a definition gets a 4x4 grid. Sentences take 8 words,
+// in two columns, mostly the target's curated look-alikes.
+const N_OPTIONS = { [WORD_TO_DEF]: 5, [DEF_TO_WORD]: 16, [SENTENCE]: 8 };
 
 // Near-synonyms the word list doesn't cross-reference. Never offered together,
 // since either could fairly be called right. (Found by reviewing the list;
@@ -122,6 +124,9 @@ function shuffle(arr, rng = Math.random) {
 
 const lower = (s) => s.toLowerCase();
 
+// Parts of speech like "v./n." count as either.
+const posParts = (pos) => pos.split("/").map((p) => p.trim()).filter(Boolean);
+
 class Vocab {
   // entries: [{rank, word, pos, definition, synonyms, antonyms, distractors, sentence}]
   constructor(entries) {
@@ -176,19 +181,34 @@ class Vocab {
     return otherSyns.includes(t) || otherSyns.some((s) => targetSyns.has(s));
   }
 
+  // Could `word` grammatically fill the blank meant for `target`? Words not in
+  // the list (some distractors) have no known part of speech, so they pass.
+  samePos(target, word) {
+    const other = this.get(word);
+    if (!other || !target.pos || !other.pos) return true;
+    const want = posParts(target.pos);
+    return posParts(other.pos).some((p) => want.includes(p));
+  }
+
   // Build a multiple-choice question.
   //
-  // Half the wrong answers come from the target's curated distractors and half
-  // are random words from `pool` (the study group, falling back to the whole
-  // list). In WORD_TO_DEF mode only distractors that are themselves in the word
-  // list can be used, since we need their definitions.
+  // About half the wrong answers come from the target's curated distractors and
+  // the rest are random words from `pool` (the study group, falling back to the
+  // whole list). In WORD_TO_DEF mode only distractors that are themselves in the
+  // word list can be used, since we need their definitions. In SENTENCE mode a
+  // wrong word must be the same part of speech when we know it, so grammar
+  // alone doesn't give the answer away.
   buildQuestion(target, mode, rng = Math.random, pool = null) {
-    if (mode === MIXED) mode = rng() < 0.5 ? WORD_TO_DEF : DEF_TO_WORD;
+    if (mode === MIXED) {
+      const modes = target.sentence ? [WORD_TO_DEF, DEF_TO_WORD, SENTENCE] : [WORD_TO_DEF, DEF_TO_WORD];
+      mode = modes[Math.floor(rng() * modes.length)];
+    }
     const nWrong = N_OPTIONS[mode] - 1;
-    const nFromDistractors = Math.floor(nWrong / 2);
+    const nFromDistractors = mode === SENTENCE ? Math.ceil(nWrong / 2) : Math.floor(nWrong / 2);
     const text = (w) => (mode === WORD_TO_DEF ? this.get(w).definition : w);
+    const fits = mode === SENTENCE ? (w) => this.samePos(target, w) : () => true;
 
-    let candidates = target.distractors.filter((d) => !this.tooClose(target, d));
+    let candidates = target.distractors.filter((d) => !this.tooClose(target, d) && fits(d));
     if (mode === WORD_TO_DEF) candidates = candidates.filter((d) => this.get(d));
     shuffle(candidates, rng);
 
@@ -205,12 +225,14 @@ class Vocab {
         added++;
       }
     };
+    const words = (entries) => shuffle(entries.map((e) => e.word), rng);
 
     take(candidates, nFromDistractors);
-    take(shuffle((pool || this.entries).map((e) => e.word), rng));
+    take(words(pool || this.entries).filter(fits));
     if (wrong.length < nWrong) { // tiny pool: top up from distractors, then everything
       take(candidates);
-      take(shuffle(this.entries.map((e) => e.word), rng));
+      take(words(this.entries).filter(fits));
+      take(words(this.entries));
     }
 
     const optionWords = shuffle([target.word, ...wrong], rng);
@@ -218,7 +240,7 @@ class Vocab {
       mode,
       word: target.word,
       pos: target.pos,
-      prompt: mode === WORD_TO_DEF ? target.word : target.definition,
+      prompt: { [WORD_TO_DEF]: target.word, [DEF_TO_WORD]: target.definition, [SENTENCE]: target.sentence }[mode],
       options: optionWords.map(text),
       optionWords,
       answerIndex: optionWords.indexOf(target.word),
@@ -226,5 +248,5 @@ class Vocab {
   }
 }
 
-Object.assign(WB, { GROUP_SIZE, WORD_TO_DEF, DEF_TO_WORD, MIXED, MODES, N_OPTIONS, NEAR_SYNONYMS, seededRandom, shuffle, Vocab });
+Object.assign(WB, { GROUP_SIZE, WORD_TO_DEF, DEF_TO_WORD, SENTENCE, MIXED, MODES, N_OPTIONS, NEAR_SYNONYMS, seededRandom, shuffle, Vocab });
 })();

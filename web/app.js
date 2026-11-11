@@ -36,9 +36,15 @@ function saveSession(s) {
 const MODE_LABELS = {
   word_to_def: "Word → Meaning",
   def_to_word: "Meaning → Word",
+  sentence: "Fill the blank",
   mixed: "Mix it up",
 };
 const LETTERS = "ABCDEFGHIJKLMNOP";
+const KIND = {
+  word_to_def: "What does this word mean?",
+  def_to_word: "Which word means…",
+  sentence: "Which word belongs in the blank?",
+};
 
 // ---------------------------------------------------------------- Setup
 const SetupScreen = {
@@ -284,9 +290,13 @@ const Practice = {
     });
 
     const pile = computed(() => earned.value.slice(-12).map((id) => COIN_BY_ID[id]).filter(Boolean));
+    const blankParts = computed(() => {
+      const [before, ...after] = question.value.prompt.split("___");
+      return [before, after.join("___")];
+    });
 
     return { s, question, progress, result, picked, earned, pile, optionEls, promptEl, bankEl,
-             choose, next, end, optionClass, stageCounts, LETTERS, MODE_LABELS };
+             choose, next, end, optionClass, stageCounts, blankParts, LETTERS, KIND, MODE_LABELS };
   },
   template: `
   <section class="practice">
@@ -307,8 +317,11 @@ const Practice = {
     </div>
 
     <div class="card question" ref="promptEl">
-      <div class="kind">{{ question.mode === 'word_to_def' ? 'What does this word mean?' : 'Which word means…' }}</div>
-      <div class="prompt" :class="question.mode">
+      <div class="kind">{{ KIND[question.mode] }}</div>
+      <div v-if="question.mode === 'sentence'" class="prompt sentence">
+        {{ blankParts[0] }}<span class="blank" :class="{ filled: result }">{{ result ? result.word : '' }}</span>{{ blankParts[1] }}
+      </div>
+      <div v-else class="prompt" :class="question.mode">
         {{ question.prompt }}
       </div>
     </div>
@@ -330,7 +343,7 @@ const Practice = {
       <div v-if="result.unknown" class="chosen">That's OK. You'll see <b>{{ result.word }}</b> again in a moment.</div>
       <div v-if="!result.correct && !result.unknown && result.chosen_word !== result.word" class="chosen">
         You picked
-        <template v-if="question.mode === 'def_to_word'"><b>{{ result.chosen_word }}</b><span v-if="result.chosen_definition">, which means “{{ result.chosen_definition }}”</span>.</template>
+        <template v-if="question.mode !== 'word_to_def'"><b>{{ result.chosen_word }}</b><span v-if="result.chosen_definition">, which means “{{ result.chosen_definition }}”</span>.</template>
         <template v-else>the meaning of <b>{{ result.chosen_word }}</b>.</template>
         You'll see <b>{{ result.word }}</b> again in a moment.
       </div>
