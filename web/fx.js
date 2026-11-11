@@ -91,36 +91,77 @@ function getSynths() {
     envelope: { attack: 0.01, decay: 0, sustain: 1, release: 0.06 },
     volume: -18,
   }).connect(drive);
-  synths = { out, register, buzzA, buzzB };
+  const voice = new Tone.Volume(0).toDestination();
+  synths = { out, voice, register, buzzA, buzzB };
   return synths;
 }
 
-async function ready() {
-  if (muted || !Tone) return null;
+async function ready(force = false) {
+  if ((muted && !force) || !Tone) return null;
   await Tone.start();
   return getSynths();
 }
 
-async function kaching() {
+// Each word's pronunciation is an MP3 data: URL in sounds/pronunciations.js (made by
+// scripts/make_pronunciations.mjs), decoded the first time that word comes up.
+const wordBuffers = new Map();
+function wordBuffer(word) {
+  const url = WB.PRONUNCIATIONS?.[word];
+  if (!url || !Tone) return null;
+  if (!wordBuffers.has(word)) {
+    const loading = Tone.ToneAudioBuffer.fromUrl(url).catch(() => {
+      wordBuffers.delete(word); // try again next time
+      return null;
+    });
+    wordBuffers.set(word, loading);
+  }
+  return wordBuffers.get(word);
+}
+
+// Speak `word` `delay` seconds after `t` (or as soon as it's decoded, if that's later).
+async function speakAt(s, word, t, delay) {
+  const buf = await wordBuffer(word);
+  if (!buf) return;
+  const p = new Tone.Player(buf).connect(s.voice);
+  p.onstop = () => p.dispose();
+  p.start(Math.max(t + delay, Tone.now() + 0.01));
+}
+
+// Words are said only after an answer, so the kid has to read them first; the sound
+// effect and the word overlap. `force` plays it even when muted (the 🔊 button).
+async function sayWord(word, { force = false } = {}) {
+  const s = await ready(force);
+  if (s) await speakAt(s, word, Tone.now(), 0.01);
+}
+
+// The ka-ching's bell rings at about 0.4 s and its drawer slams at 1.2 s; the word comes in
+// right after the bell, over a quieter drawer.
+const KACHING_WORD_DELAY = 0.45;
+const BUZZER_WORD_DELAY = 0.3;
+
+async function kaching(word) {
   const s = await ready();
   if (!s) return;
   const t = Tone.now() + 0.01;
+  const hasWord = word && WB.PRONUNCIATIONS?.[word];
   if (kachingBuffer?.loaded) {
     // A fresh player each time, so quick answers can overlap instead of cutting off.
-    const p = new Tone.Player(kachingBuffer).connect(s.out);
+    const p = new Tone.Player({ url: kachingBuffer, volume: hasWord ? -6 : 0 }).connect(s.out);
     p.onstop = () => p.dispose();
     p.start(t);
   } else {
     s.register(t);
   }
+  if (hasWord) await speakAt(s, word, t, KACHING_WORD_DELAY);
 }
 
-async function buzzer() {
+async function buzzer(word) {
   const s = await ready();
   if (!s) return;
   const t = Tone.now() + 0.01;
   s.buzzA.triggerAttackRelease(110, 0.55, t);
   s.buzzB.triggerAttackRelease(116.5, 0.55, t);
+  if (word) await speakAt(s, word, t, BUZZER_WORD_DELAY);
 }
 
 // Mint an old coin (see coins.js) with the word under it at `fromEl`, then fly it into `toEl`.
@@ -183,5 +224,5 @@ function celebrate() {
   })();
 }
 
-WB.fx = { isMuted, setMuted, kaching, buzzer, flyCoin, redX, celebrate };
+WB.fx = { isMuted, setMuted, kaching, buzzer, sayWord, flyCoin, redX, celebrate };
 })();

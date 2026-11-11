@@ -2,7 +2,8 @@
 // coin images (as data: URLs) inlined. No Sheet URL inside; the app asks for it.
 //
 //   node scripts/build_single_file.mjs                 # -> dist/word-bank.html
-//   node scripts/build_single_file.mjs --out FILE
+//   node scripts/build_single_file.mjs --out FILE [--web DIR]
+//   bazel build //:word_bank_html                      # -> bazel-bin/word-bank.html
 //
 // The file works opened from disk on a computer, or put on any static host (a
 // Safari on iPad only runs pages it loads over http/https; see README.md).
@@ -11,10 +12,13 @@ import { readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, extname, join } from "node:path";
 import { parseArgs } from "node:util";
 
-const WEB = new URL("../web/", import.meta.url).pathname;
 const { values: args } = parseArgs({
-  options: { out: { type: "string", default: new URL("../dist/word-bank.html", import.meta.url).pathname } },
+  options: {
+    out: { type: "string", default: new URL("../dist/word-bank.html", import.meta.url).pathname },
+    web: { type: "string", default: new URL("../web/", import.meta.url).pathname },
+  },
 });
+const WEB = args.web;
 const MIME = { ".webp": "image/webp", ".png": "image/png", ".svg": "image/svg+xml" };
 
 const read = (p, enc) => readFileSync(join(WEB, p), enc);

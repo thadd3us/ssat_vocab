@@ -219,16 +219,19 @@ const Practice = {
         saveSession(s);
         result.value = r;
         progress.value = r.progress;
+        // Only now, after they've read it and answered, do they hear the word said.
         if (r.correct) {
-          fx.kaching();
+          fx.kaching(r.word);
           const coin = r.coin; // the session banked it, so a reload mid-flight keeps it
           fx.flyCoin(coin, r.word, optionEls.value[i], bankEl.value, () => {
             earned.value = [...s.earned];
           });
           advanceTimer = setTimeout(next, 1700);
         } else if (!r.unknown) { // "I don't know" gets no buzzer: it's not a miss
-          fx.buzzer();
+          fx.buzzer(r.word);
           fx.redX(optionEls.value[i]);
+        } else {
+          fx.sayWord(r.word);
         }
         if (r.just_completed && !celebrated.value) {
           celebrated.value = true;
@@ -251,6 +254,12 @@ const Practice = {
         shownAt.value = performance.now();
         window.gsap?.from(promptEl.value, { y: 12, opacity: 0, duration: 0.25 });
       });
+    }
+
+    function sayWord() {
+      if (!result.value) return;
+      clearTimeout(advanceTimer); // they want to listen, so don't move on under them
+      fx.sayWord(result.value.word, { force: true });
     }
 
     function end() {
@@ -296,7 +305,7 @@ const Practice = {
     });
 
     return { s, question, progress, result, picked, earned, pile, optionEls, promptEl, bankEl,
-             choose, next, end, optionClass, stageCounts, blankParts, LETTERS, KIND, MODE_LABELS };
+             choose, next, end, sayWord, optionClass, stageCounts, blankParts, LETTERS, KIND, MODE_LABELS };
   },
   template: `
   <section class="practice">
@@ -337,7 +346,8 @@ const Practice = {
 
     <div v-if="result" class="feedback" :class="result.correct ? 'good' : result.unknown ? 'idk' : 'bad'" @click="next">
       <div>
-        <b>{{ result.word }}</b> <i>{{ result.pos }}</i> — {{ result.definition }}
+        <b>{{ result.word }}</b><button class="say" @click.stop="sayWord" title="Say it again" aria-label="Say it again">🔊</button>
+        <i>{{ result.pos }}</i> — {{ result.definition }}
         <span v-if="result.synonyms.length" class="syn">(like {{ result.synonyms.join(', ') }})</span>
       </div>
       <div v-if="result.unknown" class="chosen">That's OK. You'll see <b>{{ result.word }}</b> again in a moment.</div>

@@ -1,0 +1,45 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
+
+NODE = "@nodejs//:node_bin"
+
+# Every file the page uses (and the sources the generated .js files come from).
+filegroup(
+    name = "web",
+    srcs = glob(["web/**"]),
+)
+
+# bazel build //:word_bank_html  ->  bazel-bin/word-bank.html, the whole app in one file.
+genrule(
+    name = "word_bank_html",
+    srcs = [":web"],
+    outs = ["word-bank.html"],
+    cmd = "$(execpath %s) $(execpath scripts/build_single_file.mjs) --web web --out $@" % NODE,
+    tools = [
+        NODE,
+        "scripts/build_single_file.mjs",
+    ],
+)
+
+# One test per tests/*.test.js, each run with Bazel's Node (node:test, no npm packages).
+[
+    sh_test(
+        name = src.removeprefix("tests/").removesuffix(".test.js") + "_test",
+        size = "small",
+        srcs = ["scripts/bazel_node_test.sh"],
+        args = [
+            "$(rootpath %s)" % NODE,
+            "$(rootpath %s)" % src,
+        ],
+        data = [
+            NODE,
+            src,
+            ":web",
+            "apps_script/Code.gs",
+            "package.json",  # "type": "module"
+            "scripts/build_single_file.mjs",
+            "scripts/fake_apps_script.mjs",
+            "tests/web.mjs",
+        ],
+    )
+    for src in glob(["tests/*.test.js"])
+]

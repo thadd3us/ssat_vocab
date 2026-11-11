@@ -173,6 +173,11 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
 .feedback .syn { color: var(--muted); }
 .feedback .chosen { font-size: .95rem; }
 .feedback button { justify-self: end; }
+.feedback button.say {
+  background: none; border: 0; padding: 0 .3em; margin-left: .15em; font-size: 1.05em; vertical-align: -0.05em;
+  border-radius: 8px;
+}
+.feedback button.say:hover { background: rgba(0,0,0,.06); }
 @keyframes rise { from { transform: translateY(6px); opacity: 0; } }
 
 .footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; gap: 12px; flex-wrap: wrap; }

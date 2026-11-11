@@ -1,23 +1,33 @@
 # Word Bank — SSAT vocab practice
 
 Open `web/index.html` in a browser. That's it: no install, no server, no build. The same `web/` folder
-also works on any static host, and `node scripts/build_single_file.mjs` packs it all into one HTML file
-(`dist/word-bank.html`). The study log goes to a Google Sheet through a small Apps Script web app, so
+also works on any static host, and `bazel build //:word_bank_html` packs it all into one HTML file
+(`bazel-bin/word-bank.html`). The study log goes to a Google Sheet through a small Apps Script web app, so
 nobody using it needs a Google account. The Sheet's link isn't in the repo: the app asks for it.
 
 Everything is plain `<script>` tags (no ES modules) because browsers won't run modules, or `fetch()`
-files, from a page opened from disk. So the two data files are also wrapped as `.js`:
+files, from a page opened from disk. So the data files are also wrapped as `.js`:
 
 - **Word list:** edit `web/ssat_vocab.jsonl`, then run `scripts/embed_assets.sh` to regenerate `web/words.js`
   (the same JSONL text inside a JS string).
 - **Ka-ching:** `web/sounds/kaching.wav` becomes the data: URL in `web/sounds/kaching.js`, by the same script.
+- **Pronunciations:** each word's recording is `web/sounds/words/<word>.mp3`; the same script wraps them
+  all into `web/sounds/pronunciations.js`. After editing the word list, run `node scripts/make_pronunciations.mjs`
+  (needs ffmpeg): it records only the words that have no MP3 yet, deletes MP3s of words that are gone, and
+  re-runs `embed_assets.sh`. By default it uses Google Translate's voice (the unofficial endpoint behind
+  Translate's speaker button: no key, but it could change or rate-limit); `--engine say` uses the Mac's
+  built-in voices offline, and `--engine google` (Cloud Text-to-Speech, `GOOGLE_TTS_API_KEY`) or
+  `--engine openai` (`OPENAI_API_KEY`) use those APIs. `--redo word1,word2` re-records a few words (say,
+  one that sounds wrong), `--redo all` all of them.
 
-`tests/assets.test.js` fails if either generated file is out of date. Only developers need Node:
+`tests/assets.test.js` fails if a generated file is out of date. Only developers need Bazel (or Node):
 
 ```bash
-node --test tests/                               # tests (Node 22+, no npm install)
+bazel build //:word_bank_html                    # everything in one file: bazel-bin/word-bank.html
+bazel test //...                                 # tests, with Bazel's own pinned Node (MODULE.bazel)
+node --test tests/                               # the same tests with your Node (22+, no npm install)
 node scripts/dev_server.mjs --fake-sheet         # serve web/ with apps_script/Code.gs running in memory
-node scripts/build_single_file.mjs               # everything in one file: dist/word-bank.html
+node scripts/build_single_file.mjs               # the single file without Bazel: dist/word-bank.html
 node scripts/dev_server.mjs --host 0.0.0.0       # serve web/ to other devices on your network
 ./scripts/vendor.sh                              # only to change library versions (web/vendor/ is committed)
 ```
@@ -58,7 +68,7 @@ It is just a web page, but Safari on iPad only runs pages it loads over http(s):
 from the Files app shows a preview with JavaScript off. So the file has to live on a web server, but
 any static host will do, and with the single file there's just one thing to upload:
 
-1. `node scripts/build_single_file.mjs`, then put `dist/word-bank.html` anywhere that serves files
+1. `bazel build //:word_bank_html`, then put `bazel-bin/word-bank.html` anywhere that serves files
    over https (e.g. drag it into Netlify Drop, a Cloudflare Pages project, S3, or GitHub Pages).
    (Or host the `web/` folder as is; same app.)
 2. On the iPad, open it in Safari, then **Share → Add to Home Screen**. It opens full screen like an app.
@@ -87,6 +97,9 @@ which cycles through the mastered words as review, or end the session any time. 
 survives a page reload. Spaced-repetition rules live
 in `web/engine.js`, with tests in `tests/engine.test.js`.
 
+Each word is said out loud only once it's been answered, so the kid reads it first: over the ka-ching
+when right, after the buzzer when wrong, on its own after "I don't know". 🔊 next to the word says it again.
+
 "I don't know" (the button, or `?`) shows the answer with no buzzer and is logged as `unknown`, not
 as a miss; on the Scores page it has its own column and counts against accuracy.
 
@@ -110,6 +123,8 @@ their definitions). Options that would also be correct (same definition, listed 
     shows each student's collection with a true fact about every real coin
 - `apps_script/Code.gs` — the Google Sheet side
 - `scripts/vendor.sh` — re-fetches `web/vendor/` from pinned npm tarballs, sha256-checked; no npm needed
-- `scripts/embed_assets.sh` — regenerates `web/words.js` and `web/sounds/kaching.js`
-- `scripts/build_single_file.mjs` — inlines `web/` into `dist/word-bank.html` (not committed)
+- `scripts/embed_assets.sh` — regenerates `web/words.js`, `web/sounds/kaching.js`, `web/sounds/pronunciations.js`
+- `scripts/make_pronunciations.mjs` — records each word into `web/sounds/words/<word>.mp3`
+- `scripts/build_single_file.mjs` — inlines `web/` into one HTML file; `MODULE.bazel` + `BUILD.bazel` run it
+  (`//:word_bank_html`) and the tests (`bazel test //...`) with a pinned Node, no npm packages
 - `scripts/fake_apps_script.mjs` — runs `Code.gs` in Node against an in-memory sheet (tests, `--fake-sheet`)
