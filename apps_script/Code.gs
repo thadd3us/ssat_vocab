@@ -18,7 +18,8 @@
  *         -> {"ok": true, "ids": [...every id now stored...], "added": n}
  *   GET   ?action=summary
  *         -> {"ok": true, "users": [...],
- *             "tallies": {user: {word: {right, wrong, unknown, sum_ms, n_ms, last_seen}}}}
+ *             "tallies": {user: {word: {right, wrong, unknown, sum_ms, n_ms, last_seen}}},
+ *             "coins": {user: {coin_id: n}}}   (coins banked, from answer rows' detail.coin)
  *
  * The log is append-only as far as the page is concerned: this script never
  * edits or deletes a row. (You can, by hand, in the Sheet.)
@@ -122,15 +123,21 @@ function readRows_() {
   });
 }
 
-// Keep in sync with tally() in web/log.js.
+// Keep in sync with tally() and coinTally() in web/log.js.
 function summary_(rows) {
   var users = {};
   var tallies = {};
+  var coins = {};
   rows.forEach(function (r) {
     var user = String(r.user || "");
     if (!user) return;
     users[user] = true;
     if (r.event !== "answer" || !r.word) return;
+    var coin = coinOf_(r.detail);
+    if (coin) {
+      var byCoin = coins[user] || (coins[user] = {});
+      byCoin[coin] = (byCoin[coin] || 0) + 1;
+    }
     var byWord = tallies[user] || (tallies[user] = {});
     var t = byWord[r.word] ||
       (byWord[r.word] = { right: 0, wrong: 0, unknown: 0, sum_ms: 0, n_ms: 0, last_seen: null });
@@ -142,5 +149,15 @@ function summary_(rows) {
     var ts = String(r.ts || "");
     if (ts && (!t.last_seen || ts > t.last_seen)) t.last_seen = ts;
   });
-  return { users: Object.keys(users).sort(), tallies: tallies };
+  return { users: Object.keys(users).sort(), tallies: tallies, coins: coins };
+}
+
+function coinOf_(detail) {
+  if (!detail) return "";
+  try {
+    var d = typeof detail === "string" ? JSON.parse(detail) : detail;
+    return d && d.coin ? String(d.coin) : "";
+  } catch (err) {
+    return "";
+  }
 }

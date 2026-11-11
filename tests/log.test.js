@@ -183,7 +183,45 @@ test("Code.gs rejects junk", () => {
   const script = loadAppsScript();
   assert.equal(script.post("not json").ok, false);
   assert.equal(script.get({ action: "drop_table" }).ok, false);
-  assert.deepEqual(script.get({}), { ok: true, users: [], tallies: {} });
+  assert.deepEqual(script.get({}), { ok: true, users: [], tallies: {}, coins: {} });
+});
+
+test("each right answer banks a coin from the chosen set, and the Sheet counts them", async () => {
+  const { script, log } = setup();
+  const s = Session.start({ vocab, log, user: "Ada", group: 1, mode: WORD_TO_DEF, rng: seededRandom(4),
+                            coinSet: "greek" });
+  const results = play(s, 12, (i) => i % 3 !== 0);
+  const greek = new Set(WB.COIN_SET_BY_ID.greek.coins.map((c) => c.id));
+  for (const r of results) {
+    if (r.correct) assert.ok(greek.has(r.coin.id), r.coin.id);
+    else assert.equal(r.coin, null);
+  }
+  assert.equal(s.earned.length, 8);
+  const want = {};
+  for (const id of s.earned) want[id] = (want[id] || 0) + 1;
+  assert.deepEqual(log.coins("Ada"), want); // still in the outbox
+
+  await log.flush();
+  assert.deepEqual(log.coins("Ada"), want); // moved into the cached summary, not counted twice
+  await log.refresh();
+  assert.deepEqual(log.coins("Ada"), want); // straight from Code.gs
+  assert.deepEqual(script.get({}).coins, { Ada: want });
+  assert.equal(JSON.parse(sheetRows(script)[0].detail).coin_set, "greek");
+
+  // The coin set survives a reload mid-session.
+  const again = Session.fromJSON(JSON.parse(JSON.stringify(s)), { vocab, log });
+  assert.equal(again.coinSet, "greek");
+});
+
+test("an older Code.gs without coin counts doesn't wipe this device's", async () => {
+  const { script, log } = setup();
+  const s = Session.start({ vocab, log, user: "Ada", group: 1, mode: WORD_TO_DEF, rng: seededRandom(5) });
+  play(s, 3, () => true);
+  await log.flush();
+  const get = script.get;
+  script.get = (p) => { const r = get(p); delete r.coins; return r; };
+  await log.refresh();
+  assert.equal(Object.values(log.coins("Ada")).reduce((a, b) => a + b, 0), 3);
 });
 
 test("\"I don't know\" re-drills like a miss but is logged and scored separately", async () => {
