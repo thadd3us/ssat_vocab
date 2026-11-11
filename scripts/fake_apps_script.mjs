@@ -8,7 +8,9 @@ import vm from "node:vm";
 const CODE = new URL("../apps_script/Code.gs", import.meta.url);
 
 class FakeSheet {
-  constructor(name) { this.name = name; this.cells = []; } // cells[row][col], 0-indexed
+  constructor(name, book) { this.name = name; this.book = book; this.cells = []; } // cells[row][col], 0-indexed
+  getName() { return this.name; }
+  setName(n) { this.book.delete(this.name); this.name = n; this.book.set(n, this); return this; }
   getLastRow() { return this.cells.length; }
   getLastColumn() { return Math.max(0, ...this.cells.map((r) => r.length)); }
   setFrozenRows() {}
@@ -40,7 +42,11 @@ export function loadAppsScript() {
   const sheets = new Map();
   const spreadsheet = {
     getSheetByName: (n) => sheets.get(n) || null,
-    insertSheet: (n) => { const s = new FakeSheet(n); sheets.set(n, s); return s; },
+    getSheets: () => [...sheets.values()],
+    insertSheet: (n) => {
+      if ([...sheets.keys()].some((k) => k.toLowerCase() === n.toLowerCase())) throw new Error(`tab ${n} exists`);
+      const s = new FakeSheet(n, sheets); sheets.set(n, s); return s;
+    },
   };
   const context = vm.createContext({
     SpreadsheetApp: { getActiveSpreadsheet: () => spreadsheet },
@@ -54,6 +60,7 @@ export function loadAppsScript() {
   vm.runInContext(readFileSync(CODE, "utf8"), context, { filename: "Code.gs" });
   return {
     sheets,
+    spreadsheet,
     get(params = {}) { return JSON.parse(context.doGet({ parameter: params }).content); },
     post(body) { return JSON.parse(context.doPost({ postData: { contents: body } }).content); },
   };
