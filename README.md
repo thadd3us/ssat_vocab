@@ -71,7 +71,7 @@ network to open (there's no offline cache); answers given while offline wait in 
 
 ## How a session works
 
-The 505 words in `ssat_vocab.jsonl` are split into groups of 20 in file order (group 26 has 5). A session drills one group.
+The 508 words in `ssat_vocab.jsonl` are split into groups of 20 in file order (group 26 has 8). Each word also has a fill-in-the-blank `sentence`, with `___` where the word goes. A session drills one group.
 
 | Answer | Word moves to | Stage |
 |---|---|---|
