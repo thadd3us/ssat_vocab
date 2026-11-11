@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { WB, vocab } from "./web.mjs";
 import { loadAppsScript, fakeFetch } from "../scripts/fake_apps_script.mjs";
 
-const { seededRandom, DEF_TO_WORD, WORD_TO_DEF, Log, Session, scoreRows } = WB;
+const { seededRandom, DEF_TO_WORD, WORD_TO_DEF, Log, Session, scoreRows, checkSheetUrl } = WB;
 
 function memoryStorage() {
   const m = new Map();
@@ -32,8 +32,9 @@ function play(s, n, rightPattern) {
   return results;
 }
 
-const sheetRows = (script) => {
-  const [header, ...rows] = script.sheets.get("log").cells;
+// The rows in one student's tab.
+const sheetRows = (script, user) => {
+  const [header, ...rows] = script.sheets.get(user).cells;
   return rows.map((r) => Object.fromEntries(header.map((h, i) => [h, r[i]])));
 };
 
@@ -48,7 +49,8 @@ test("a full session lands in the Sheet, in order, once", async () => {
   await log.flush();
   assert.equal(log.pending, 0);
 
-  const rows = sheetRows(script);
+  assert.deepEqual([...script.sheets.keys()], ["Ada"]);
+  const rows = sheetRows(script, "Ada");
   assert.deepEqual(rows.map((r) => r.event), ["session_start", ...Array(25).fill("answer"), "session_end"]);
   assert.equal(new Set(rows.map((r) => r.id)).size, 27);
   const a = rows[1];
@@ -64,8 +66,8 @@ test("a full session lands in the Sheet, in order, once", async () => {
   assert.equal(JSON.parse(a.options).length, 5);
   assert.equal(rows[3].word, a.word); // the missed word comes back after exactly one other
 
-  // Scores from the Sheet's summary match.
-  await log.refresh();
+  // Scores from Ada's tab match.
+  await log.refresh("Ada");
   const scores = scoreRows(vocab, log.tallies("Ada"), 2);
   assert.equal(scores.reduce((n, r) => n + r.right, 0), 18);
   assert.equal(scores.reduce((n, r) => n + r.wrong, 0), 7);
@@ -88,7 +90,7 @@ test("scores count outbox rows before they reach the Sheet, and never twice", as
   assert.equal(log.pending, 0);
   assert.equal(log.error, "");
   assert.equal(right(), 4);
-  await log.refresh();
+  await log.refresh("Bo");
   assert.equal(right(), 4);
 });
 
@@ -99,8 +101,8 @@ test("resending rows the Sheet already has does not duplicate them", async () =>
   const again = script.post(JSON.stringify({ rows: [row, row] }));
   assert.deepEqual(again.ids, [row.id, row.id]);
   assert.equal(again.added, 0);
-  assert.equal(sheetRows(script).length, 1);
-  assert.equal(script.get({ action: "summary" }).tallies.Ada.abundant.right, 1);
+  assert.equal(sheetRows(script, "Ada").length, 1);
+  assert.deepEqual(script.get({ action: "rows", user: "ada" }).rows.length, 1);
 });
 
 test("a lost reply is retried safely", async () => {
@@ -118,9 +120,9 @@ test("a lost reply is retried safely", async () => {
   assert.equal(log.pending, 1);
   await log.flush();
   assert.equal(log.pending, 0);
-  await log.refresh();
+  await log.refresh("Cy");
   assert.equal(log.tallies("Cy").hostile.wrong, 1);
-  assert.equal(sheetRows(script).length, 1);
+  assert.equal(sheetRows(script, "Cy").length, 1);
 });
 
 test("the outbox survives a reload", async () => {
@@ -132,7 +134,7 @@ test("the outbox survives a reload", async () => {
   assert.equal(reloaded.pending, 1);
   assert.deepEqual(reloaded.users(), ["Di"]);
   await reloaded.flush();
-  assert.equal(sheetRows(script).length, 1);
+  assert.equal(sheetRows(script, "Di").length, 1);
 });
 
 test("without a Sheet URL everything stays on the device", async () => {
@@ -140,7 +142,7 @@ test("without a Sheet URL everything stays on the device", async () => {
   const s = Session.start({ vocab, log, user: "Ed", group: 1, mode: "mixed", rng: seededRandom(2) });
   play(s, 3, () => false);
   await log.flush();
-  await log.refresh();
+  await log.refresh("Ed");
   assert.equal(fetch.calls.length, 0);
   assert.equal(log.pending, 4);
   assert.equal(scoreRows(vocab, log.tallies("Ed")).reduce((n, r) => n + r.wrong, 0), 3);
@@ -156,6 +158,7 @@ test("names: validated, and matched case-insensitively", () => {
   assert.equal(Session.start({ vocab, log, user: "  ada ", group: 1, mode: "mixed" }).user, "Ada");
   Session.start({ vocab, log, user: "Grace  Hopper", group: 1, mode: "mixed" });
   assert.deepEqual(log.users(), ["Ada", "Grace Hopper"]);
+  assert.throws(() => Session.start({ vocab, log, user: "LOG", group: 1, mode: "mixed" }), /another name/);
 });
 
 test("the question shown does not leak the answer", () => {
@@ -183,10 +186,11 @@ test("Code.gs rejects junk", () => {
   const script = loadAppsScript();
   assert.equal(script.post("not json").ok, false);
   assert.equal(script.get({ action: "drop_table" }).ok, false);
-  assert.deepEqual(script.get({}), { ok: true, users: [], tallies: {}, coins: {} });
+  assert.deepEqual(script.get({}), { ok: true, users: [] });
+  assert.equal(script.post(JSON.stringify({ rows: [{ id: "x", user: "../etc" }] })).ok, false);
 });
 
-test("each right answer banks a coin from the chosen set, and the Sheet counts them", async () => {
+test("each right answer banks a coin from the chosen set, and the student's tab counts them", async () => {
   const { script, log } = setup();
   const s = Session.start({ vocab, log, user: "Ada", group: 1, mode: WORD_TO_DEF, rng: seededRandom(4),
                             coinSet: "greek" });
@@ -203,25 +207,19 @@ test("each right answer banks a coin from the chosen set, and the Sheet counts t
 
   await log.flush();
   assert.deepEqual(log.coins("Ada"), want); // moved into the cached summary, not counted twice
-  await log.refresh();
-  assert.deepEqual(log.coins("Ada"), want); // straight from Code.gs
-  assert.deepEqual(script.get({}).coins, { Ada: want });
-  assert.equal(JSON.parse(sheetRows(script)[0].detail).coin_set, "greek");
+  await log.refresh("Ada");
+  assert.deepEqual(log.coins("Ada"), want); // from Ada's tab
+  assert.equal(JSON.parse(sheetRows(script, "Ada")[0].detail).coin_set, "greek");
+
+  // Another device, nothing cached, loads the same coins from Ada's tab.
+  const ipad = new Log({ url: "x", storage: memoryStorage(), fetch: fakeFetch(script), timers: noTimers });
+  await ipad.refresh("Ada");
+  assert.deepEqual(ipad.coins("Ada"), want);
+  assert.deepEqual(ipad.coins("Bo"), {});
 
   // The coin set survives a reload mid-session.
   const again = Session.fromJSON(JSON.parse(JSON.stringify(s)), { vocab, log });
   assert.equal(again.coinSet, "greek");
-});
-
-test("an older Code.gs without coin counts doesn't wipe this device's", async () => {
-  const { script, log } = setup();
-  const s = Session.start({ vocab, log, user: "Ada", group: 1, mode: WORD_TO_DEF, rng: seededRandom(5) });
-  play(s, 3, () => true);
-  await log.flush();
-  const get = script.get;
-  script.get = (p) => { const r = get(p); delete r.coins; return r; };
-  await log.refresh();
-  assert.equal(Object.values(log.coins("Ada")).reduce((a, b) => a + b, 0), 3);
 });
 
 test("\"I don't know\" re-drills like a miss but is logged and scored separately", async () => {
@@ -235,9 +233,101 @@ test("\"I don't know\" re-drills like a miss but is logged and scored separately
   assert.equal(r.stage_after, "missed");
   assert.equal(s.queue.order[1], first); // slot 3, same as a miss
   assert.deepEqual([r.progress.right, r.progress.wrong, r.progress.unknown], [0, 0, 1]);
-  await log.refresh();
-  assert.deepEqual(sheetRows(script).at(-1).outcome, "unknown");
+  await log.refresh("Ada");
+  assert.deepEqual(sheetRows(script, "Ada").at(-1).outcome, "unknown");
   const t = log.tallies("Ada")[first];
   assert.deepEqual([t.right, t.wrong, t.unknown], [0, 0, 1]);
   assert.equal(scoreRows(vocab, log.tallies("Ada")).find((x) => x.word === first).unknown, 1);
+});
+
+test("each student gets their own tab, and a fresh device loads it", async () => {
+  const { script, log } = setup();
+  const a = Session.start({ vocab, log, user: "Ada", group: 1, mode: WORD_TO_DEF, rng: seededRandom(4) });
+  play(a, 5, (i) => i !== 2);
+  const b = Session.start({ vocab, log, user: "Bo", group: 2, mode: DEF_TO_WORD, rng: seededRandom(5) });
+  play(b, 3, () => false);
+  await log.flush();
+  assert.deepEqual([...script.sheets.keys()].sort(), ["Ada", "Bo"]);
+  assert.equal(sheetRows(script, "Ada").length, 6);
+  assert.equal(sheetRows(script, "Bo").length, 4);
+  // A tab the parent made by hand isn't a student.
+  script.sheets.set("Charts", { getName: () => "Charts", getLastRow: () => 0, getLastColumn: () => 0 });
+
+  // Another iPad, nothing cached: the list of names, then Ada's tab.
+  const ipad = new Log({ url: "x", storage: memoryStorage(), fetch: fakeFetch(script), timers: noTimers });
+  await ipad.refresh();
+  assert.deepEqual(ipad.users(), ["Ada", "Bo"]);
+  assert.deepEqual(ipad.tallies("Ada"), {});
+  await ipad.refresh("Ada");
+  const right = (who) => scoreRows(vocab, ipad.tallies(who)).reduce((n, r) => n + r.right, 0);
+  assert.equal(right("Ada"), 4);
+  const t = Object.values(ipad.tallies("Ada"));
+  assert.equal(t.reduce((n, x) => n + x.wrong, 0), 1);
+  assert.ok(t.every((x) => x.n_ms === x.right + x.wrong && x.sum_ms > 0)); // response_ms came back as numbers
+  assert.deepEqual(ipad.tallies("Bo"), {}); // not loaded yet
+  await ipad.refresh("Bo");
+  assert.equal(scoreRows(vocab, ipad.tallies("Bo")).reduce((n, r) => n + r.wrong, 0), 3);
+  assert.equal(ipad.canonicalName("bo"), "Bo");
+});
+
+test("a row stored but not acknowledged is counted once after loading the tab", async () => {
+  const { script, storage } = setup();
+  let lose = true;
+  const fetch = async (url, opts) => {
+    const res = await fakeFetch(script)(url, opts);
+    if (lose && opts.method === "POST") { lose = false; throw new TypeError("Load failed"); }
+    return res;
+  };
+  const log = new Log({ url: "x", storage, fetch, timers: noTimers });
+  log.append({ user: "Cy", event: "answer", word: "hostile", outcome: "correct", response_ms: 9 });
+  await log.flush(); // landed in the Sheet, reply lost: still in the outbox
+  assert.equal(log.pending, 1);
+  log.flush = async () => {}; // stay "offline" for sending, but read the tab
+  await log.refresh("Cy");
+  assert.equal(log.tallies("Cy").hostile.right, 1);
+  delete log.flush;
+  await log.flush();
+  assert.equal(log.pending, 0);
+  assert.equal(log.tallies("Cy").hostile.right, 1);
+});
+
+test("an old single log tab is split into a tab per student", () => {
+  const script = loadAppsScript();
+  // The old layout: one "log" tab with a user column.
+  const cols = ["id", "ts", "received", "user", "event", "word", "outcome", "response_ms"];
+  const tab = script.spreadsheet.insertSheet("log");
+  tab.cells.push(cols,
+    ["1", "2026-01-01T00:00:00Z", "r", "Ada", "answer", "abundant", "correct", "1200"],
+    ["2", "2026-01-01T00:00:01Z", "r", "Bo", "answer", "hostile", "wrong", "800"],
+    ["3", "2026-01-01T00:00:02Z", "r", "Ada", "answer", "hostile", "correct", "700"]);
+  assert.deepEqual(script.get({ action: "users" }).users.sort(), ["Ada", "Bo"]);
+  assert.ok(script.sheets.has("log (split into tabs)"));
+  assert.ok(!script.sheets.has("log"));
+  const ada = script.get({ action: "rows", user: "Ada" });
+  assert.deepEqual(ada.rows.map((r) => r[ada.columns.indexOf("word")]), ["abundant", "hostile"]);
+  assert.equal(sheetRows(script, "Ada")[0].ts, "2026-01-01T00:00:00Z");
+  // Running again changes nothing.
+  assert.equal(script.get({ action: "rows", user: "Bo" }).rows.length, 1);
+});
+
+test("checkSheetUrl: catches the spreadsheet link, a dead link, and a working one", async () => {
+  const script = loadAppsScript();
+  await assert.rejects(checkSheetUrl("https://docs.google.com/spreadsheets/d/abc/edit", fakeFetch(script)), /web app link/);
+  await assert.rejects(checkSheetUrl("hello", fakeFetch(script)), /doesn't look like a link/);
+  await assert.rejects(checkSheetUrl("https://x/exec", async () => { throw new TypeError("Load failed"); }), /Couldn't reach/);
+  await assert.rejects(checkSheetUrl("https://x/exec", async () => ({ ok: true, json: async () => { throw new SyntaxError(); } })),
+                       /deployed for Anyone/);
+  assert.deepEqual(await checkSheetUrl(" https://x/exec ", fakeFetch(script)), []);
+});
+
+test("switching Sheets forgets the old Sheet's scores but keeps unsent rows", async () => {
+  const { log } = setup();
+  log.append({ user: "Ada", event: "answer", word: "abundant", outcome: "correct", response_ms: 5 });
+  await log.refresh("Ada");
+  assert.equal(log.tallies("Ada").abundant.right, 1);
+  log.setUrl("");
+  assert.deepEqual(log.summary, { users: [], tallies: {}, coins: {} });
+  assert.deepEqual(log.tallies("Ada"), {});
+  log.append({ user: "Ada", event: "answer", word: "hostile", outcome: "wrong", response_ms: 5 });
+  assert.equal(log.tallies("Ada").hostile.wrong, 1);
 });

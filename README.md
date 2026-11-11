@@ -1,8 +1,9 @@
 # Word Bank — SSAT vocab practice
 
 Open `web/index.html` in a browser. That's it: no install, no server, no build. The same `web/` folder
-also works on any static host. The study log goes to a Google Sheet through a small Apps Script web app,
-so nobody using it needs a Google account.
+also works on any static host, and `node scripts/build_single_file.mjs` packs it all into one HTML file
+(`dist/word-bank.html`). The study log goes to a Google Sheet through a small Apps Script web app, so
+nobody using it needs a Google account. The Sheet's link isn't in the repo: the app asks for it.
 
 Everything is plain `<script>` tags (no ES modules) because browsers won't run modules, or `fetch()`
 files, from a page opened from disk. So the two data files are also wrapped as `.js`:
@@ -16,6 +17,7 @@ files, from a page opened from disk. So the two data files are also wrapped as `
 ```bash
 node --test tests/                               # tests (Node 22+, no npm install)
 node scripts/dev_server.mjs --fake-sheet         # serve web/ with apps_script/Code.gs running in memory
+node scripts/build_single_file.mjs               # everything in one file: dist/word-bank.html
 node scripts/dev_server.mjs --host 0.0.0.0       # serve web/ to other devices on your network
 ./scripts/vendor.sh                              # only to change library versions (web/vendor/ is committed)
 ```
@@ -27,26 +29,45 @@ node scripts/dev_server.mjs --host 0.0.0.0       # serve web/ to other devices o
 2. **Deploy → New deployment → Web app**. Execute as: **Me**. Who has access: **Anyone**. Authorize it.
    The consent screen should ask only to "view and manage spreadsheets that this application has been
    installed in" (the `@OnlyCurrentDoc` line at the top of `Code.gs`), not all your spreadsheets.
-3. Put the `/exec` URL in [`web/config.js`](web/config.js).
+3. Open the app and paste the `/exec` URL when it asks. It checks the link, then keeps it in that
+   browser's localStorage. **⚙︎** in the header changes it, or switches to "this device only".
+   A link ending in `#sheet=<the /exec URL>` fills it in too (handy to text to an iPad); the app then
+   drops it from the address bar.
 
-The script appends rows to a `log` tab (it creates the tab), one row per event: `session_start`,
-`answer`, `session_end`, with the user's name in a column. It never edits or deletes rows. Scores are
-worked out from the rows. If you change `Code.gs`, use **Deploy → Manage deployments → Edit → New
-version** to keep the same URL.
+Each student gets a tab named after them (the script makes it on their first answer), one row per
+event: `session_start`, `answer`, `session_end`. It never edits or deletes rows. When the app starts it
+lists the student tabs, and loads the tab of whoever is picked (again whenever someone else is picked,
+here or on the Scores page); scores are worked out from those rows. Tabs you add yourself are ignored.
+A Sheet from before tabs-per-student has one `log` tab: the first call splits it into student tabs and
+renames it `log (split into tabs)`. If you change `Code.gs`, use **Deploy → Manage deployments → Edit →
+New version** to keep the same URL.
 
-Anyone who has the `/exec` URL can add rows and read the scores. The page holds the URL, so treat it
-like a shared password for the Sheet. The Sheet itself stays private.
+Anyone who has the `/exec` URL can add rows and read the scores, so treat it like a shared password for
+the Sheet. The Sheet itself stays private. It isn't in the repo, so the page and the single-file build
+are safe to host publicly.
 
 Each row goes into a local outbox (localStorage) first and leaves it only when the Sheet confirms
 it. Every row has an id, and the script skips ids it already has, so resending after a dropped
 connection never counts an answer twice. The badge at the top shows **Saved**, **Saving…**, or
-**N unsaved** (tap it to retry). With `SHEET_URL` empty, the app keeps everything on that one device.
+**N unsaved** (tap it to retry). With no Sheet connected, the app keeps everything on that one device;
+connecting one later sends those rows to it.
 
 ## On the iPad
 
-Safari on the iPad won't run a web page from the Files app, so host `web/` somewhere (any static
-host, no build step), open it in Safari, and use **Share → Add to Home Screen**. Safari can delete a website's storage after 7 days without a visit,
-but not storage for apps on the Home Screen, so the outbox and saved scores are safe there.
+It is just a web page, but Safari on iPad only runs pages it loads over http(s): opening an `.html`
+from the Files app shows a preview with JavaScript off. So the file has to live on a web server, but
+any static host will do, and with the single file there's just one thing to upload:
+
+1. `node scripts/build_single_file.mjs`, then put `dist/word-bank.html` anywhere that serves files
+   over https (e.g. drag it into Netlify Drop, a Cloudflare Pages project, S3, or GitHub Pages).
+   (Or host the `web/` folder as is; same app.)
+2. On the iPad, open it in Safari, then **Share → Add to Home Screen**. It opens full screen like an app.
+3. Open it from the Home Screen and paste the Sheet link (or open your `#sheet=` link). Home Screen
+   apps keep their own storage, separate from Safari's, so do this step in the Home Screen app.
+
+Safari can delete a website's storage after 7 days without a visit, but not storage for apps on the
+Home Screen, so the outbox, the Sheet link and saved scores are safe there. The page still needs the
+network to open (there's no offline cache); answers given while offline wait in the outbox.
 
 ## How a session works
 
@@ -88,4 +109,5 @@ their definitions). Options that would also be correct (same definition, listed 
 - `apps_script/Code.gs` — the Google Sheet side
 - `scripts/vendor.sh` — re-fetches `web/vendor/` from pinned npm tarballs, sha256-checked; no npm needed
 - `scripts/embed_assets.sh` — regenerates `web/words.js` and `web/sounds/kaching.js`
+- `scripts/build_single_file.mjs` — inlines `web/` into `dist/word-bank.html` (not committed)
 - `scripts/fake_apps_script.mjs` — runs `Code.gs` in Node against an in-memory sheet (tests, `--fake-sheet`)

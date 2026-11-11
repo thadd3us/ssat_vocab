@@ -3,13 +3,23 @@
 const WB = (globalThis.WB ||= {});
 
 const { createApp, ref, computed, onMounted, onUnmounted, nextTick, watch, markRaw } = Vue;
-const { fx, SHEET_URL, Vocab, Log, browserStorage: store, Session, scoreRows,
+const { fx, Vocab, Log, checkSheetUrl, browserStorage: store, Session, scoreRows,
         COINS, COIN_BY_ID, COIN_SETS, COIN_SET_BY_ID, DEFAULT_COIN_SET, preloadCoins } = WB;
+
+// The Sheet's web app URL isn't in the code. It's pasted in once (SetupScreen) and kept
+// in localStorage: null = never asked, "" = this device only. A link ending in
+// #sheet=<url> fills it in too, then the URL is dropped from the address bar.
+const SHEET_KEY = "sheet_url";
+const fromLink = new URLSearchParams(location.hash.slice(1)).get("sheet");
+if (fromLink !== null) {
+  store.set(SHEET_KEY, fromLink.trim());
+  history.replaceState(null, "", location.pathname + location.search);
+}
 
 // Everything runs in the page; the log syncs to a Google Sheet (see log.js).
 // `version` ticks whenever the log changes, so computed scores and the sync badge update.
 const version = ref(0);
-const log = new Log({ url: SHEET_URL, onChange: () => version.value++ });
+const log = new Log({ url: store.get(SHEET_KEY, null) || "", onChange: () => version.value++ });
 let vocab = null;
 window.addEventListener("online", () => log.flush());
 document.addEventListener("visibilitychange", () => { if (!document.hidden) log.flush(); });
@@ -29,6 +39,56 @@ const MODE_LABELS = {
   mixed: "Mix it up",
 };
 const LETTERS = "ABCDEFGHIJKLMNOP";
+
+// ---------------------------------------------------------------- Setup
+const SetupScreen = {
+  props: ["firstTime"],
+  emits: ["done"],
+  setup(props, { emit }) {
+    const url = ref(log.url);
+    const busy = ref(false);
+    const error = ref("");
+
+    async function connect() {
+      error.value = "";
+      if (!url.value.trim()) { error.value = "Paste the link first."; return; }
+      busy.value = true;
+      try {
+        await checkSheetUrl(url.value);
+        save(url.value.trim());
+      } catch (e) {
+        error.value = e.message;
+      } finally {
+        busy.value = false;
+      }
+    }
+
+    function save(u) {
+      store.set(SHEET_KEY, u);
+      log.setUrl(u);
+      emit("done");
+    }
+
+    return { url, busy, error, connect, save };
+  },
+  template: `
+  <section class="card setup">
+    <h2>Connect to the Google Sheet</h2>
+    <p>Scores are kept in a Google Sheet, with a tab for each student. Paste the Sheet's web app link
+       (from Apps Script: <b>Deploy → Manage deployments</b>, the URL ending in <code>/exec</code>).</p>
+    <p class="muted">It's saved on this device only. Anyone with the link can add to the Sheet and see scores, so treat it like a password.</p>
+    <div class="row">
+      <input v-model="url" type="url" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off"
+             autocapitalize="off" spellcheck="false" @keydown.enter="connect" aria-label="Sheet link">
+    </div>
+    <p v-if="error" class="error">{{ error }}</p>
+    <div class="row">
+      <button class="primary" @click="connect" :disabled="busy">{{ busy ? 'Checking…' : 'Connect' }}</button>
+      <button class="ghost" @click="save('')">Keep scores on this device only</button>
+      <button v-if="!firstTime" class="ghost" @click="$emit('done')">Cancel</button>
+    </div>
+  </section>`,
+};
 
 // ---------------------------------------------------------------- Start
 const StartScreen = {
@@ -326,7 +386,8 @@ const Scores = {
     const coinTab = ref(COIN_SET_BY_ID[store.get("coinSet")] ? store.get("coinSet") : DEFAULT_COIN_SET);
     const sortKey = ref("wrong");
     const onlySeen = ref(false);
-    onMounted(() => log.refresh());
+    // Load the student's tab whenever the table switches to them.
+    watch(who, (u) => log.refresh(u), { immediate: true });
     watch(() => props.users, (us) => { if (!us.includes(who.value)) who.value = us[0] || ""; });
 
     const rows = computed(() => {
@@ -431,7 +492,7 @@ const Scores = {
 
 // ---------------------------------------------------------------- Root
 createApp({
-  components: { StartScreen, Practice, Summary, Scores },
+  components: { SetupScreen, StartScreen, Practice, Summary, Scores },
   setup() {
     const tab = ref("practice");
     const groups = ref([]);
@@ -441,14 +502,16 @@ createApp({
     const muted = ref(fx.isMuted());
     const loaded = ref(false);
     const loadError = ref("");
+    const setup = ref(store.get(SHEET_KEY, null) === null ? "first" : ""); // "first" | "change" | ""
 
     const users = computed(() => { version.value; return log.users(); });
     watch(users, (us) => { if (us.length && !us.includes(user.value)) user.value = us[0]; });
 
     const sync = computed(() => {
       version.value;
-      if (!log.syncEnabled) return { cls: "local", text: "This device only", title: "No Google Sheet set up (web/config.js)" };
+      if (!log.syncEnabled) return { cls: "local", text: "This device only", title: "No Google Sheet connected (⚙︎ to connect one)" };
       if (log.error) return { cls: "err", text: `${log.pending} unsaved`, title: log.error };
+      if (log.loading) return { cls: "busy", text: "Loading…", title: "Reading scores from the Sheet" };
       if (log.syncing || log.pending) return { cls: "busy", text: "Saving…", title: `${log.pending} rows on their way to the Sheet` };
       return { cls: "ok", text: "Saved", title: "Everything is in the Google Sheet" };
     });
@@ -463,7 +526,7 @@ createApp({
         if (saved) session.value = markRaw(Session.fromJSON(saved, { vocab, log }));
       } catch { sessionStorage.removeItem("session"); }
       loaded.value = true;
-      log.refresh();
+      log.refresh(user.value);
     });
 
     function start({ user: u, group, mode, coinSet, onError }) {
@@ -485,16 +548,18 @@ createApp({
     }
 
     function toggleMute() { muted.value = !muted.value; fx.setMuted(muted.value); }
-    watch(user, (u) => store.set("user", u));
+    // Picking a name loads that student's tab from the Sheet.
+    watch(user, (u) => { store.set("user", u); log.refresh(u); });
 
-    function syncNow() { log.flush(); }
+    function syncNow() { log.error ? log.flush() : log.refresh(user.value); }
+    function setupDone() { setup.value = ""; log.refresh(user.value); }
 
-    return { tab, groups, users, user, session, summary, muted, loaded, loadError, sync,
-             start, ended, toggleMute, syncNow };
+    return { tab, groups, users, user, session, summary, muted, loaded, loadError, sync, setup,
+             start, ended, toggleMute, syncNow, setupDone, logo: COIN_BY_ID.byzantine.src };
   },
   template: `
   <header>
-    <h1><img class="logo" src="coins/byzantine.webp" alt=""> Word Bank</h1>
+    <h1><img class="logo" :src="logo" alt=""> Word Bank</h1>
     <nav>
       <button :class="{ active: tab === 'practice' }" @click="tab = 'practice'">Practice</button>
       <button :class="{ active: tab === 'scores' }" @click="tab = 'scores'">Scores</button>
@@ -502,9 +567,13 @@ createApp({
     <span class="who" v-if="session">{{ session.user }} · Group {{ session.group }}</span>
     <button class="sync" :class="sync.cls" :title="sync.title" @click="syncNow">{{ sync.text }}</button>
     <button class="icon" @click="toggleMute" :title="muted ? 'Sound off' : 'Sound on'">{{ muted ? '🔇' : '🔊' }}</button>
+    <button class="icon" @click="setup = setup ? '' : 'change'" title="Google Sheet link">⚙︎</button>
   </header>
   <p v-if="loadError" class="card error">{{ loadError }}</p>
-  <main v-if="loaded">
+  <main v-if="loaded && setup">
+    <SetupScreen :first-time="setup === 'first'" @done="setupDone" />
+  </main>
+  <main v-else-if="loaded">
     <div v-show="tab === 'practice'">
       <Practice v-if="session" :key="session.id" :session="session" @end="ended" />
       <Summary v-else-if="summary" :summary="summary" @again="summary = null" @scores="tab = 'scores'" />

@@ -6,8 +6,11 @@
 "use strict";
 const WB = (globalThis.WB ||= {});
 
+// The single-file build (scripts/build_single_file.mjs) puts the images in WB.ASSETS as data: URLs.
+const asset = (path) => WB.ASSETS?.[path] || path;
+
 const coin = (id, name, where, when, fact, ext = "webp") =>
-  ({ id, name, where, when, fact, src: `coins/${id}.${ext}` });
+  ({ id, name, where, when, fact, src: asset(`coins/${id}.${ext}`) });
 const fantasy = (id, name, where, when, fact) =>
   ({ ...coin(id, name, where, when, fact, "svg"), madeUp: true });
 

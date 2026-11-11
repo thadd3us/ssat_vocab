@@ -1,7 +1,8 @@
 // Local static server for web/.
 //
-//   node scripts/dev_server.mjs                 # http://localhost:8000, uses web/config.js
-//   node scripts/dev_server.mjs --fake-sheet    # also runs apps_script/Code.gs in memory at /fake-sheet
+//   node scripts/dev_server.mjs                 # http://localhost:8000
+//   node scripts/dev_server.mjs --fake-sheet    # also runs apps_script/Code.gs in memory at /fake-sheet,
+//                                               # and prints a link that points the app at it
 //   node scripts/dev_server.mjs --host 0.0.0.0  # let other devices on your network connect
 //
 // The real app needs no server: open web/index.html, or put web/ on any static host.
@@ -33,11 +34,9 @@ createServer(async (req, res) => {
     let body = "";
     for await (const chunk of req) body += chunk;
     const out = req.method === "POST" ? sheet.post(body) : sheet.get(Object.fromEntries(url.searchParams));
-    res.writeHead(200, { "Content-Type": "application/json" }).end(JSON.stringify(out));
-    return;
-  }
-  if (sheet && url.pathname === "/config.js") {
-    res.writeHead(200, { "Content-Type": "text/javascript" }).end('(globalThis.WB ||= {}).SHEET_URL = "/fake-sheet";\n');
+    // Like the real Apps Script, answer any origin (the single-file build runs from file://).
+    res.writeHead(200, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" })
+      .end(JSON.stringify(out));
     return;
   }
   const path = normalize(join(ROOT, decodeURIComponent(url.pathname === "/" ? "/index.html" : url.pathname)));
@@ -49,5 +48,7 @@ createServer(async (req, res) => {
     res.writeHead(404).end("not found");
   }
 }).listen(Number(args.port), args.host, () => {
-  console.log(`http://${args.host === "0.0.0.0" ? "localhost" : args.host}:${args.port}/${sheet ? "  (fake Sheet at /fake-sheet)" : ""}`);
+  const base = `http://${args.host === "0.0.0.0" ? "localhost" : args.host}:${args.port}`;
+  console.log(`${base}/`);
+  if (sheet) console.log(`${base}/#sheet=${base}/fake-sheet   (opens the app pointed at the fake Sheet)`);
 });
