@@ -119,9 +119,12 @@ class Vocab {
   // word list can be used, since we need their definitions. In SENTENCE mode a
   // wrong word must be the same part of speech when we know it, so grammar
   // alone doesn't give the answer away.
-  buildQuestion(target, mode, rng = Math.random, pool = null) {
+  //
+  // MIXED never picks SENTENCE on a word's first try (`firstTry`): the sentence
+  // is a harder, context-only clue, so it's saved for words already seen.
+  buildQuestion(target, mode, rng = Math.random, pool = null, { firstTry = false } = {}) {
     if (mode === MIXED) {
-      const modes = target.sentence ? [WORD_TO_DEF, DEF_TO_WORD, SENTENCE] : [WORD_TO_DEF, DEF_TO_WORD];
+      const modes = target.sentence && !firstTry ? [WORD_TO_DEF, DEF_TO_WORD, SENTENCE] : [WORD_TO_DEF, DEF_TO_WORD];
       mode = modes[Math.floor(rng() * modes.length)];
     }
     const nWrong = N_OPTIONS[mode] - 1;
