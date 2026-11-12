@@ -81,7 +81,7 @@ network to open (there's no offline cache); answers given while offline wait in 
 
 ## How a session works
 
-The 508 words in `ssat_vocab.jsonl` are split into groups of 20 in file order (group 26 has 8). Each word also has a fill-in-the-blank `sentence`, with `___` where the word goes. And an `explanation`: a sentence or two on where the word comes from (prefixes, roots, related words) and a way to remember it. Roots are given through modern Italian words where one fits (and German cousins where there's a good one), since that's what the students already know, with false friends like *egregio* called out, shown after every answer, right or wrong. Because there's something to read, a right answer waits for **Next** instead of moving on by itself. A session drills one group.
+The 1036 words in `ssat_vocab.jsonl` are split into groups of 20 in file order (group 52 has 16). Groups 1–6 are the original list's first 120 words, kept as they were. From word 121 come all the words of Manhattan Review's [SSAT flashcards](https://www.manhattanreview.com/ssat-vocab-flashcards/) (Essential, then Intermediate, then Advanced, in their deck order; definitions mostly theirs), then the rest of our own list. Each word also has a fill-in-the-blank `sentence`, with `___` where the word goes. And an `explanation`: a sentence or two on where the word comes from (prefixes, roots, related words) and a way to remember it. Roots are given through modern Italian words where one fits (and German cousins where there's a good one), since that's what the students already know, with false friends like *egregio* called out, shown after every answer, right or wrong. Because there's something to read, a right answer waits for **Next** instead of moving on by itself. A session drills one group.
 
 | Answer | Word moves to | Stage |
 |---|---|---|
@@ -110,8 +110,8 @@ answer is showing, the next one is), and nothing else about the session changes.
 letters A–P, or 1–9. About half the wrong options come from the word's curated `distractors` (4 of the 7
 in Fill the blank), the rest are random words from the same group. In Fill the blank a wrong word is always
 the same part of speech as the answer (when it's in the list, so we know), so grammar doesn't give it away. Word→Meaning mode can only use distractors that are themselves in the list (we need
-their definitions). Options that would also be correct (same definition, listed synonyms, or the
-`NEAR_SYNONYMS` in `web/vocab.js`) are never offered together.
+their definitions). Options that would also be correct (same definition, listed synonyms, or each word's
+`near_synonyms`, which list the words close enough in meaning that either could be called right) are never offered together.
 
 ## Layout
 

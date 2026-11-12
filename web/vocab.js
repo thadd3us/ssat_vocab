@@ -17,91 +17,6 @@ const MODES = [WORD_TO_DEF, DEF_TO_WORD, SENTENCE, MIXED];
 // in two columns, mostly the target's curated look-alikes.
 const N_OPTIONS = { [WORD_TO_DEF]: 5, [DEF_TO_WORD]: 16, [SENTENCE]: 8 };
 
-// Near-synonyms the word list doesn't cross-reference. Never offered together,
-// since either could fairly be called right. (Found by reviewing the list;
-// pairs sharing a listed synonym are caught automatically.)
-const NEAR_SYNONYMS = [
-  ["impetuous", "rash"],
-  ["coerce", "compel"],
-  ["potent", "robust"],
-  ["zealous", "avid"],
-  ["scorn", "spurn", "rebuff"],
-  ["steadfast", "staunch"],
-  ["servile", "submissive", "obsequious", "sycophant"],
-  ["demean", "disparage"],
-  ["wary", "prudent", "circumspect"],
-  ["desolate", "forlorn"],
-  ["paltry", "petty"],
-  ["eradicate", "obliterate"],
-  ["loquacious", "garrulous"],
-  ["lugubrious", "melancholy", "morose", "somber"],
-  ["appease", "placate", "mollify", "pacify", "quell"],
-  ["quandary", "predicament", "imbroglio", "conundrum"],
-  ["conundrum", "enigma"],
-  ["paucity", "dearth", "meager"],
-  ["plethora", "myriad", "copious", "abundant"],
-  ["candor", "candid", "veracity"],
-  ["veracity", "fidelity"],
-  ["fervor", "fervent", "zeal", "zealous"],
-  ["propensity", "penchant"],
-  ["hubris", "haughty"],
-  ["benign", "innocuous", "benevolent"],
-  ["brazen", "blatant", "audacious", "impudent", "insolent"],
-  ["cursory", "superficial"],
-  ["esoteric", "obscure"],
-  ["flippant", "facetious", "frivolous"],
-  ["frivolous", "trivial", "petty"],
-  ["impeccable", "pristine"],
-  ["ingenious", "innovative", "shrewd", "astute"],
-  ["ingenuous", "naive", "gullible", "credulous"],
-  ["insipid", "banal", "trite", "prosaic", "mundane"],
-  ["laconic", "terse", "taciturn", "curt"],
-  ["petulant", "sullen", "morose", "querulous"],
-  ["poignant", "pathos", "melancholy"],
-  ["precocious", "prodigy"],
-  ["sanguine", "buoyant"],
-  ["tenuous", "feeble"],
-  ["abate", "wane", "diminish", "dwindle", "recede"],
-  ["ameliorate", "alleviate", "mitigate", "rectify"],
-  ["vacillate", "fluctuate", "ambivalent"],
-  ["nostalgia", "yearn"],
-  ["arbitrary", "haphazard", "capricious"],
-  ["acquiesce", "comply", "concede"],
-  ["alacrity", "zeal", "avid"],
-  ["assiduous", "diligent", "conscientious"],
-  ["austere", "stern", "frugal"],
-  ["bombastic", "verbose"],
-  ["castigate", "berate", "rebuke", "censure", "reprimand"],
-  ["chicanery", "swindle"],
-  ["clandestine", "covert", "surreptitious", "furtive", "stealthy"],
-  ["cogent", "coherent", "lucid"],
-  ["deleterious", "detrimental", "adverse", "pernicious", "noxious"],
-  ["didactic", "pedantic"],
-  ["diffident", "withdrawn", "reticent"],
-  ["ebullient", "exuberant", "buoyant"],
-  ["egregious", "flagrant", "blatant"],
-  ["equivocal", "ambiguous"],
-  ["exonerate", "vindicate"],
-  ["inexorable", "inevitable", "implacable"],
-  ["irascible", "irate"],
-  ["mendacious", "devious", "perfidious"],
-  ["nefarious", "malevolent"],
-  ["parsimonious", "frugal", "thrifty"],
-  ["pugnacious", "belligerent", "truculent", "hostile"],
-  ["pugnacious", "irascible"],
-  ["recalcitrant", "obstinate", "defiant", "truculent"],
-  ["erudite", "sage", "pedantic"],
-  ["plethora", "superfluous"],
-  ["ebullient", "zealous", "zeal"],
-  ["assiduous", "tenacious"],
-  ["oblivious", "complacent"],
-  ["abate", "mitigate", "alleviate"],
-  ["irascible", "petulant", "sullen", "morose"],
-  ["perspicacious", "perceptive", "astute", "shrewd", "keen"],
-  ["intractable", "recalcitrant", "obstinate", "unruly", "defiant"],
-  ["pompous", "bombastic", "haughty", "ostentatious"],
-].map((g) => new Set(g));
-
 // Small seedable PRNG (mulberry32) so tests are repeatable. Returns floats in [0, 1).
 function seededRandom(seed) {
   let a = seed >>> 0;
@@ -128,7 +43,7 @@ const lower = (s) => s.toLowerCase();
 const posParts = (pos) => pos.split("/").map((p) => p.trim()).filter(Boolean);
 
 class Vocab {
-  // entries: [{rank, word, pos, definition, synonyms, antonyms, distractors, sentence, explanation}]
+  // entries: [{rank, word, pos, definition, synonyms, antonyms, distractors, sentence, explanation, nearSynonyms}]
   constructor(entries) {
     this.entries = [...entries].sort((a, b) => a.rank - b.rank);
     this.byWord = new Map(this.entries.map((e) => [lower(e.word), e]));
@@ -152,6 +67,10 @@ class Vocab {
         distractors: d.distractors || [],
         sentence: d.sentence || "", // fill-in-the-blank; "___" marks the word
         explanation: d.explanation || "", // where the word comes from, and a way to remember it
+        // Words close enough in meaning that either could fairly be called right, so they're
+        // never offered together. Listed on both words. (Words sharing a listed synonym, or a
+        // definition, are kept apart automatically.)
+        nearSynonyms: d.near_synonyms || [],
       };
     });
     return new Vocab(entries);
@@ -174,9 +93,10 @@ class Vocab {
     if (w === t) return true;
     const targetSyns = new Set(target.synonyms.map(lower));
     if (targetSyns.has(w)) return true;
-    if (NEAR_SYNONYMS.some((g) => g.has(t) && g.has(w))) return true;
+    if (target.nearSynonyms?.some((n) => lower(n) === w)) return true;
     const other = this.get(w);
     if (!other) return false;
+    if (other.nearSynonyms?.some((n) => lower(n) === t)) return true;
     if (lower(other.definition) === lower(target.definition)) return true;
     const otherSyns = other.synonyms.map(lower);
     return otherSyns.includes(t) || otherSyns.some((s) => targetSyns.has(s));
@@ -249,5 +169,5 @@ class Vocab {
   }
 }
 
-Object.assign(WB, { GROUP_SIZE, WORD_TO_DEF, DEF_TO_WORD, SENTENCE, MIXED, MODES, N_OPTIONS, NEAR_SYNONYMS, seededRandom, shuffle, Vocab });
+Object.assign(WB, { GROUP_SIZE, WORD_TO_DEF, DEF_TO_WORD, SENTENCE, MIXED, MODES, N_OPTIONS, seededRandom, shuffle, Vocab });
 })();
