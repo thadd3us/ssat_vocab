@@ -282,6 +282,8 @@ function sheetRows(tab) {
   });
 }
 
+const SHORT_LINK_RE = /^https?:\/\/(www\.)?(tinyurl\.com|bit\.ly|goo\.gl|t\.co|tiny\.cc|is\.gd|rb\.gy|ow\.ly|shorturl\.at)\//i;
+
 // Check a pasted Sheet URL before saving it: resolves to the list of students.
 async function checkSheetUrl(url, fetch = globalThis.fetch.bind(globalThis)) {
   url = url.trim();
@@ -290,6 +292,11 @@ async function checkSheetUrl(url, fetch = globalThis.fetch.bind(globalThis)) {
                     "in Apps Script, Deploy → Manage deployments, copy the URL ending in /exec.");
   }
   if (!/^https?:\/\//.test(url) && !url.startsWith("/")) throw new Error("That doesn't look like a link.");
+  // A short link's redirect has no CORS header for this page, so the browser blocks every call through it.
+  if (SHORT_LINK_RE.test(url)) {
+    throw new Error("Short links (tinyurl and the like) can't be used here: the browser blocks the app from " +
+                    "following them. Paste the full link ending in /exec.");
+  }
   let res;
   try { res = await fetch(withParams(url, { action: "users" })); }
   catch (e) { throw new Error(`Couldn't reach it (${e.message}). Check the link and your connection.`); }
