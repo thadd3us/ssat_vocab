@@ -1,3 +1,5 @@
+**▶ Use it: https://thadd3us.github.io/ssat_vocab/**
+
 # Word Bank — SSAT vocab practice
 
 Open `web/index.html` in a browser. That's it: no install, no server, no build. The same `web/` folder
@@ -102,8 +104,8 @@ The 1036 words in `ssat_vocab.jsonl` are split into groups of 20 in file order (
 | Answer | Word moves to | Stage |
 |---|---|---|
 | Miss, or "I don't know" (any time) | slot 3: one other question, then this one again | missed |
-| Right, after a miss | slot 5 | recovering |
-| Right, while recovering | back of the words still being learned (at least slot 8) | almost |
+| Right, after a miss | slot 4 | recovering |
+| Right, while recovering | slot 5 | almost |
 | Right otherwise | out of the rotation | **learned** (mastered) |
 
 Mastered words aren't asked again while other words in the group are still being learned. They only
@@ -119,11 +121,11 @@ when right, after the buzzer when wrong, on its own after "I don't know". 🔊 n
 "I don't know" (the button, or `?`) shows the answer with no buzzer and is logged as `unknown`, not
 as a miss; on the Scores page it has its own column and counts against accuracy.
 
-Word→Meaning questions have 5 options; Meaning→Word has 16, in a 4×4 grid; Fill the blank shows the
+Word→Meaning questions have 5 options; Meaning→Word has 6, in a single list; Fill the blank shows the
 word's `sentence` and 8 words to pick from. "Mix it up" picks one of the three for each question. The
 buttons above the question switch type mid-session: the word on screen is re-asked the new way (or, if the
 answer is showing, the next one is), and nothing else about the session changes. Keys:
-letters A–P, or 1–9. About half the wrong options come from the word's curated `distractors` (4 of the 7
+letters A–H, or 1–8. About half the wrong options come from the word's curated `distractors` (4 of the 7
 in Fill the blank), the rest are random words from the same group. In Fill the blank a wrong word is always
 the same part of speech as the answer (when it's in the list, so we know), so grammar doesn't give it away. Word→Meaning mode can only use distractors that are themselves in the list (we need
 their definitions). Options that would also be correct (same definition, listed synonyms, or each word's

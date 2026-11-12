@@ -12,10 +12,10 @@ const SENTENCE = "sentence";       // show the fill-in-the-blank sentence, pick 
 const MIXED = "mixed";
 const MODES = [WORD_TO_DEF, DEF_TO_WORD, SENTENCE, MIXED];
 
-// Options per question: SSAT-style A-E for definitions; words are short, so
-// picking the word from a definition gets a 4x4 grid. Sentences take 8 words,
-// in two columns, mostly the target's curated look-alikes.
-const N_OPTIONS = { [WORD_TO_DEF]: 5, [DEF_TO_WORD]: 16, [SENTENCE]: 8 };
+// Options per question: SSAT-style A-E for definitions; picking the word from a
+// definition gets a single list of 6. Sentences take 8 words, in two columns,
+// mostly the target's curated look-alikes.
+const N_OPTIONS = { [WORD_TO_DEF]: 5, [DEF_TO_WORD]: 6, [SENTENCE]: 8 };
 
 // Small seedable PRNG (mulberry32) so tests are repeatable. Returns floats in [0, 1).
 function seededRandom(seed) {

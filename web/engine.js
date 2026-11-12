@@ -5,15 +5,16 @@
 // question, then this word again".
 //
 //   * Miss or "I don't know"      -> slot 3            stage = MISSED
-//   * Right while MISSED          -> slot 5            stage = RECOVERING
-//   * Right while RECOVERING      -> back of the list  stage = REVIEW ("almost")
-//                                    (but never sooner than slot 8)
+//   * Right while MISSED          -> slot 4            stage = RECOVERING
+//   * Right while RECOVERING      -> slot 5            stage = REVIEW ("almost")
 //   * Right while NEW/REVIEW/...  -> mastered pile     stage = LEARNED
 //
-// A word is LEARNED when it is answered right "cold": on first sight, or after a
-// trip to the back of the list (at least six other questions) once it has recovered. Learned words leave the
-// rotation, so nobody re-answers words they already know while others are still
-// being learned. They come back in two ways:
+// So a missed word has to be answered right three times running, each a little
+// further out (one, two, then three other questions in between), before it leaves;
+// a miss anywhere along the way starts it over at slot 3. A word answered right on
+// first sight is LEARNED straight away. Learned words leave the rotation, so nobody
+// re-answers words they already know while others are still being learned. They
+// come back in two ways:
 //
 //   * As spacers. When a word needs to wait (say slot 5) but fewer than that many
 //     words are still being learned, the gap is filled with mastered words, oldest
@@ -30,8 +31,8 @@
 const WB = (globalThis.WB ||= {});
 
 const MISS_SLOT = 3;
-const RECOVER_SLOT = 5;
-const REVIEW_SLOT = 8;
+const RECOVER_SLOT = 4;
+const REVIEW_SLOT = 5;
 const SPACER = null; // a placeholder in `active`: ask a mastered word here
 
 const Stage = Object.freeze({
@@ -94,9 +95,7 @@ class StudyQueue {
     let after, slot;
     if (!correct) [after, slot] = [Stage.MISSED, MISS_SLOT];
     else if (before === Stage.MISSED) [after, slot] = [Stage.RECOVERING, RECOVER_SLOT];
-    else if (before === Stage.RECOVERING) {
-      [after, slot] = [Stage.REVIEW, Math.max(REVIEW_SLOT, this.active.length + 2)];
-    }
+    else if (before === Stage.RECOVERING) [after, slot] = [Stage.REVIEW, REVIEW_SLOT];
     else after = Stage.LEARNED;
     if (after === Stage.LEARNED) {
       this.done.push(word);

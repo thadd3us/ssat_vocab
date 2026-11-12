@@ -52,7 +52,7 @@ header .sync {
   border-radius: 999px; padding: .15em .7em; font-size: .8rem;
 }
 header .who + .sync { margin-left: 0; }
-header .sync + .icon { margin-left: 0; }
+header .sync + .icon, header .icon + .icon { margin-left: 0; }
 header .sync::before { content: "●"; margin-right: .35em; }
 header .sync.ok::before { color: var(--green); }
 header .sync.busy::before { color: var(--gold); }
@@ -144,7 +144,6 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
 .question .blank.filled { min-width: 0; padding: 0 .2em; color: var(--green); font-weight: 700; border-color: var(--green); }
 
 .options { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 10px; }
-.options.def_to_word { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
 .options.sentence { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .options button {
   width: 100%; display: flex; align-items: center; gap: 12px; text-align: left;
@@ -261,18 +260,33 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
 .coin-cards li.missing img { filter: grayscale(1); opacity: .45; }
 .coin-cards li.missing b { color: var(--muted); }
 
+/* Phones: keep the question and all its options on one screen. The header packs into two rows
+   (title, sync, sound, settings; then the tabs and who's studying), the progress bar and bank
+   share a row, and the question and options get less padding. */
 @media (max-width: 600px) {
-  header { flex-wrap: wrap; padding: 10px 16px; }
+  header { flex-wrap: wrap; gap: 6px 8px; padding: 8px 16px; }
+  header h1 { font-size: 1.15rem; }
+  header .sync, header .who + .sync { order: 1; margin-left: auto; font-size: .75rem; }
+  header .icon { order: 2; font-size: 1.15rem; padding: 0 2px; }
+  header nav { order: 3; }
+  header nav button { padding: .25em .8em; font-size: .95rem; }
+  header .who { order: 4; margin-left: auto; font-size: .85rem; }
   main { padding: 0 16px 32px; }
-  .topbar { flex-direction: column; align-items: stretch; }
+  .topbar { gap: 12px; margin-bottom: 10px; }
+  .progress small { font-size: .8rem; line-height: 1.3; display: block; margin-top: 2px; }
+  .bank { min-width: 0; padding: 4px 10px; gap: 4px; }
+  .bank .vault { font-size: 1.3rem; }
+  .bank .amount { font-size: 1.1rem; }
+  .mode-switch { margin-bottom: 10px; }
+  .mode-switch button { font-size: .8rem; padding: .2em .7em; }
+  .question { padding: 16px 16px 18px; }
+  .question .prompt { font-size: 1.3rem; line-height: 1.3; }
   .question .prompt.word_to_def { font-size: 2rem; }
   .question .prompt.sentence { font-size: 1.2rem; }
+  .options { margin-top: 12px; gap: 8px; }
+  .options button { padding: 9px 12px; }
+  .idk { margin-top: 10px; }
   .coin-fly img { width: 96px; height: 96px; }
   .scores .def, .scores th:nth-child(7), .scores td:nth-child(7) { display: none; }
 }
 
-/* 4x4 word grid on narrow screens */
-@media (max-width: 560px) {
-  .options.def_to_word button { font-size: 1rem; padding-left: .5em; padding-right: .4em; gap: .4em; }
-  .options.def_to_word .letter { display: none; }
-}
