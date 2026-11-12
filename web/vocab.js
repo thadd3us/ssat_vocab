@@ -128,7 +128,7 @@ const lower = (s) => s.toLowerCase();
 const posParts = (pos) => pos.split("/").map((p) => p.trim()).filter(Boolean);
 
 class Vocab {
-  // entries: [{rank, word, pos, definition, synonyms, antonyms, distractors, sentence}]
+  // entries: [{rank, word, pos, definition, synonyms, antonyms, distractors, sentence, explanation}]
   constructor(entries) {
     this.entries = [...entries].sort((a, b) => a.rank - b.rank);
     this.byWord = new Map(this.entries.map((e) => [lower(e.word), e]));
@@ -151,6 +151,7 @@ class Vocab {
         antonyms: d.antonyms || [],
         distractors: d.distractors || [],
         sentence: d.sentence || "", // fill-in-the-blank; "___" marks the word
+        explanation: d.explanation || "", // where the word comes from, and a way to remember it
       };
     });
     return new Vocab(entries);
