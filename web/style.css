@@ -30,7 +30,7 @@ body {
   font: 17px/1.45 ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 button { font: inherit; color: inherit; cursor: pointer; }
-select, input[type=text], input[type=url], input:not([type]) {
+select, input[type=text], input[type=url], input[type=search], input:not([type]) {
   font: inherit; padding: .55em .8em; border-radius: 10px; border: 2px solid var(--line);
   background: var(--card); color: var(--ink); min-width: 12em;
 }
@@ -77,6 +77,13 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
 /* Start */
 .start h2 { font-size: 1.05rem; margin: 22px 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
 .start h2:first-child { margin-top: 0; }
+.group-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+              margin: 22px 0 10px; }
+.group-head h2 { margin: 0 !important; }
+.word-search { min-width: 0; width: 11rem; max-width: 100%; padding: .35em .7em; font-size: .95rem; }
+.word-hits { display: flex; flex-wrap: wrap; gap: 6px; margin: -2px 0 10px; font-size: .9rem; }
+.word-hit { padding: 4px 10px; border-radius: 999px; font-size: .9rem; background: var(--bg); border: 2px solid var(--line); }
+.word-hit.exact { border-color: var(--green); background: var(--green-soft); }
 .groups { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
 .group {
   display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left;
