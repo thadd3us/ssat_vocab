@@ -8,8 +8,8 @@ test("groups preserve order", () => {
   const g = vocab.groups;
   assert.equal(g.length, 52);
   assert.deepEqual(g.slice(0, -1).map((x) => x.length), Array(51).fill(20));
-  assert.equal(g.at(-1).length, 16);
-  assert.deepEqual(g.flat().map((e) => e.rank), Array.from({ length: 1036 }, (_, i) => i + 1));
+  assert.equal(g.at(-1).length, 18);
+  assert.deepEqual(g.flat().map((e) => e.rank), Array.from({ length: 1038 }, (_, i) => i + 1));
   assert.equal(vocab.group(1)[0].word, "salacious");
   assert.throws(() => vocab.group(0));
   assert.throws(() => vocab.group(53));

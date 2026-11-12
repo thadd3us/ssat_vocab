@@ -107,6 +107,19 @@ const StartScreen = {
     const mode = ref(store.get("mode", "mixed"));
     const coinSet = ref(COIN_SET_BY_ID[store.get("coinSet")] ? store.get("coinSet") : DEFAULT_COIN_SET);
     const error = ref("");
+    const query = ref("");
+    // Words matching the search box: an exact hit first, then ones starting with it, then containing it.
+    const matches = computed(() => {
+      const q = query.value.trim().toLowerCase();
+      if (!q) return [];
+      const score = (w) => (w === q ? 0 : w.startsWith(q) ? 1 : w.includes(q) ? 2 : 3);
+      return vocab.entries.map((e) => ({ word: e.word, group: vocab.groupOf(e), s: score(e.word.toLowerCase()) }))
+        .filter((m) => m.s < 3).sort((a, b) => a.s - b.s || a.word.localeCompare(b.word)).slice(0, 6);
+    });
+    function pickFromSearch(g) {
+      group.value = g;
+      nextTick(() => document.querySelector(".group.selected")?.scrollIntoView({ behavior: "smooth", block: "center" }));
+    }
     watch(coinSet, (id) => { store.set("coinSet", id); preloadCoins(id); });
 
     const effectiveUser = computed(() => (addingNew.value ? newName.value.trim() : props.user));
@@ -142,7 +155,7 @@ const StartScreen = {
                       onError: (m) => (error.value = m) });
     }
 
-    return { newName, addingNew, group, mode, coinSet, groupStats, error, onPick, start, MODE_LABELS, COIN_SETS };
+    return { newName, addingNew, group, mode, coinSet, groupStats, query, matches, pickFromSearch, error, onPick, start, MODE_LABELS, COIN_SETS };
   },
   template: `
   <section class="start card">
@@ -156,7 +169,20 @@ const StartScreen = {
              @keydown.enter="start" autofocus aria-label="New name">
     </div>
 
-    <h2>Pick a group</h2>
+    <div class="group-head">
+      <h2>Pick a group</h2>
+      <input v-model="query" type="search" class="word-search" placeholder="Find a word…"
+             aria-label="Find a word" autocomplete="off" spellcheck="false">
+    </div>
+    <div v-if="query.trim()" class="word-hits" aria-live="polite">
+      <template v-if="matches.length">
+        <button v-for="m in matches" :key="m.word" class="word-hit" :class="{ exact: m.s === 0 }"
+                @click="pickFromSearch(m.group)" :title="'Pick group ' + m.group">
+          <b>{{ m.word }}</b> · Group {{ m.group }}
+        </button>
+      </template>
+      <span v-else class="muted">“{{ query.trim() }}” isn't in the list.</span>
+    </div>
     <div class="groups">
       <button v-for="g in groups" :key="g.group" class="group" :class="{ selected: g.group === group }"
               @click="group = g.group" :title="g.words.join(', ')">
