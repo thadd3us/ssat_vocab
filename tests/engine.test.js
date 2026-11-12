@@ -34,22 +34,20 @@ test("full recovery path", () => {
   const step = (c) => shown.push(ask(q, c)[0]);
   step(false); step(true); step(true);
   assert.equal(q.stages.w01, Stage.RECOVERING);
-  assert.deepEqual(q.order.slice(0, 4), ["w03", "w04", "w05", "w01"]);
+  assert.deepEqual(q.order.slice(0, 3), ["w03", "w04", "w01"]); // slot 4
   step(true); step(true); step(true);
-  step(true);
-  assert.deepEqual(shown, ["w01", "w02", "w01", "w03", "w04", "w05", "w01"]);
   assert.equal(q.stages.w01, Stage.REVIEW);
-  // Back of the words still being learned: after w06..w20, not after the mastered ones too.
-  assert.deepEqual(q.order.slice(0, 16), [...WORDS.slice(5), "w01"]);
-  for (let i = 0; i < 15; i++) assert.notEqual(ask(q, true)[0], "w01");
-  ask(q, true);
+  assert.deepEqual(q.order.slice(0, 4), ["w05", "w06", "w07", "w01"]); // slot 5
+  step(true); step(true); step(true); step(true);
+  assert.deepEqual(shown, ["w01", "w02", "w01", "w03", "w04", "w01", "w05", "w06", "w07", "w01"]);
   assert.equal(q.stages.w01, Stage.LEARNED);
+  assert.ok(!q.order.slice(0, 13).includes("w01")); // out of the rotation
 });
 
 test("miss during recovery resets to slot 3", () => {
   const q = new StudyQueue(WORDS);
   ask(q, false); ask(q, true); ask(q, true);
-  for (let i = 0; i < 3; i++) ask(q, true);
+  for (let i = 0; i < 2; i++) ask(q, true);
   const [w, t] = ask(q, false);
   assert.equal(w, "w01");
   assert.equal(t.stageBefore, Stage.RECOVERING);
@@ -87,9 +85,9 @@ test("at the end of a group, only the needed spacing is filled with mastered wor
   for (let i = 0; i < 19; i++) ask(q, true); // w01..w19 mastered
   const shown = [ask(q, false)[0]];          // w20 missed
   while (!q.complete) shown.push(ask(q, true)[0]);
-  // w20 again after 1 spacer, then 3, then 6: 10 mastered words, not a lap of all 19.
-  assert.deepEqual(shown.map((w) => (w === "w20" ? "X" : ".")).join(""), "X.X...X......X");
-  assert.deepEqual(shown.filter((w) => w !== "w20"), WORDS.slice(0, 10)); // oldest first, no repeats
+  // w20 again after 1 spacer, then 2, then 3: 6 mastered words, not a lap of all 19.
+  assert.deepEqual(shown.map((w) => (w === "w20" ? "X" : ".")).join(""), "X.X..X...X");
+  assert.deepEqual(shown.filter((w) => w !== "w20"), WORDS.slice(0, 6)); // oldest first, no repeats
 });
 
 test("all correct completes in one pass", () => {
@@ -129,13 +127,16 @@ test("short queue pads slots with mastered words", () => {
   ask(q, false);                         // a -> slot 3
   assert.deepEqual(q.order, ["b", "a", "c"]);
   ask(q, true);                          // b mastered
-  ask(q, true);                          // a recovering -> slot 5, but only c is left to learn
-  const next = Array.from({ length: 4 }, () => ask(q, true)[0]);
-  assert.deepEqual(next, ["c", "b", "c", "a"]); // c, then mastered spacers, then a
+  ask(q, true);                          // a recovering -> slot 4, but only c is left to learn
+  const next = Array.from({ length: 7 }, () => ask(q, true)[0]);
+  // c, a spacer, a (-> slot 5), three spacers, a
+  assert.deepEqual(next, ["c", "b", "a", "c", "b", "c", "a"]);
 });
 
-// Bounds sit a little above the worst of 100 seeds (33, 55, 107; the old one-list engine: 33, 71, 133).
-for (const [accuracy, maxGap] of [[0.9, 40], [0.7, 70], [0.5, 130]]) {
+// Bounds sit a little above the worst of 100 seeds (40, 91, 249). With fixed slots 3/4/5, a few hard
+// words cycle near the front, so unseen words wait longer than when "almost" words went to the back
+// of the list (33, 55, 107; the old one-list engine: 33, 71, 133).
+for (const [accuracy, maxGap] of [[0.9, 45], [0.7, 100], [0.5, 260]]) {
   test(`no unmastered word is starved at accuracy ${accuracy}`, () => {
     for (let seed = 0; seed < 100; seed++) {
       const rng = seededRandom(seed);
@@ -169,8 +170,9 @@ test("two persistent misses ping-pong", () => {
   assert.deepEqual(shown, ["w01", "w02", "w01", "w02", "w01", "w02"]);
 });
 
-// Bounds sit a little above the worst of 100 seeds (76, 109, 288; the old engine needed 94, 190, 488).
-for (const [accuracy, maxQuestions] of [[0.9, 90], [0.8, 130], [0.6, 320]]) {
+// Bounds sit a little above the worst of 100 seeds (61, 85, 189; with "almost" sent to the back of the
+// list: 76, 109, 288; the old one-list engine: 94, 190, 488).
+for (const [accuracy, maxQuestions] of [[0.9, 70], [0.8, 95], [0.6, 200]]) {
   test(`session length is reasonable at accuracy ${accuracy}`, () => {
     for (let seed = 0; seed < 100; seed++) {
       const rng = seededRandom(seed);

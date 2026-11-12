@@ -47,7 +47,7 @@ test("half the wrong answers are curated distractors", () => {
   for (let k = 0; k < 20; k++) {
     const q = vocab.buildQuestion(target, DEF_TO_WORD, rng, vocab.group(1));
     const fromDistractors = q.optionWords.filter((w) => w !== "hostile" && target.distractors.includes(w));
-    assert.ok(fromDistractors.length >= 5);
+    assert.ok(fromDistractors.length >= Math.floor((N_OPTIONS[DEF_TO_WORD] - 1) / 2));
   }
 });
 

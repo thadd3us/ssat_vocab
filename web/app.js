@@ -206,8 +206,32 @@ const Practice = {
     const optionEls = ref([]);
     const promptEl = ref(null);
     const bankEl = ref(null);
+    const feedbackEl = ref(null);
     const celebrated = ref(progress.value.complete);
     let advanceTimer = null;
+    let revealTimer = null;
+    let shown = 0; // counts answers shown and dismissed, so a late coin landing can tell it's stale
+    let scrolledFrom = null; // where the page was before revealFeedback scrolled it
+    let scrollTween = null;
+
+    // On a phone the feedback panel lands below the fold. Once the answer's animation is done
+    // (the coin and the red X are pinned to where things were on screen), scroll just far
+    // enough to show it, keeping its top on screen if it's taller than the screen. Does nothing
+    // when it's already in view. (GSAP drives the scroll so next() can cancel it mid-way.)
+    function revealFeedback(delay) {
+      clearTimeout(revealTimer);
+      revealTimer = setTimeout(() => {
+        const r = feedbackEl.value?.getBoundingClientRect();
+        if (!r || r.bottom <= innerHeight) return;
+        const by = Math.min(r.bottom - innerHeight + 12, r.top - 8);
+        if (by <= 0) return;
+        const to = scrollY + by;
+        scrolledFrom = scrollY;
+        if (!window.gsap || matchMedia("(prefers-reduced-motion: reduce)").matches) { scrollTo(0, to); return; }
+        const pos = { y: scrollY };
+        scrollTween = gsap.to(pos, { y: to, duration: 0.4, ease: "power2.out", onUpdate: () => scrollTo(0, pos.y) });
+      }, delay);
+    }
 
     function choose(i) {
       if (busy.value || result.value) return;
@@ -218,6 +242,7 @@ const Practice = {
         const r = s.answer(i, ms);
         saveSession(s);
         result.value = r;
+        const showing = ++shown;
         progress.value = r.progress;
         // Only now, after they've read it and answered, do they hear the word said.
         if (r.correct) {
@@ -225,14 +250,17 @@ const Practice = {
           const coin = r.coin; // the session banked it, so a reload mid-flight keeps it
           fx.flyCoin(coin, r.word, optionEls.value[i], bankEl.value, () => {
             earned.value = [...s.earned];
+            if (r.explanation && shown === showing) revealFeedback(0);
           });
           // With an explanation to read, wait for Next; otherwise move on by itself.
           if (!r.explanation) advanceTimer = setTimeout(next, 1700);
         } else if (!r.unknown) { // "I don't know" gets no buzzer: it's not a miss
           fx.buzzer(r.word);
           fx.redX(optionEls.value[i]);
+          revealFeedback(1000); // as the X fades
         } else {
           fx.sayWord(r.word);
+          revealFeedback(0);
         }
         if (r.just_completed && !celebrated.value) {
           celebrated.value = true;
@@ -247,12 +275,17 @@ const Practice = {
 
     function next() {
       clearTimeout(advanceTimer);
+      clearTimeout(revealTimer);
       if (!result.value) return;
+      shown++;
       question.value = result.value.next;
       result.value = null;
       picked.value = null;
       nextTick(() => {
         shownAt.value = performance.now();
+        // If the feedback scrolled the page down, put it back for the new question.
+        scrollTween?.kill();
+        if (scrolledFrom !== null) { scrollTo(0, scrolledFrom); scrolledFrom = null; }
         window.gsap?.from(promptEl.value, { y: 12, opacity: 0, duration: 0.25 });
       });
     }
@@ -297,7 +330,7 @@ const Practice = {
       if (i >= 0 && i < question.value.options.length) choose(i);
     }
     onMounted(() => window.addEventListener("keydown", onKey));
-    onUnmounted(() => { window.removeEventListener("keydown", onKey); clearTimeout(advanceTimer); });
+    onUnmounted(() => { window.removeEventListener("keydown", onKey); clearTimeout(advanceTimer); clearTimeout(revealTimer); });
 
     function optionClass(i) {
       if (!result.value) return {};
@@ -320,7 +353,7 @@ const Practice = {
       return [before, after.join("___")];
     });
 
-    return { s, question, progress, result, picked, earned, pile, optionEls, promptEl, bankEl, mode,
+    return { s, question, progress, result, picked, earned, pile, optionEls, promptEl, bankEl, feedbackEl, mode,
              choose, next, end, sayWord, switchMode, optionClass, stageCounts, blankParts, LETTERS, KIND, MODE_LABELS };
   },
   template: `
@@ -365,7 +398,7 @@ const Practice = {
     </ol>
     <button class="idk" @click="choose(null)" :disabled="!!result" title="Shortcut: ?">🤷 I don't know</button>
 
-    <div v-if="result" class="feedback" :class="result.correct ? 'good' : result.unknown ? 'idk' : 'bad'" @click="next">
+    <div v-if="result" ref="feedbackEl" class="feedback" :class="result.correct ? 'good' : result.unknown ? 'idk' : 'bad'" @click="next">
       <div>
         <b>{{ result.word }}</b><button class="say" @click.stop="sayWord" title="Say it again" aria-label="Say it again">🔊</button>
         <i>{{ result.pos }}</i> — {{ result.definition }}
