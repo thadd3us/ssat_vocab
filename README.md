@@ -42,7 +42,10 @@ node scripts/dev_server.mjs --host 0.0.0.0       # serve web/ to other devices o
 3. Open the app and paste the `/exec` URL when it asks. It checks the link, then keeps it in that
    browser's localStorage. **⚙︎** in the header changes it, or switches to "this device only".
    A link ending in `#sheet=<the /exec URL>` fills it in too (handy to text to an iPad); the app then
-   drops it from the address bar.
+   drops it from the address bar. Short links (tinyurl, bit.ly) don't work as the Sheet link: their
+   redirect doesn't allow other pages to read it, so the browser blocks every call. A short link *to the
+   app* works, though: point it at `https://thadd3us.github.io/ssat_vocab/#sheet=<the /exec URL>` and
+   opening it sets everything up in one step.
 
 Each student gets a tab named after them (the script makes it on their first answer), one row per
 event: `session_start`, `answer`, `session_end`. It never edits or deletes rows. When the app starts it
@@ -68,9 +71,9 @@ It is just a web page, but Safari on iPad only runs pages it loads over http(s):
 from the Files app shows a preview with JavaScript off. So the file has to live on a web server, but
 any static host will do, and with the single file there's just one thing to upload:
 
-1. `bazel build //:word_bank_html`, then put `bazel-bin/word-bank.html` anywhere that serves files
-   over https (e.g. drag it into Netlify Drop, a Cloudflare Pages project, S3, or GitHub Pages).
-   (Or host the `web/` folder as is; same app.)
+1. Publish a GitHub release (below); the app is then at https://thadd3us.github.io/ssat_vocab/.
+   Or `bazel build //:word_bank_html` and put `bazel-bin/word-bank.html` anywhere that serves files over
+   https (Netlify Drop, Cloudflare Pages, S3…), or host the `web/` folder as is; same app.
 2. On the iPad, open it in Safari, then **Share → Add to Home Screen**. It opens full screen like an app.
 3. Open it from the Home Screen and paste the Sheet link (or open your `#sheet=` link). Home Screen
    apps keep their own storage, separate from Safari's, so do this step in the Home Screen app.
@@ -78,6 +81,19 @@ any static host will do, and with the single file there's just one thing to uplo
 Safari can delete a website's storage after 7 days without a visit, but not storage for apps on the
 Home Screen, so the outbox, the Sheet link and saved scores are safe there. The page still needs the
 network to open (there's no offline cache); answers given while offline wait in the outbox.
+
+### Releases
+
+Publishing a GitHub release runs [`.github/workflows/release.yml`](.github/workflows/release.yml): it
+runs the tests, builds the single file, attaches it to the release as `word-bank.html`, and deploys it to
+GitHub Pages as `index.html`. **Run workflow** on the Actions tab redeploys Pages without a release.
+
+```bash
+gh release create v1.0 --generate-notes
+```
+
+One-time setup: **Settings → Pages → Source: GitHub Actions**. (Pages on a private repo needs a paid
+GitHub plan; the site itself is public either way, which is fine since the Sheet link isn't in it.)
 
 ## How a session works
 

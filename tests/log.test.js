@@ -339,6 +339,7 @@ test("checkSheetUrl: catches the spreadsheet link, a dead link, and a working on
   const script = loadAppsScript();
   await assert.rejects(checkSheetUrl("https://docs.google.com/spreadsheets/d/abc/edit", fakeFetch(script)), /web app link/);
   await assert.rejects(checkSheetUrl("hello", fakeFetch(script)), /doesn't look like a link/);
+  await assert.rejects(checkSheetUrl("https://tinyurl.com/some-sheet", fakeFetch(script)), /Short links/);
   await assert.rejects(checkSheetUrl("https://x/exec", async () => { throw new TypeError("Load failed"); }), /Couldn't reach/);
   await assert.rejects(checkSheetUrl("https://x/exec", async () => ({ ok: true, json: async () => { throw new SyntaxError(); } })),
                        /deployed for Anyone/);
