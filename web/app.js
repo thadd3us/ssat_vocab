@@ -226,7 +226,8 @@ const Practice = {
           fx.flyCoin(coin, r.word, optionEls.value[i], bankEl.value, () => {
             earned.value = [...s.earned];
           });
-          advanceTimer = setTimeout(next, 1700);
+          // With an explanation to read, wait for Next; otherwise move on by itself.
+          if (!r.explanation) advanceTimer = setTimeout(next, 1700);
         } else if (!r.unknown) { // "I don't know" gets no buzzer: it's not a miss
           fx.buzzer(r.word);
           fx.redX(optionEls.value[i]);
@@ -370,6 +371,7 @@ const Practice = {
         <i>{{ result.pos }}</i> — {{ result.definition }}
         <span v-if="result.synonyms.length" class="syn">(like {{ result.synonyms.join(', ') }})</span>
       </div>
+      <div v-if="result.explanation" class="explain">💡 {{ result.explanation }}</div>
       <div v-if="result.unknown" class="chosen">That's OK. You'll see <b>{{ result.word }}</b> again in a moment.</div>
       <div v-if="!result.correct && !result.unknown && result.chosen_word !== result.word" class="chosen">
         You picked

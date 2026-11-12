@@ -103,6 +103,7 @@ class Session {
       pos: entry.pos,
       definition: entry.definition,
       synonyms: [...entry.synonyms],
+      explanation: entry.explanation,
       chosen_word: chosenWord,
       chosen_definition: correct || !chosen ? null : chosen.definition,
       stage_after: t.stageAfter,

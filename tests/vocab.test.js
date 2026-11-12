@@ -130,6 +130,13 @@ test("every word has a fill-in-the-blank sentence", () => {
   }
 });
 
+test("every word has a short explanation", () => {
+  for (const e of vocab.entries) {
+    assert.ok(e.explanation.length >= 40, `${e.word}: missing or too short`);
+    assert.ok(e.explanation.length <= 300, `${e.word}: too long to read between questions`);
+  }
+});
+
 test("added words are present", () => {
   for (const w of ["pugnacious", "perspicacious", "recalcitrant", "intractable", "sycophant", "pompous"]) assert.ok(vocab.get(w), w);
 });
