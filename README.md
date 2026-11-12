@@ -25,7 +25,7 @@ files, from a page opened from disk. So the data files are also wrapped as `.js`
 ```bash
 bazel build //:word_bank_html                    # everything in one file: bazel-bin/word-bank.html
 bazel test //...                                 # tests, with Bazel's own pinned Node (MODULE.bazel)
-node --test tests/                               # the same tests with your Node (22+, no npm install)
+node --test "tests/*.test.js"                    # the same tests with your Node (22+, no npm install)
 node scripts/dev_server.mjs --fake-sheet         # serve web/ with apps_script/Code.gs running in memory
 node scripts/build_single_file.mjs               # the single file without Bazel: dist/word-bank.html
 node scripts/dev_server.mjs --host 0.0.0.0       # serve web/ to other devices on your network

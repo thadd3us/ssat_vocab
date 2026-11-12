@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: 24
       - name: Test
-        run: node --test tests/
+        run: node --test "tests/*.test.js"
       - name: Build the single file
         run: node scripts/build_single_file.mjs --out site/index.html
       - name: Attach it to the release
