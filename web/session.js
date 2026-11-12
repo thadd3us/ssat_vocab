@@ -4,7 +4,7 @@
 "use strict";
 const WB = (globalThis.WB ||= {});
 
-const { StudyQueue, MODES, WORD_TO_DEF, newId } = WB;
+const { StudyQueue, Stage, MODES, WORD_TO_DEF, newId } = WB;
 
 class Session {
   constructor({ vocab, log, user, group, mode, rng = Math.random, queue = null, id = newId(),
@@ -46,8 +46,9 @@ class Session {
 
   nextQuestion() {
     this.seq++;
-    this.q = this.vocab.buildQuestion(this.vocab.get(this.queue.current), this.mode, this.rng,
-                                      this.vocab.group(this.group));
+    const word = this.queue.current;
+    this.q = this.vocab.buildQuestion(this.vocab.get(word), this.mode, this.rng, this.vocab.group(this.group),
+                                      { firstTry: this.queue.stages[word] === Stage.NEW });
     return this.question;
   }
 

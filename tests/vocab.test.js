@@ -87,6 +87,13 @@ test("mixed resolves to a concrete mode", () => {
   assert.deepEqual(modes, new Set([WORD_TO_DEF, DEF_TO_WORD, SENTENCE]));
 });
 
+test("mixed never picks the sentence on a word's first try", () => {
+  const rng = seededRandom(3);
+  const modes = new Set(Array.from({ length: 50 }, () =>
+    vocab.buildQuestion(vocab.entries[0], MIXED, rng, null, { firstTry: true }).mode));
+  assert.deepEqual(modes, new Set([WORD_TO_DEF, DEF_TO_WORD]));
+});
+
 test("definitions are unique", () => {
   const seen = new Map();
   for (const e of vocab.entries) {
