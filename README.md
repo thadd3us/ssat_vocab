@@ -118,6 +118,13 @@ in `web/engine.js`, with tests in `tests/engine.test.js`.
 Each word is said out loud only once it's been answered, so the kid reads it first: over the ka-ching
 when right, after the buzzer when wrong, on its own after "I don't know". 🔊 next to the word says it again.
 
+**Review my misses** (above the groups) is a session over the student's whole history instead of one
+group: the 20 words with the highest share of wrong tries ("I don't know" counts as wrong here), ties to the
+word missed more often. Answering a word right lowers its share, so learned words slide off the list on
+their own. Picking it shows an AG Grid of every word the student has tried, with their record and the
+definition, sortable and filterable; the review's words are marked in red. Its log rows have `grp` 0.
+The ranking is `reviewWords` in `web/session.js`, tested in `tests/review.test.js`.
+
 "I don't know" (the button, or `?`) shows the answer with no buzzer and is logged as `unknown`, not
 as a miss; on the Scores page it has its own column and counts against accuracy.
 
@@ -134,7 +141,8 @@ their definitions). Options that would also be correct (same definition, listed 
 ## Layout
 
 - `web/` — the app: Vue 3 (global build, templates compiled in the browser), GSAP animations, Tone.js sounds,
-  canvas-confetti, all in `web/vendor/`. Scripts share one global, `WB`, and load in the order `index.html` lists
+  canvas-confetti, AG Grid Community (the review word table; its CSS is in its JS, so the single-file build
+  still works), all in `web/vendor/`. Scripts share one global, `WB`, and load in the order `index.html` lists
   - `engine.js` spaced repetition, `vocab.js` questions, `session.js` one session, `log.js` the log and Sheet sync
   - `coins.js` + `coins/` — each right answer banks a random coin from the set the student picks: through
     history (Athens to the Morgan dollar), ancient Greek, or fantasy realms. Real coins are public-domain/CC0

@@ -6,8 +6,12 @@ const WB = (globalThis.WB ||= {});
 
 const { StudyQueue, Stage, MODES, WORD_TO_DEF, newId } = WB;
 
+// group REVIEW: no fixed group; the session drills an explicit word list (see reviewWords).
+const REVIEW = 0;
+const REVIEW_SIZE = 20;
+
 class Session {
-  constructor({ vocab, log, user, group, mode, rng = Math.random, queue = null, id = newId(),
+  constructor({ vocab, log, user, group, mode, rng = Math.random, queue = null, id = newId(), words = null,
                 seq = 0, tally = { right: 0, wrong: 0, unknown: 0 }, earned = [], coinSet = null }) {
     if (!MODES.includes(mode)) throw new Error(`mode must be one of ${MODES.join(", ")}`);
     this.vocab = vocab;
@@ -16,7 +20,10 @@ class Session {
     this.group = group;
     this.mode = mode;
     this.rng = rng;
-    this.words = vocab.group(group).map((e) => e.word);
+    this.words = group === REVIEW ? [...words] : vocab.group(group).map((e) => e.word);
+    // Wrong answers are drawn from these words first: the group, or the review list (hard words
+    // make good decoys for each other).
+    this.pool = this.words.map((w) => vocab.get(w));
     this.queue = queue || new StudyQueue(this.words);
     this.id = id;
     this.seq = seq;
@@ -26,11 +33,17 @@ class Session {
     this.q = null; // full current question, including the answer
   }
 
+  // group REVIEW picks the user's most-missed words from their whole history.
   static start({ vocab, log, user, group, mode, rng, coinSet }) {
     user = log.canonicalName(user);
-    const s = new Session({ vocab, log, user, group, mode, rng, coinSet });
+    let words = null;
+    if (group === REVIEW) {
+      words = reviewWords(vocab, log.tallies(user)).map((r) => r.word);
+      if (!words.length) throw new Error("Nothing to review yet: miss a few words first!");
+    }
+    const s = new Session({ vocab, log, user, group, mode, rng, coinSet, words });
     log.append({ user, session_id: s.id, event: "session_start", grp: group, mode,
-                 detail: { words: s.words, coin_set: s.coinSet } });
+                 detail: { words: s.words, coin_set: s.coinSet, ...(group === REVIEW ? { review: true } : {}) } });
     s.nextQuestion();
     return s;
   }
@@ -47,7 +60,7 @@ class Session {
   nextQuestion() {
     this.seq++;
     const word = this.queue.current;
-    this.q = this.vocab.buildQuestion(this.vocab.get(word), this.mode, this.rng, this.vocab.group(this.group),
+    this.q = this.vocab.buildQuestion(this.vocab.get(word), this.mode, this.rng, this.pool,
                                       { firstTry: this.queue.stages[word] === Stage.NEW });
     return this.question;
   }
@@ -123,18 +136,35 @@ class Session {
 
   // For surviving a page reload mid-session (kept in sessionStorage).
   toJSON() {
-    return { user: this.user, group: this.group, mode: this.mode, id: this.id, seq: this.seq,
+    return { user: this.user, group: this.group, words: this.words, mode: this.mode, id: this.id, seq: this.seq,
              tally: this.tally, earned: this.earned, coinSet: this.coinSet, queue: this.queue.toJSON(), q: this.q };
   }
 
   static fromJSON(d, { vocab, log, rng }) {
-    const s = new Session({ vocab, log, rng, user: d.user, group: d.group, mode: d.mode, id: d.id,
+    const s = new Session({ vocab, log, rng, user: d.user, group: d.group, words: d.words, mode: d.mode, id: d.id,
                             seq: d.seq, tally: d.tally, earned: d.earned || [], coinSet: d.coinSet,
                             queue: StudyQueue.fromJSON(d.queue) });
     s.q = d.q;
     if (!s.q || s.q.word !== s.queue.current) s.nextQuestion();
     return s;
   }
+}
+
+// "I don't know" isn't a miss, but it isn't right either; both count against a word here.
+const missRate = (r) => {
+  const tries = r.right + r.wrong + r.unknown;
+  return tries ? (r.wrong + r.unknown) / tries : null;
+};
+
+// The words most worth reviewing, worst first: every word ever missed (or not known), by the
+// fraction of tries that went wrong, then by how many times. Answering one right lowers its
+// rate, so words drop off the list as they're learned.
+function reviewWords(vocab, tallies, n = REVIEW_SIZE) {
+  return scoreRows(vocab, tallies)
+    .map((r) => ({ ...r, miss_rate: missRate(r) }))
+    .filter((r) => r.wrong + r.unknown > 0)
+    .sort((a, b) => b.miss_rate - a.miss_rate || (b.wrong + b.unknown) - (a.wrong + a.unknown) || a.rank - b.rank)
+    .slice(0, n);
 }
 
 // Rows for the Scores table.
@@ -150,5 +180,5 @@ function scoreRows(vocab, tallies, group = 0) {
   });
 }
 
-Object.assign(WB, { Session, scoreRows });
+Object.assign(WB, { Session, scoreRows, reviewWords, missRate, REVIEW, REVIEW_SIZE });
 })();

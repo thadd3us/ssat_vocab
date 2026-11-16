@@ -312,3 +312,15 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
   .scores .def, .scores th:nth-child(7), .scores td:nth-child(7) { display: none; }
 }
 
+
+/* Review mode: the tile, and the per-word grid (AG Grid) under it. */
+.group.review b { color: var(--accent); }
+.review-row { display: grid; grid-template-columns: minmax(150px, 320px); margin-bottom: 8px; }
+.review-panel { margin-bottom: 14px; }
+.review-panel p { margin: 0 0 8px; font-size: .9rem; }
+.word-grid .word-search { margin-bottom: 8px; }
+.grid-box { height: 420px; width: 100%; }
+.grid-box .grid-word { font-weight: 700; }
+.grid-box .grid-def { line-height: 1.35; padding-top: 8px; padding-bottom: 8px; color: var(--muted); }
+.grid-box .in-review { box-shadow: inset 4px 0 0 var(--red); }
+.grid-box .in-review .grid-word { color: var(--red); }
