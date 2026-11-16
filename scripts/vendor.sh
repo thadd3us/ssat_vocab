@@ -23,3 +23,4 @@ fetch vue 3.5.45 c2ec36a9b719e4277785f1ad36a1bb0424d8d32f0bea24abcce862e26821d58
 fetch gsap 3.15.1 c70a3bcf656015f32b4f6456e686034564c90d64280db535cfbd84de4497d988 dist/gsap.min.js gsap.min.js
 fetch tone 15.1.22 86dec0a9521dd69a59e7b824a83b132afd1ef8284bda1e7799449ab9d84d9f62 build/Tone.js Tone.js
 fetch canvas-confetti 1.9.4 c7c7d003c8b444d4f8e340e0b2c2a474abf2803ce34d184f783c1107217853e2 dist/confetti.browser.js confetti.browser.js
+fetch ag-grid-community 36.2.0 691720b60486ab2e8ebafb6f760b198a718c766c55d3c4e204264d44e636a816 dist/ag-grid-community.min.js ag-grid-community.min.js

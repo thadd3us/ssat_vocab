@@ -3,7 +3,7 @@
 const WB = (globalThis.WB ||= {});
 
 const { createApp, ref, computed, onMounted, onUnmounted, nextTick, watch, markRaw } = Vue;
-const { fx, Vocab, Log, checkSheetUrl, browserStorage: store, Session, scoreRows,
+const { fx, Vocab, Log, checkSheetUrl, browserStorage: store, Session, scoreRows, reviewWords, missRate, REVIEW, REVIEW_SIZE,
         COINS, COIN_BY_ID, COIN_SETS, COIN_SET_BY_ID, DEFAULT_COIN_SET, preloadCoins } = WB;
 
 // The Sheet's web app URL isn't in the code. It's pasted in once (SetupScreen) and kept
@@ -96,8 +96,77 @@ const SetupScreen = {
   </section>`,
 };
 
+// ---------------------------------------------------------------- Word stats grid
+// Every word a student has tried, with their record and the definition, in an AG Grid
+// (sortable, filterable). Words in `highlight` (the next review session's) are marked.
+const pct = (p) => (p.value == null ? "" : Math.round(100 * p.value) + "%");
+const WordGrid = {
+  props: ["rows", "highlight"],
+  setup(props) {
+    const el = ref(null);
+    const filter = ref("");
+    let api = null;
+    const marked = () => new Set(props.highlight || []);
+    let inReview = marked();
+    onMounted(() => {
+      if (!window.agGrid) return;
+      api = agGrid.createGrid(el.value, {
+        theme: agGrid.themeQuartz.withParams({
+          backgroundColor: "var(--card)", foregroundColor: "var(--ink)", borderColor: "var(--line)",
+          headerBackgroundColor: "var(--bg)", accentColor: "var(--green)", fontFamily: "inherit",
+          fontSize: 14, headerFontSize: 12, wrapperBorderRadius: 10,
+        }),
+        rowData: props.rows,
+        getRowId: (p) => p.data.word,
+        rowClassRules: { "in-review": (p) => inReview.has(p.data.word) },
+        defaultColDef: { sortable: true, resizable: true, suppressMovable: true },
+        columnDefs: [
+          { field: "word", headerName: "Word", pinned: "left", width: 130, cellClass: "grid-word" },
+          { field: "definition", headerName: "Definition", flex: 1, minWidth: 200, wrapText: true, autoHeight: true,
+            sortable: false, cellClass: "grid-def" },
+          { field: "miss_rate", headerName: "Missed %", width: 120, sort: "desc", valueFormatter: pct,
+            type: "numericColumn" },
+          { field: "wrong", headerName: "Missed", width: 90, type: "numericColumn" },
+          { field: "unknown", headerName: "Didn't know", width: 110, type: "numericColumn" },
+          { field: "right", headerName: "Right", width: 80, type: "numericColumn" },
+          { field: "group", headerName: "Group", width: 80, type: "numericColumn" },
+          { field: "last_seen", headerName: "Last seen", width: 115,
+            valueFormatter: (p) => (p.value ? new Date(p.value).toLocaleDateString() : "") },
+        ],
+        // Ties on Missed %: more misses first, then list order.
+        postSortRows: (p) => {
+          const st = p.api.getColumnState().find((c) => c.sort);
+          if (st?.colId !== "miss_rate") return;
+          const dir = st.sort === "desc" ? 1 : -1;
+          p.nodes.sort((a, b) => dir * (b.data.miss_rate - a.data.miss_rate) ||
+            (b.data.wrong + b.data.unknown) - (a.data.wrong + a.data.unknown) || a.data.rank - b.data.rank);
+        },
+      });
+    });
+    watch(() => props.rows, (rows) => api?.setGridOption("rowData", rows));
+    watch(() => props.highlight, () => { inReview = marked(); api?.redrawRows(); });
+    watch(filter, (q) => api?.setGridOption("quickFilterText", q));
+    onUnmounted(() => api?.destroy());
+    return { el, filter };
+  },
+  template: `
+  <div class="word-grid">
+    <input v-model="filter" type="search" class="word-search" placeholder="Filter words…" aria-label="Filter words"
+           autocomplete="off" spellcheck="false">
+    <div ref="el" class="grid-box"></div>
+  </div>`,
+};
+
+// The student's per-word record: every word they've tried, with its miss rate.
+function triedRows(user) {
+  return scoreRows(vocab, log.tallies(user))
+    .filter((r) => r.right + r.wrong + r.unknown)
+    .map((r) => ({ ...r, miss_rate: missRate(r) }));
+}
+
 // ---------------------------------------------------------------- Start
 const StartScreen = {
+  components: { WordGrid },
   props: ["groups", "users", "user"],
   emits: ["start", "update:user"],
   setup(props, { emit }) {
@@ -136,6 +205,18 @@ const StartScreen = {
       }
       return stats;
     });
+    // Review: the most-missed words across everything they've studied.
+    const statRows = computed(() => {
+      version.value;
+      const u = effectiveUser.value;
+      return u && !addingNew.value ? triedRows(u) : [];
+    });
+    const review = computed(() => {
+      version.value;
+      const u = effectiveUser.value;
+      return u && !addingNew.value ? reviewWords(vocab, log.tallies(u)).map((r) => r.word) : [];
+    });
+
     // Names can arrive from the Sheet after this screen is up.
     watch(() => props.users.length, (n, old) => { if (n && !old && !newName.value.trim()) addingNew.value = false; });
 
@@ -155,7 +236,7 @@ const StartScreen = {
                       onError: (m) => (error.value = m) });
     }
 
-    return { newName, addingNew, group, mode, coinSet, groupStats, query, matches, pickFromSearch, error, onPick, start, MODE_LABELS, COIN_SETS };
+    return { newName, addingNew, group, mode, coinSet, groupStats, statRows, review, REVIEW, REVIEW_SIZE, query, matches, pickFromSearch, error, onPick, start, MODE_LABELS, COIN_SETS };
   },
   template: `
   <section class="start card">
@@ -183,6 +264,24 @@ const StartScreen = {
       </template>
       <span v-else class="muted">“{{ query.trim() }}” isn't in the list.</span>
     </div>
+    <div class="review-row">
+      <button class="group review" :class="{ selected: group === REVIEW }" @click="group = REVIEW"
+              :title="review.length ? review.join(', ') : 'Words you miss will show up here'">
+        <b>🔁&nbsp;Review my misses</b>
+        <small v-if="review.length">your {{ review.length }} most-missed {{ review.length === 1 ? 'word' : 'words' }}, from every group</small>
+        <small v-else>nothing missed yet</small>
+      </button>
+    </div>
+    <div v-if="group === REVIEW" class="review-panel">
+      <p class="muted">
+        Review drills the {{ REVIEW_SIZE }} words you've missed most often, by the share of tries that went wrong
+        (“I don't know” counts too). Get them right and they slide down the list, making room for others.
+        <template v-if="statRows.length"> Rows marked in red are in this review.</template>
+      </p>
+      <WordGrid v-if="statRows.length" :rows="statRows" :highlight="review" />
+      <p v-else class="muted">No words practiced yet{{ effectiveUser ? '' : ': pick your name first' }}.</p>
+    </div>
+
     <div class="groups">
       <button v-for="g in groups" :key="g.group" class="group" :class="{ selected: g.group === group }"
               @click="group = g.group" :title="g.words.join(', ')">
@@ -212,7 +311,7 @@ const StartScreen = {
     </div>
 
     <p v-if="error" class="error">{{ error }}</p>
-    <button class="primary big" @click="start">Start group {{ group }} →</button>
+    <button class="primary big" @click="start">{{ group === REVIEW ? 'Start review' : 'Start group ' + group }} →</button>
   </section>`,
 };
 
@@ -659,7 +758,7 @@ createApp({
     function setupDone() { setup.value = ""; log.refresh(user.value); }
 
     return { tab, groups, users, user, session, summary, muted, loaded, loadError, sync, setup,
-             start, ended, toggleMute, syncNow, setupDone, logo: COIN_BY_ID.byzantine.src };
+             start, ended, toggleMute, syncNow, setupDone, REVIEW, logo: COIN_BY_ID.byzantine.src };
   },
   template: `
   <header>
@@ -668,7 +767,7 @@ createApp({
       <button :class="{ active: tab === 'practice' }" @click="tab = 'practice'">Practice</button>
       <button :class="{ active: tab === 'scores' }" @click="tab = 'scores'">Scores</button>
     </nav>
-    <span class="who" v-if="session">{{ session.user }} · Group {{ session.group }}</span>
+    <span class="who" v-if="session">{{ session.user }} · {{ session.group === REVIEW ? 'Review' : 'Group ' + session.group }}</span>
     <button class="sync" :class="sync.cls" :title="sync.title" @click="syncNow">{{ sync.text }}</button>
     <button class="icon" @click="toggleMute" :title="muted ? 'Sound off' : 'Sound on'">{{ muted ? '🔇' : '🔊' }}</button>
     <button class="icon" @click="setup = setup ? '' : 'change'" title="Google Sheet link">⚙︎</button>
