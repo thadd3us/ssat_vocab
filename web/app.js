@@ -239,6 +239,17 @@ const Practice = {
     let shown = 0; // counts answers shown and dismissed, so a late coin landing can tell it's stale
     let scrolledFrom = null; // where the page was before revealFeedback scrolled it
     let scrollTween = null;
+    // A miss or "I don't know" shows its explanation centered on screen, and it can't be
+    // dismissed for a while, so it actually gets read instead of skipped.
+    const LOCK_MS = 10000;
+    const MISS_DELAY_MS = 900; // let the red X play before the panel covers it
+    const locked = ref(false); // Got it is grayed out (no countdown: eyes belong on the explanation)
+    let lockTimer = null;
+    function startLock(ms) {
+      clearTimeout(lockTimer);
+      locked.value = true;
+      lockTimer = setTimeout(() => { locked.value = false; }, ms);
+    }
 
     // On a phone the feedback panel lands below the fold. Once the answer's animation is done
     // (the coin and the red X are pinned to where things were on screen), scroll just far
@@ -283,10 +294,10 @@ const Practice = {
         } else if (!r.unknown) { // "I don't know" gets no buzzer: it's not a miss
           fx.buzzer(r.word);
           fx.redX(optionEls.value[i]);
-          revealFeedback(1000); // as the X fades
+          startLock(MISS_DELAY_MS + LOCK_MS);
         } else {
           fx.sayWord(r.word);
-          revealFeedback(0);
+          startLock(LOCK_MS);
         }
         if (r.just_completed && !celebrated.value) {
           celebrated.value = true;
@@ -302,7 +313,7 @@ const Practice = {
     function next() {
       clearTimeout(advanceTimer);
       clearTimeout(revealTimer);
-      if (!result.value) return;
+      if (!result.value || locked.value) return;
       shown++;
       question.value = result.value.next;
       result.value = null;
@@ -356,7 +367,7 @@ const Practice = {
       if (i >= 0 && i < question.value.options.length) choose(i);
     }
     onMounted(() => window.addEventListener("keydown", onKey));
-    onUnmounted(() => { window.removeEventListener("keydown", onKey); clearTimeout(advanceTimer); clearTimeout(revealTimer); });
+    onUnmounted(() => { window.removeEventListener("keydown", onKey); clearTimeout(advanceTimer); clearTimeout(revealTimer); clearTimeout(lockTimer); });
 
     function optionClass(i) {
       if (!result.value) return {};
@@ -379,7 +390,7 @@ const Practice = {
       return [before, after.join("___")];
     });
 
-    return { s, question, progress, result, picked, earned, pile, optionEls, promptEl, bankEl, feedbackEl, mode,
+    return { s, question, progress, result, picked, earned, pile, optionEls, promptEl, bankEl, feedbackEl, mode, locked,
              choose, next, end, sayWord, switchMode, optionClass, stageCounts, blankParts, LETTERS, KIND, MODE_LABELS };
   },
   template: `
@@ -424,7 +435,8 @@ const Practice = {
     </ol>
     <button class="idk" @click="choose(null)" :disabled="!!result" title="Shortcut: ?">🤷 I don't know</button>
 
-    <div v-if="result" ref="feedbackEl" class="feedback" :class="result.correct ? 'good' : result.unknown ? 'idk' : 'bad'" @click="next">
+    <div v-if="result" :class="{ 'feedback-overlay': !result.correct, late: !result.correct && !result.unknown }">
+    <div ref="feedbackEl" class="feedback" :class="result.correct ? 'good' : result.unknown ? 'idk' : 'bad'" @click="next">
       <div>
         <b>{{ result.word }}</b><button class="say" @click.stop="sayWord" title="Say it again" aria-label="Say it again">🔊</button>
         <i>{{ result.pos }}</i> — {{ result.definition }}
@@ -438,7 +450,11 @@ const Practice = {
         <template v-else>the meaning of <b>{{ result.chosen_word }}</b>.</template>
         You'll see <b>{{ result.word }}</b> again in a moment.
       </div>
-      <button class="primary" @click.stop="next">{{ result.correct ? 'Next' : 'Got it' }} ⏎</button>
+      <button class="primary" @click.stop="next" :disabled="locked">
+        <template v-if="result.correct">Next ⏎</template>
+        <template v-else>Got it ⏎</template>
+      </button>
+    </div>
     </div>
 
     <div class="footer">
