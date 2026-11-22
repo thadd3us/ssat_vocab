@@ -533,6 +533,8 @@ const Practice = {
       </div>
     </div>
 
+    <div class="answer-area">
+    <div class="choices" :class="{ covered: result && result.correct }">
     <ol class="options" :class="[question.mode, { words: wordOptions }]">
       <li v-for="(opt, i) in question.options" :key="question.seq + ':' + i">
         <button :ref="el => optionEls[i] = el" :class="optionClass(i)" @click="choose(i)" :disabled="!!result">
@@ -541,9 +543,14 @@ const Practice = {
       </li>
     </ol>
     <button class="idk" @click="choose(null)" :disabled="!!result" title="Shortcut: ?">🤷 I don't know</button>
+    </div>
 
-    <div v-if="result" :class="{ 'feedback-overlay': !result.correct, late: !result.correct && !result.unknown }">
+    <div v-if="result" :class="{ 'feedback-overlay': !result.correct, 'feedback-cover': result.correct, late: !result.correct && !result.unknown }">
     <div ref="feedbackEl" class="feedback" :class="result.correct ? 'good' : result.unknown ? 'idk' : 'bad'" @click="next">
+      <div class="headword">
+        <b class="word">{{ result.word }}</b><button class="say" @click.stop="sayWord" title="Say it again" aria-label="Say it again">🔊</button>
+        <i>{{ result.pos }}</i> — {{ result.definition }}
+      </div>
       <div v-if="!result.correct" class="recap">
         <div class="kind">{{ KIND[result.mode] }}</div>
         <div v-if="result.mode === 'sentence'" class="sentence">{{ blankParts[0] }}<b class="answer">{{ result.word }}</b>{{ blankParts[1] }}</div>
@@ -558,14 +565,10 @@ const Practice = {
       </div>
       <div v-else-if="result.mode === 'synonym'" class="relation"><b>{{ result.answer_text }}</b> means about the same as <b>{{ result.word }}</b>.</div>
       <div v-else-if="result.mode === 'antonym'" class="relation"><b>{{ result.answer_text }}</b> is the opposite of <b>{{ result.word }}</b>.</div>
-      <div>
-        <b>{{ result.word }}</b><button class="say" @click.stop="sayWord" title="Say it again" aria-label="Say it again">🔊</button>
-        <i>{{ result.pos }}</i> — {{ result.definition }}
-      </div>
-      <div v-if="result.synonyms.length" class="syn">≈ Similar: {{ result.synonyms.join(', ') }}</div>
+      <div v-if="result.synonyms.length" class="syn">Synonyms: <template v-for="(w, i) in result.synonyms" :key="w"><template v-if="i">, </template><b>{{ w }}</b></template></div>
       <div v-if="result.mode !== 'sentence'" class="in-context">“{{ result.sentence[0] }}<b class="answer">{{ result.word }}</b>{{ result.sentence[1] }}”</div>
       <div v-if="result.explanation" class="explain">💡 {{ result.explanation }}</div>
-      <div v-if="result.antonyms.length" class="ant">≠ Opposite: {{ result.antonyms.join(', ') }}</div>
+      <div v-if="result.antonyms.length" class="ant">Antonyms: <template v-for="(w, i) in result.antonyms" :key="w"><template v-if="i">, </template><b>{{ w }}</b></template></div>
       <div v-if="result.unknown" class="chosen">That's OK. You'll see <b>{{ result.word }}</b> again in a moment.</div>
       <div v-if="!result.correct && !result.unknown && result.chosen_word !== result.word" class="chosen">
         You picked
@@ -577,6 +580,7 @@ const Practice = {
         <template v-if="result.correct">Next ⏎</template>
         <template v-else>Got it ⏎</template>
       </button>
+    </div>
     </div>
     </div>
 
