@@ -129,7 +129,8 @@ The ranking is `reviewWords` in `web/session.js`, tested in `tests/review.test.j
 as a miss; on the Scores page it has its own column and counts against accuracy.
 
 Word→Meaning questions have 5 options; Meaning→Word has 6, in a single list; Fill the blank shows the
-word's `sentence` and 8 words to pick from. "Mix it up" picks one of the three for each question. The
+word's `sentence` and 8 words to pick from. "Mix it up" picks any of the six types for each question
+(Antonyms only for words that have antonyms), except that Fill the blank and Analogies are never a word's first question. The
 buttons above the question switch type mid-session: the word on screen is re-asked the new way (or, if the
 answer is showing, the next one is), and nothing else about the session changes. Keys:
 letters A–H, or 1–8. About half the wrong options come from the word's curated `distractors` (4 of the 7
@@ -137,6 +138,22 @@ in Fill the blank), the rest are random words from the same group. In Fill the b
 the same part of speech as the answer (when it's in the list, so we know), so grammar doesn't give it away. Word→Meaning mode can only use distractors that are themselves in the list (we need
 their definitions). Options that would also be correct (same definition, listed synonyms, or each word's
 `near_synonyms`, which list the words close enough in meaning that either could be called right) are never offered together.
+
+**Synonyms** and **Antonyms** show the word and ask for one of its listed `synonyms` (or `antonyms`), 5 options:
+one wrong option is the classic trap (an antonym in Synonyms, a synonym in Antonyms), one is a look-alike from
+`distractors`, two are random words from the group. Nothing offered can also be right (a near-synonym of the
+answer, or another opposite, listed either way). A word with no antonyms gets a Synonyms question instead.
+
+**Analogies** use each word's `analogies` list (one each for now): `terms` is *A is to B as C is to D* (the word
+is one of the four), `pos` is D's part of speech, `difficulty` runs 1–5, `relation` names the relationship in
+a few words ("opposites", "tool and its use", "mood and weather"), and `rule` is a defining sentence with `{A}`
+and `{B}` in it that both pairs plug into ("A {A} is famously {B}." gives "A mule is famously obstinate." and
+"A lamb is famously docile."). The quiz shows A, B, C and asks for D; of the 4 wrong options, 3 come from the
+analogy's curated `distractors` (related words that don't fit the relationship, or fit it backwards) and one is a
+random word with D's part of speech. After the answer, the feedback shows the rule filled in for both pairs.
+
+After a miss or "I don't know", the feedback panel restates the question with the answer filled in, so the
+question isn't lost under the panel.
 
 ## Layout
 

@@ -358,14 +358,17 @@ test("switching Sheets forgets the old Sheet's scores but keeps unsent rows", as
   assert.equal(log.tallies("Ada").hostile.wrong, 1);
 });
 
-test("mixed mode never asks a word as fill-in-the-blank the first time it comes up", () => {
+test("mixed mode never asks a word as fill-in-the-blank or an analogy the first time it comes up", () => {
   const { log } = setup({ url: "" });
   const s = Session.start({ vocab, log, user: "Ed", group: 1, mode: "mixed", rng: seededRandom(5) });
   const seen = new Set();
   let laterSentences = 0;
   for (let i = 0; i < 200; i++) {
     const { word, mode } = s.q;
-    if (!seen.has(word)) assert.notEqual(mode, SENTENCE, `${word} was a sentence on its first try`);
+    if (!seen.has(word)) {
+      assert.notEqual(mode, SENTENCE, `${word} was a sentence on its first try`);
+      assert.notEqual(mode, "analogy", `${word} was an analogy on its first try`);
+    }
     else if (mode === SENTENCE) laterSentences++;
     seen.add(word);
     s.answer(i % 3 ? s.q.answerIndex : (s.q.answerIndex + 1) % s.q.options.length, 1000);

@@ -2,7 +2,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { WB, vocab } from "./web.mjs";
 
-const { Vocab, DEF_TO_WORD, WORD_TO_DEF, SENTENCE, MIXED, N_OPTIONS, seededRandom } = WB;
+const { Vocab, DEF_TO_WORD, WORD_TO_DEF, SENTENCE, SYNONYM, ANTONYM, ANALOGY, MIXED, N_OPTIONS, seededRandom, fillRule,
+        Session, Log } = WB;
 
 test("groups preserve order", () => {
   const g = vocab.groups;
@@ -83,15 +84,17 @@ test("answer position is shuffled", () => {
 
 test("mixed resolves to a concrete mode", () => {
   const rng = seededRandom(3);
-  const modes = new Set(Array.from({ length: 50 }, () => vocab.buildQuestion(vocab.entries[0], MIXED, rng).mode));
-  assert.deepEqual(modes, new Set([WORD_TO_DEF, DEF_TO_WORD, SENTENCE]));
+  const modes = new Set(Array.from({ length: 100 }, () => vocab.buildQuestion(vocab.entries[0], MIXED, rng).mode));
+  assert.deepEqual(modes, new Set([WORD_TO_DEF, DEF_TO_WORD, SENTENCE, SYNONYM, ANTONYM, ANALOGY]));
+  const noAntonyms = vocab.entries.find((e) => !e.antonyms.length);
+  for (let k = 0; k < 50; k++) assert.notEqual(vocab.buildQuestion(noAntonyms, MIXED, rng).mode, ANTONYM);
 });
 
-test("mixed never picks the sentence on a word's first try", () => {
+test("mixed never picks the sentence or an analogy on a word's first try", () => {
   const rng = seededRandom(3);
-  const modes = new Set(Array.from({ length: 50 }, () =>
+  const modes = new Set(Array.from({ length: 100 }, () =>
     vocab.buildQuestion(vocab.entries[0], MIXED, rng, null, { firstTry: true }).mode));
-  assert.deepEqual(modes, new Set([WORD_TO_DEF, DEF_TO_WORD]));
+  assert.deepEqual(modes, new Set([WORD_TO_DEF, DEF_TO_WORD, SYNONYM, ANTONYM]));
 });
 
 test("definitions are unique", () => {
@@ -168,4 +171,115 @@ test("every word has a short explanation", () => {
 
 test("added words are present", () => {
   for (const w of ["pugnacious", "perspicacious", "recalcitrant", "intractable", "sycophant", "pompous"]) assert.ok(vocab.get(w), w);
+});
+
+// ---------------------------------------------------------------- synonyms, antonyms, analogies
+
+const lc = (w) => w.toLowerCase();
+
+for (const mode of [SYNONYM, ANTONYM, ANALOGY]) {
+  test(`every word builds a sound question (${mode})`, () => {
+    const rng = seededRandom(7);
+    for (const g of vocab.groups) {
+      for (const target of g) {
+        for (let k = 0; k < 5; k++) {
+          const q = vocab.buildQuestion(target, mode, rng, g);
+          const want = mode === ANTONYM && !target.antonyms.length ? SYNONYM : mode;
+          assert.equal(q.mode, want);
+          assert.equal(q.options.length, N_OPTIONS[want]);
+          assert.equal(new Set(q.options.map(lc)).size, q.options.length, q.options.join(" | "));
+          const answer = q.options[q.answerIndex];
+          if (want === SYNONYM) assert.ok(target.synonyms.includes(answer));
+          if (want === ANTONYM) assert.ok(target.antonyms.includes(answer));
+          if (want === ANALOGY) assert.equal(answer, q.analogy.terms[3]);
+          q.options.forEach((w, i) => {
+            if (i === q.answerIndex) return;
+            const why = `${target.word} (${want}: ${answer}) / ${w}`;
+            assert.ok(!vocab.sameAsWord(answer, w), why);
+            if (want === SYNONYM) assert.ok(!vocab.tooClose(target, w), why);
+            if (want === ANTONYM) assert.ok(!vocab.isAntonym(target, w), why);
+            if (want === ANALOGY) assert.ok(!q.analogy.terms.map(lc).includes(lc(w)), why);
+          });
+        }
+      }
+    }
+  });
+}
+
+test("synonym and antonym questions mix in the classic trap and random words", () => {
+  const rng = seededRandom(8);
+  const target = vocab.get("abundant");
+  let traps = 0, random = 0;
+  for (let k = 0; k < 40; k++) {
+    const syn = vocab.buildQuestion(target, SYNONYM, rng, vocab.group(1));
+    const ant = vocab.buildQuestion(target, ANTONYM, rng, vocab.group(1));
+    traps += syn.optionWords.filter((w) => target.antonyms.includes(w)).length;
+    traps += ant.optionWords.filter((w) => target.synonyms.includes(w)).length;
+    random += [...syn.optionWords, ...ant.optionWords].filter((w) => vocab.group(1).some((e) => e.word === w)).length;
+  }
+  assert.ok(traps >= 70, `${traps} traps`); // one per question, but a trap can itself be too close
+  assert.ok(random > 80, `${random} random words`);
+});
+
+test("analogy questions: three curated distractors and one other word", () => {
+  const rng = seededRandom(9);
+  for (const target of vocab.group(3)) {
+    const q = vocab.buildQuestion(target, ANALOGY, rng, vocab.group(3));
+    const an = target.analogies[0];
+    const curated = q.optionWords.filter((w, i) => i !== q.answerIndex && an.distractors.includes(w));
+    assert.ok(curated.length >= 3, `${target.word}: ${q.optionWords}`);
+    assert.equal(q.prompt, `${an.terms[0]} : ${an.terms[1]} :: ${an.terms[2]} : ?`);
+  }
+});
+
+test("a word with no antonyms gets a synonym question", () => {
+  const target = vocab.entries.find((e) => !e.antonyms.length);
+  assert.equal(vocab.buildQuestion(target, ANTONYM, seededRandom(1)).mode, SYNONYM);
+});
+
+test("every word has a well-formed analogy that uses it", () => {
+  for (const e of vocab.entries) {
+    assert.ok(e.analogies.length >= 1 && e.analogies.length <= 3, e.word);
+    for (const an of e.analogies) {
+      const w = `${e.word}: ${an.terms.join(" : ")}`;
+      assert.equal(an.terms.length, 4, w);
+      assert.equal(new Set(an.terms.map(lc)).size, 4, w);
+      assert.ok(an.terms.some((t) => lc(t).includes(lc(e.word))), `${w}: doesn't use the word`);
+      assert.ok(an.rule.includes("{A}") && an.rule.includes("{B}") && !/\{[^AB]/.test(an.rule), `${w}: ${an.rule}`);
+      assert.ok(an.relation, w);
+      assert.ok(Number.isInteger(an.difficulty) && an.difficulty >= 1 && an.difficulty <= 5, w);
+      assert.ok(an.distractors.length >= 3, w);
+      for (const d of an.distractors) assert.ok(!an.terms.map(lc).includes(lc(d)), `${w}: distractor ${d} is a term`);
+      assert.ok(["adj.", "n.", "v.", "adv."].includes(an.pos), `${w}: pos ${an.pos}`);
+    }
+  }
+});
+
+test("analogy difficulty is spread out", () => {
+  const n = [0, 0, 0, 0, 0, 0];
+  for (const e of vocab.entries) for (const an of e.analogies) n[an.difficulty]++;
+  for (let d = 1; d <= 5; d++) assert.ok(n[d] > 0, `no difficulty ${d}`);
+  assert.ok(Math.max(...n) < 0.45 * vocab.entries.length, n.join(","));
+});
+
+test("an analogy's rule fills in for both pairs, with a/an fixed", () => {
+  assert.equal(fillRule("A {A} is {B}.", "owl", "wise"), "An owl is wise.");
+  assert.equal(fillRule("An {A} is {B}.", "fox", "wily"), "A fox is wily.");
+  assert.equal(fillRule("{A} is a kind of {B}.", "jubilation", "euphoria"), "Jubilation is a kind of euphoria.");
+  assert.equal(fillRule("A {A} is spoken at a {B}.", "eulogy", "funeral"), "A eulogy is spoken at a funeral.");
+  assert.equal(fillRule("You leave things to a {B} if you {A}.", "bequeath", "heir"), "You leave things to an heir if you bequeath.");
+  assert.equal(fillRule("In a {A} vote, {B} agree.", "unanimous", "all"), "In a unanimous vote, all agree.");
+});
+
+test("the page never sees an analogy's answer before it's given", () => {
+  const storage = { get: (k, d) => d, set: () => {} };
+  const log = new Log({ url: "", storage, timers: { setTimeout: () => 0, clearTimeout: () => {} } });
+  const s = Session.start({ vocab, log, user: "Ana", group: 2, mode: ANALOGY, rng: seededRandom(3) });
+  const q = s.question;
+  assert.equal(q.analogy.terms.length, 3);
+  assert.ok(!JSON.stringify(q).includes('"answerWord"'));
+  const r = s.answer(0, 1000);
+  assert.equal(r.analogy.rule.length, 2);
+  assert.ok(r.analogy.rule.every((line) => !line.includes("{")));
+  assert.equal(r.answer_text, r.analogy.terms[3]);
 });

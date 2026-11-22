@@ -37,6 +37,9 @@ const MODE_LABELS = {
   word_to_def: "Word → Meaning",
   def_to_word: "Meaning → Word",
   sentence: "Fill the blank",
+  synonym: "Synonyms",
+  antonym: "Antonyms",
+  analogy: "Analogies",
   mixed: "Mix it up",
 };
 const LETTERS = "ABCDEFGHIJKLMNOP";
@@ -44,6 +47,9 @@ const KIND = {
   word_to_def: "What does this word mean?",
   def_to_word: "Which word means…",
   sentence: "Which word belongs in the blank?",
+  synonym: "Which word means about the same as…",
+  antonym: "Which word means the opposite of…",
+  analogy: "Complete the analogy",
 };
 
 // ---------------------------------------------------------------- Setup
@@ -488,9 +494,11 @@ const Practice = {
       const [before, ...after] = question.value.prompt.split("___");
       return [before, after.join("___")];
     });
+    // Options are words (not definitions) in every mode but word_to_def.
+    const wordOptions = computed(() => question.value.mode !== "word_to_def");
 
     return { s, question, progress, result, picked, earned, pile, optionEls, promptEl, bankEl, feedbackEl, mode, locked,
-             choose, next, end, sayWord, switchMode, optionClass, stageCounts, blankParts, LETTERS, KIND, MODE_LABELS };
+             choose, next, end, sayWord, switchMode, optionClass, stageCounts, blankParts, wordOptions, LETTERS, KIND, MODE_LABELS };
   },
   template: `
   <section class="practice">
@@ -520,12 +528,17 @@ const Practice = {
       <div v-if="question.mode === 'sentence'" class="prompt sentence">
         {{ blankParts[0] }}<span class="blank" :class="{ filled: result }">{{ result ? result.word : '' }}</span>{{ blankParts[1] }}
       </div>
+      <div v-else-if="question.mode === 'analogy'" class="prompt analogy">
+        <b>{{ question.analogy.terms[0] }}</b> is to <b>{{ question.analogy.terms[1] }}</b>
+        <span class="as">as</span> <b>{{ question.analogy.terms[2] }}</b> is to
+        <span class="blank" :class="{ filled: result }">{{ result ? result.answer_text : '' }}</span>
+      </div>
       <div v-else class="prompt" :class="question.mode">
         {{ question.prompt }}
       </div>
     </div>
 
-    <ol class="options" :class="question.mode">
+    <ol class="options" :class="[question.mode, { words: wordOptions }]">
       <li v-for="(opt, i) in question.options" :key="question.seq + ':' + i">
         <button :ref="el => optionEls[i] = el" :class="optionClass(i)" @click="choose(i)" :disabled="!!result">
           <span class="letter">{{ LETTERS[i] }}</span><span class="text">{{ opt }}</span>
@@ -536,6 +549,20 @@ const Practice = {
 
     <div v-if="result" :class="{ 'feedback-overlay': !result.correct, late: !result.correct && !result.unknown }">
     <div ref="feedbackEl" class="feedback" :class="result.correct ? 'good' : result.unknown ? 'idk' : 'bad'" @click="next">
+      <div v-if="!result.correct" class="recap">
+        <div class="kind">{{ KIND[result.mode] }}</div>
+        <div v-if="result.mode === 'sentence'" class="sentence">{{ blankParts[0] }}<b class="answer">{{ result.word }}</b>{{ blankParts[1] }}</div>
+        <div v-else-if="result.mode === 'analogy'"><b>{{ result.analogy.terms[0] }}</b> is to <b>{{ result.analogy.terms[1] }}</b>
+          as <b>{{ result.analogy.terms[2] }}</b> is to <b class="answer">{{ result.analogy.terms[3] }}</b></div>
+        <div v-else-if="result.mode === 'synonym' || result.mode === 'antonym'"><b>{{ result.prompt }}</b> → <b class="answer">{{ result.answer_text }}</b></div>
+        <div v-else-if="result.mode === 'def_to_word'">“{{ result.prompt }}” → <b class="answer">{{ result.word }}</b></div>
+        <div v-else><b>{{ result.word }}</b> → <span class="answer">{{ result.answer_text }}</span></div>
+      </div>
+      <div v-if="result.analogy" class="relation">
+        🔗 <i>{{ result.analogy.relation }}:</i> {{ result.analogy.rule[0] }} {{ result.analogy.rule[1] }}
+      </div>
+      <div v-else-if="result.mode === 'synonym'" class="relation"><b>{{ result.answer_text }}</b> means about the same as <b>{{ result.word }}</b>.</div>
+      <div v-else-if="result.mode === 'antonym'" class="relation"><b>{{ result.answer_text }}</b> is the opposite of <b>{{ result.word }}</b>.</div>
       <div>
         <b>{{ result.word }}</b><button class="say" @click.stop="sayWord" title="Say it again" aria-label="Say it again">🔊</button>
         <i>{{ result.pos }}</i> — {{ result.definition }}
