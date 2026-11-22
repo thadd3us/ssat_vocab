@@ -1,0 +1,1040 @@
+rank_index	word	question	options	my_answer	key	correct	unsure	relation	difficulty
+0	salacious	chaste : salacious :: modest : ?	polite / brazen / demure / humble / shy	brazen	brazen	True	False	opposites	3
+1	abundant	adequate : abundant :: warm : ?	cool / mild / tepid / cold / hot	hot	hot	True	False	mild and extreme forms	2
+2	lugubrious	celebration : jubilant :: funeral : ?	lucrative / festive / lugubrious / jovial / ludicrous	lugubrious	lugubrious	True	False	thing and its typical quality	3
+3	hostile	ally : friendly :: adversary : ?	amiable / loyal / hostile / hospitable / humble	hostile	hostile	True	False	thing and its typical quality	1
+4	imbroglio	quandary : dilemma :: imbroglio : ?	order / solution / anecdote / calm / predicament	predicament	predicament	True	False	same meaning	4
+5	reluctant	reluctant : willing :: timid : ?	meek / docile / fearful / bold / shy	bold	bold	True	False	opposites	1
+6	defenestrate	defenestrate : window :: exhume : ?	body / shovel / ghost / funeral / grave	grave	grave	True	False	definition	3
+7	diligent	sluggard : diligent :: miser : ?	stingy / greedy / generous / wealthy / frugal	generous	generous	True	False	lacking	3
+8	pathos	pathos : pity :: humor : ?	tears / laughter / sympathy / sorrow / gloom	laughter	laughter	True	False	cause and effect	3
+9	candid	frank : candid :: timid : ?	bold / forthright / assertive / brazen / diffident	diffident	diffident	True	False	same meaning	3
+10	manifesto	manifesto : declare :: eulogy : ?	mourn / criticize / bury / praise / forget	praise	praise	True	False	purpose	3
+11	ambiguous	ambiguous : explicit :: vague : ?	precise / murky / obscure / unclear / subtle	precise	precise	True	False	opposites	2
+12	loquacious	loquacious : talk :: voracious : ?	eat / sleep / cook / speak / starve	eat	eat	True	False	who does what	3
+13	benevolent	benevolent : malevolent :: benign : ?	harmless / kindly / malignant / benefactor / gentle	malignant	malignant	True	False	opposites	4
+14	cajole	cajole : coax :: coerce : ?	plead / comply / flatter / force / persuade	force	force	True	False	same meaning	3
+15	meager	scanty : meager :: plentiful : ?	copious / sparse / scarce / paltry / few	copious	copious	True	False	same meaning	2
+16	sanguine	optimist : sanguine :: skeptic : ?	cheerful / credulous / hopeful / dubious / gullible	dubious	dubious	True	False	thing and its typical quality	3
+17	obstinate	mule : obstinate :: lamb : ?	woolly / sly / docile / stubborn / fierce	docile	docile	True	False	thing and its typical quality	2
+18	tacit	tacit : unspoken :: candid : ?	silent / tactful / evasive / frank / secret	frank	frank	True	False	same meaning	3
+19	tranquil	pond : tranquil :: waterfall : ?	turbulent / wet / placid / serene / shallow	turbulent	turbulent	True	False	thing and its typical quality	2
+20	ingenious	inventor : ingenious :: sage : ?	wise / foolish / old / bearded / herbal	wise	wise	True	False	thing and its typical quality	2
+21	frugal	frugal : stingy :: confident : ?	certain / modest / timid / humble / arrogant	arrogant	arrogant	True	False	mild and extreme forms	3
+22	prosaic	prosaic : imaginative :: tedious : ?	dull / monotonous / boring / tiresome / exciting	exciting	exciting	True	False	opposites	3
+23	extravagant	extravagant : money :: verbose : ?	words / silence / books / ideas / grammar	words	words	True	False	definition	3
+24	impeccable	impeccable : flaw :: innocuous : ?	safety / kindness / help / harm / virtue	harm	harm	True	False	lacking	3
+25	hinder	hinder : assist :: exacerbate : ?	aggravate / intensify / hamper / alleviate / worsen	alleviate	alleviate	True	False	opposites	3
+26	exacerbate	exacerbate : worse :: ameliorate : ?	later / angrier / better / weaker / harder	better	better	True	False	definition	3
+27	futile	futile : effective :: trivial : ?	minor / significant / petty / pointless / useless	significant	significant	True	False	opposites	2
+28	quandary	quandary : perplexed :: triumph : ?	elated / defeated / bored / confused / dejected	elated	elated	True	False	cause and effect	3
+29	elated	happy : elated :: sad : ?	miserable / calm / content / jovial / cheerful	miserable	miserable	True	False	mild and extreme forms	1
+30	innocuous	placebo : innocuous :: poison : ?	toxic / medical / liquid / bitter / harmless	toxic	toxic	True	False	thing and its typical quality	2
+31	dejected	defeat : dejected :: victory : ?	sorry / exhausted / elated / modest / despondent	elated	elated	True	False	cause and effect	1
+32	copious	copious : abundance :: meager : ?	surplus / paucity / glut / excess / plethora	paucity	paucity	True	False	definition	4
+33	vigilant	sentry : vigilant :: sloth : ?	alert / agile / fast / hairy / lazy	lazy	lazy	True	False	thing and its typical quality	1
+34	anomaly	anomaly : norm :: exception : ?	oddity / quirk / rule / surprise / error	rule	rule	True	False	definition	3
+35	wary	wary : trusting :: skeptical : ?	credulous / dubious / cynical / suspicious / doubtful	credulous	credulous	True	False	opposites	3
+36	cursory	glance : cursory :: inspection : ?	quick / brief / casual / thorough / hasty	thorough	thorough	True	False	thing and its typical quality	2
+37	prudent	prudent : rash :: cautious : ?	wary / reckless / careful / timid / judicious	reckless	reckless	True	False	opposites	2
+38	paucity	paucity : plethora :: dearth : ?	scarcity / shortage / glut / lack / famine	glut	glut	True	False	opposites	4
+39	arduous	marathon : arduous :: stroll : ?	grueling / tiring / long / strenuous / effortless	effortless	effortless	True	False	thing and its typical quality	2
+40	trite	trite : fresh :: obsolete : ?	outdated / archaic / old / antiquated / current	current	current	True	False	opposites	3
+41	obsolete	typewriter : obsolete :: smartphone : ?	antiquated / broken / expensive / fragile / modern	modern	modern	True	False	thing and its typical quality	1
+42	ingenuous	ingenuous : cunning :: naive : ?	trusting / credulous / innocent / shrewd / guileless	shrewd	shrewd	True	False	opposites	4
+43	eccentric	eccentric : conventional :: whimsical : ?	odd / playful / fanciful / quirky / serious	serious	serious	True	False	opposites	3
+44	vacillate	vacillate : indecisive :: persevere : ?	determined / weary / erratic / fickle / hesitant	determined	determined	True	False	thing and its typical quality	3
+45	ominous	thundercloud : ominous :: rainbow : ?	menacing / colorful / gloomy / hopeful / wet	hopeful	hopeful	True	False	thing and its typical quality	1
+46	appease	appease : provoke :: pacify : ?	incite / soothe / placate / mollify / calm	incite	incite	True	False	opposites	3
+47	indifferent	indifferent : care :: ignorant : ?	try / speak / rest / feel / know	know	know	True	False	lacking	2
+48	penchant	penchant : aversion :: fondness : ?	liking / dislike / appetite / craving / taste	dislike	dislike	True	False	opposites	3
+49	bewilder	maze : bewilder :: map : ?	confuse / fold / travel / guide / draw	guide	guide	True	False	purpose	1
+50	poignant	poignant : tears :: hilarious : ?	anger / sympathy / boredom / laughter / sorrow	laughter	laughter	True	False	cause and effect	2
+51	diminish	diminish : augment :: wane : ?	shrink / dwindle / fade / ebb / wax	wax	wax	True	False	opposites	3
+52	mollify	mollify : anger :: alleviate : ?	medicine / health / pain / joy / doctor	pain	pain	True	False	action and what it acts on	3
+53	alleviate	alleviate : aggravate :: soothe : ?	ease / calm / irritate / comfort / relieve	irritate	irritate	True	False	opposites	3
+54	propensity	propensity : inclination :: penchant : ?	fondness / talent / antipathy / reluctance / aversion	fondness	fondness	True	False	same meaning	4
+55	scrutinize	glance : scrutinize :: nibble : ?	swallow / taste / sip / devour / chew	devour	devour	True	False	mild and extreme forms	2
+56	placate	placate : angry :: console : ?	jealous / happy / grieving / calm / sleepy	grieving	grieving	True	False	action and what it acts on	2
+57	impartial	judge : impartial :: fan : ?	athletic / biased / tall / loud / neutral	biased	biased	True	False	thing and its typical quality	1
+58	paradox	paradox : puzzling :: axiom : ?	complex / doubtful / mysterious / obvious / false	obvious	obvious	True	False	thing and its typical quality	3
+59	vulnerable	vulnerable : protected :: fragile : ?	exposed / weak / sturdy / brittle / delicate	sturdy	sturdy	True	False	opposites	2
+60	tenuous	cobweb : tenuous :: boulder : ?	round / fragile / gray / solid / rough	solid	solid	True	False	thing and its typical quality	2
+61	inevitable	inevitable : avoided :: indelible : ?	drawn / remembered / written / seen / erased	erased	erased	True	False	definition	3
+62	prodigious	large : prodigious :: small : ?	minuscule / huge / average / modest / enormous	minuscule	minuscule	True	False	mild and extreme forms	2
+63	tedious	tedious : bore :: hilarious : ?	sadden / annoy / tire / scare / amuse	amuse	amuse	True	False	cause and effect	1
+64	quixotic	dreamer : quixotic :: pragmatist : ?	naive / romantic / foolish / idealistic / practical	practical	practical	True	False	thing and its typical quality	3
+65	concise	summary : concise :: encyclopedia : ?	terse / heavy / alphabetical / brief / exhaustive	exhaustive	exhaustive	True	False	thing and its typical quality	3
+66	hubris	hubris : downfall :: diligence : ?	success / effort / laziness / pride / failure	success	success	True	False	cause and effect	3
+67	resilient	rubber : resilient :: glass : ?	transparent / shiny / fragile / sturdy / clear	fragile	fragile	True	False	thing and its typical quality	2
+68	candor	candor : evasiveness :: courage : ?	valor / boldness / heroism / bravery / cowardice	cowardice	cowardice	True	False	opposites	2
+69	skeptical	skeptical : believe :: oblivious : ?	doubt / care / sleep / notice / forget	notice	notice	True	False	who does what	3
+70	arbitrary	arbitrary : reasoned :: random : ?	deliberate / casual / accidental / haphazard / sudden	deliberate	deliberate	True	False	opposites	3
+71	gregarious	socialite : gregarious :: hermit : ?	religious / bearded / reclusive / convivial / outgoing	reclusive	reclusive	True	False	thing and its typical quality	2
+72	precocious	precocious : early :: belated : ?	late / soon / old / fast / young	late	late	True	False	definition	3
+73	jubilant	jubilant : joy :: furious : ?	fear / anger / sadness / calm / pride	anger	anger	True	False	definition	1
+74	oblivious	oblivious : aware :: ignorant : ?	heedless / naive / unaware / informed / clueless	informed	informed	True	False	opposites	2
+75	serene	meditation : serene :: panic : ?	calm / placid / tired / frantic / quiet	frantic	frantic	True	False	cause and effect	2
+76	plethora	plethora : excess :: dearth : ?	glut / shortage / surplus / plenty / abundance	shortage	shortage	True	False	same meaning	3
+77	audacious	lion : audacious :: mouse : ?	bold / gray / small / timid / quick	timid	timid	True	False	thing and its typical quality	1
+78	insipid	insipid : flavor :: odorless : ?	color / taste / sound / shape / smell	smell	smell	True	False	lacking	2
+79	feeble	newborn : feeble :: weightlifter : ?	famous / sweaty / tired / strong / tall	strong	strong	True	False	thing and its typical quality	1
+80	conundrum	conundrum : solution :: question : ?	puzzle / riddle / problem / answer / mystery	answer	answer	True	False	definition	2
+81	tenacious	tenacious : persist :: irresolute : ?	waver / decide / rest / succeed / quit	waver	waver	True	False	who does what	3
+82	fervor	zealot : fervor :: cynic : ?	faith / doubt / passion / energy / hope	doubt	doubt	True	False	thing and its typical quality	3
+83	ample	ample : scant :: generous : ?	lavish / stingy / kind / charitable / wealthy	stingy	stingy	True	False	opposites	2
+84	brazen	brazen : bashful :: bold : ?	audacious / shy / brash / daring / brave	shy	shy	True	False	opposites	2
+85	apprehensive	apprehensive : dread :: eager : ?	boredom / anticipation / anxiety / regret / fear	anticipation	anticipation	True	False	thing and its typical quality	3
+86	abate	abate : subside :: exacerbate : ?	soothe / lessen / worsen / calm / ease	worsen	worsen	True	False	same meaning	3
+87	adequate	adequate : deficient :: sufficient : ?	satisfactory / ample / plenty / lacking / enough	lacking	lacking	True	False	opposites	2
+88	erudite	scholar : erudite :: novice : ?	wealthy / studious / inexperienced / bald / learned	inexperienced	inexperienced	True	False	thing and its typical quality	2
+89	adversary	adversary : foe :: ally : ?	opponent / rival / stranger / friend / enemy	friend	friend	True	False	same meaning	1
+90	wane	moon : wane :: tide : ?	flow / shine / ebb / grow / rise	ebb	ebb	True	True	who does what	3
+91	compassion	nurse : compassion :: soldier : ?	courage / weapon / uniform / pity / rank	courage	courage	True	False	thing and its typical quality	2
+92	esoteric	esoteric : arcane :: obvious : ?	obscure / evident / cryptic / secret / mysterious	evident	evident	True	False	same meaning	3
+93	complacent	complacent : vigilant :: smug : ?	conceited / vain / proud / humble / arrogant	humble	humble	True	False	opposites	3
+94	frivolous	joke : frivolous :: eulogy : ?	whimsical / long / silly / solemn / written	solemn	solemn	True	False	thing and its typical quality	2
+95	conspicuous	peacock : conspicuous :: chameleon : ?	colorful / camouflaged / slow / green / scaly	camouflaged	camouflaged	True	False	thing and its typical quality	2
+96	laconic	laconic : few :: loquacious : ?	simple / short / quiet / none / many	many	many	True	False	definition	2
+97	contempt	contempt : sneer :: joy : ?	frown / shrug / smile / yawn / tear	smile	smile	True	False	cause and effect	2
+98	myriad	myriad : countless :: few : ?	scant / plentiful / innumerable / many / numerous	scant	scant	True	False	same meaning	2
+99	deter	scarecrow : deter :: decoy : ?	lure / sink / frighten / hook / repel	lure	lure	True	False	purpose	2
+100	petulant	petulant : sulk :: jubilant : ?	boo / sleep / pout / cheer / whine	cheer	cheer	True	False	who does what	2
+101	discord	discord : harmony :: strife : ?	friction / quarrel / peace / war / conflict	peace	peace	True	False	opposites	2
+102	benign	benign : kindly :: menacing : ?	friendly / safe / gentle / calm / sinister	sinister	sinister	True	False	same meaning	3
+103	dismal	dismal : dreary :: cheerful : ?	glum / sad / merry / gloomy / depressing	merry	merry	True	False	same meaning	2
+104	flippant	flippant : earnest :: glib : ?	sarcastic / cheeky / joking / witty / sincere	sincere	sincere	True	False	opposites	3
+105	docile	docile : tame :: truculent : ?	quiet / combative / gentle / obedient / meek	combative	combative	True	False	same meaning	4
+106	nostalgia	nostalgia : past :: anticipation : ?	present / history / dream / memory / future	future	future	True	False	definition	2
+107	dubious	rumor : dubious :: fact : ?	false / doubtful / whispered / certain / spread	certain	certain	True	False	thing and its typical quality	2
+108	diffident	diffident : confident :: timid : ?	shy / bold / meek / quiet / bashful	bold	bold	True	False	opposites	3
+109	eloquent	poet : eloquent :: dancer : ?	tall / graceful / young / articulate / nervous	graceful	graceful	True	False	thing and its typical quality	2
+110	acquiesce	acquiesce : resist :: comply : ?	yield / obey / defy / agree / consent	defy	defy	True	False	opposites	3
+111	endeavor	endeavor : attempt :: triumph : ?	failure / defeat / effort / trial / success	success	success	True	False	same meaning	2
+112	deleterious	smoking : deleterious :: exercise : ?	tiring / harmful / beneficial / sweaty / damaging	beneficial	beneficial	True	False	thing and its typical quality	2
+113	erratic	erratic : steady :: fickle : ?	changeable / capricious / inconstant / flighty / loyal	loyal	loyal	True	False	opposites	3
+114	vitriolic	insult : vitriolic :: compliment : ?	flattering / caustic / sarcastic / rude / bitter	flattering	flattering	True	False	thing and its typical quality	2
+115	fickle	weathervane : fickle :: anchor : ?	sunken / steadfast / capricious / salty / rusty	steadfast	steadfast	True	False	thing and its typical quality	3
+116	truculent	truculent : combative :: affable : ?	surly / genial / aggressive / rude / hostile	genial	genial	True	False	same meaning	4
+117	flourish	sunlight : flourish :: drought : ?	bloom / rain / grow / wither / thrive	wither	wither	True	False	cause and effect	1
+118	nefarious	villain : nefarious :: hero : ?	short / sly / noble / wicked / tired	noble	noble	True	False	thing and its typical quality	1
+119	formidable	fortress : formidable :: tent : ?	portable / flimsy / sturdy / canvas / imposing	flimsy	flimsy	True	False	thing and its typical quality	2
+120	whimsical	limerick : whimsical :: hymn : ?	short / playful / musical / solemn / rhyming	solemn	solemn	True	False	thing and its typical quality	3
+121	pervasive	pervasive : widespread :: limited : ?	general / restricted / universal / popular / common	restricted	restricted	True	False	same meaning	2
+122	catalyst	spark : fire :: catalyst : ?	change / stability / chemist / heat / laboratory	change	change	True	False	cause and effect	2
+123	endorse	endorse : approve :: denounce : ?	support / announce / endure / condemn / praise	condemn	condemn	True	False	same meaning	3
+124	opulence	palace : opulence :: hovel : ?	grandeur / privacy / squalor / luxury / comfort	squalor	squalor	True	False	thing and its typical quality	3
+125	lavish	lavish : sumptuous :: meager : ?	rich / generous / opulent / scanty / plentiful	scanty	scanty	True	False	same meaning	3
+126	excruciating	uncomfortable : excruciating :: chilly : ?	mild / cool / frigid / warm / damp	frigid	frigid	True	False	mild and extreme forms	2
+127	cogent	cogent : weak :: valid : ?	sound / clear / persuasive / logical / flawed	flawed	flawed	True	False	opposites	3
+128	evoke	evoke : suppress :: summon : ?	conjure / recall / call / banish / invite	banish	banish	True	False	opposites	3
+129	euphoria	joy : euphoria :: sadness : ?	happiness / despair / calm / elation / boredom	despair	despair	True	False	mild and extreme forms	2
+130	opaque	brick : opaque :: windowpane : ?	cloudy / shiny / hard / fragile / transparent	transparent	transparent	True	False	thing and its typical quality	1
+131	incessant	incessant : intermittent :: constant : ?	regular / frequent / occasional / ceaseless / steady	occasional	occasional	True	False	opposites	3
+132	improvise	improvise : ad-lib :: rehearse : ?	perform / recite / prepare / invent / forget	prepare	prepare	True	False	same meaning	2
+133	didactic	didactic : teach :: comic : ?	scare / amuse / learn / preach / bore	amuse	amuse	True	False	purpose	3
+134	scrutiny	scrutiny : careful :: glimpse : ?	clear / thorough / brief / detailed / distant	brief	brief	True	False	definition	2
+135	susceptible	susceptible : resistant :: gullible : ?	vulnerable / trusting / naive / credulous / skeptical	skeptical	skeptical	True	False	opposites	3
+136	pedantic	pedantic : nitpicky :: casual : ?	strict / formal / fussy / precise / relaxed	relaxed	relaxed	True	True	same meaning	3
+137	retrench	budget : retrench :: hedge : ?	fence / plant / grow / water / prune	prune	prune	True	False	action and what it acts on	3
+138	proponent	proponent : support :: critic : ?	praise / endorse / follow / ignore / criticize	criticize	criticize	True	False	who does what	2
+139	resolve	resolve : conflict :: solve : ?	game / answer / clue / puzzle / piece	puzzle	puzzle	True	False	action and what it acts on	2
+140	augment	augment : enlarge :: undermine : ?	bolster / boost / support / weaken / strengthen	weaken	weaken	True	False	same meaning	4
+141	vapid	vapid : lively :: insipid : ?	flavorful / tasteless / dull / plain / bland	flavorful	flavorful	True	False	opposites	4
+142	encompass	encompass : include :: exclude : ?	embrace / contain / omit / surround / cover	omit	omit	True	False	same meaning	2
+143	affable	affable : surly :: genial : ?	friendly / kind / cordial / sullen / amiable	sullen	sullen	True	False	opposites	4
+144	sage	sage : wisdom :: fool : ?	laughter / joke / jester / foolish / folly	folly	folly	True	False	thing and its typical quality	2
+145	extricate	extricate : entangle :: release : ?	loosen / rescue / capture / free / liberate	capture	capture	True	False	opposites	3
+146	exhume	exhume : bury :: unveil : ?	display / expose / reveal / show / cover	cover	cover	True	False	opposites	3
+147	speculate	speculate : guess :: verify : ?	prove / imagine / suppose / wonder / theorize	prove	prove	True	False	same meaning	2
+148	incongruous	incongruous : harmonious :: disparate : ?	dissimilar / similar / different / diverse / unusual	similar	similar	True	False	opposites	4
+149	autonomy	autonomy : dependence :: freedom : ?	independence / captivity / choice / liberty / release	captivity	captivity	True	False	opposites	2
+150	impending	impending : imminent :: distant : ?	sudden / near / looming / remote / approaching	remote	remote	True	False	same meaning	3
+151	trivial	trivial : crucial :: petty : ?	insignificant / small / minor / slight / important	important	important	True	False	opposites	2
+152	eclectic	eclectic : diverse :: narrow : ?	wide / varied / limited / assorted / broad	limited	limited	True	False	same meaning	2
+153	solemn	solemn : grave :: jovial : ?	sad / merry / grim / somber / serious	merry	merry	True	False	same meaning	2
+154	caricature	caricature : drawing :: parody : ?	tribute / portrait / imitation / original / sculpture	imitation	imitation	True	False	kind of thing	3
+155	undermine	undermine : bolster :: weaken : ?	strengthen / erode / attack / damage / sabotage	strengthen	strengthen	True	False	opposites	2
+156	exhaustive	exhaustive : cursory :: thorough : ?	complete / detailed / meticulous / careful / hasty	hasty	hasty	True	False	opposites	3
+157	adverse	adverse : favorable :: hostile : ?	harmful / friendly / unfriendly / detrimental / negative	friendly	friendly	True	False	opposites	2
+158	colossal	ant : tiny :: whale : ?	colossal / minuscule / aquatic / gray / swift	colossal	colossal	True	False	thing and its typical quality	1
+159	flagrant	flagrant : subtle :: glaring : ?	clear / blatant / conspicuous / obvious / hidden	hidden	hidden	True	False	opposites	3
+160	deprecate	deprecate : belittle :: commend : ?	disparage / mock / praise / insult / criticize	praise	praise	True	False	same meaning	3
+161	antithesis	epitome : embodiment :: antithesis : ?	twin / copy / example / model / opposite	opposite	opposite	True	False	definition	3
+162	concur	concur : agree :: dissent : ?	accord / approve / consent / assent / disagree	disagree	disagree	True	False	same meaning	2
+163	scribe	scribe : pen :: blacksmith : ?	shoe / hammer / horse / scroll / nail	hammer	hammer	True	False	maker and what they make or use	1
+164	idiosyncrasy	idiosyncrasy : individual :: tradition : ?	custom / habit / holiday / culture / history	culture	culture	True	True	definition	4
+165	credulous	con artist : credulous :: pickpocket : ?	distracted / honest / suspicious / quick / wealthy	distracted	distracted	True	False	action and what it acts on	4
+166	patriarch	patriarch : matriarch :: king : ?	throne / prince / queen / princess / crown	queen	queen	True	False	counterparts	2
+167	epitome	epitome : quintessence :: nadir : ?	middle / peak / summit / bottom / top	bottom	bottom	True	False	definition	4
+168	acrid	smoke : acrid :: honey : ?	bitter / sweet / golden / sticky / pungent	sweet	sweet	True	False	thing and its typical quality	1
+169	pacify	riot : pacify :: fire : ?	kindle / flare / ignite / heat / extinguish	extinguish	extinguish	True	False	action and what it acts on	3
+170	dupe	dupe : deceive :: enlighten : ?	fool / mislead / inform / lie / trick	inform	inform	True	False	same meaning	2
+171	ensconce	ensconce : settle :: oust : ?	expel / install / shelter / house / nestle	expel	expel	True	False	same meaning	3
+172	generalization	generalization : broad :: detail : ?	specific / wide / general / sweeping / vague	specific	specific	True	False	thing and its typical quality	2
+173	entrepreneur	entrepreneur : company :: composer : ?	symphony / piano / conductor / orchestra / concert	symphony	symphony	True	False	maker and what they make or use	2
+174	disparate	disparate : similar :: diverse : ?	varied / different / uniform / various / assorted	uniform	uniform	True	False	opposites	3
+175	apocryphal	legend : apocryphal :: official record : ?	famous / written / fictitious / verified / ancient	verified	verified	True	False	thing and its typical quality	4
+176	empathy	empathy : understand :: apathy : ?	ignore / share / help / feel / comfort	ignore	ignore	True	False	cause and effect	2
+177	countenance	countenance : face :: posture : ?	foot / run / body / gait / shoe	body	body	True	False	definition	4
+178	cynical	cynic : cynical :: optimist : ?	bitter / distrustful / skeptical / hopeful / naive	hopeful	hopeful	True	False	thing and its typical quality	1
+179	inadvertent	inadvertent : deliberate :: accidental : ?	random / careless / unwitting / intentional / sudden	intentional	intentional	True	False	opposites	2
+180	acrimony	acrimony : bitter divorce :: harmony : ?	song / choir / singer / melody / quarrel	choir	choir	True	True	thing and its typical quality	4
+181	paradigm	paradigm : model :: anomaly : ?	rule / example / pattern / standard / exception	exception	exception	True	False	same meaning	3
+182	benefactor	benefactor : donate :: thief : ?	steal / borrow / receive / give / hide	steal	steal	True	False	who does what	1
+183	abhor	dislike : abhor :: like : ?	enjoy / detest / tolerate / adore / prefer	adore	adore	True	False	mild and extreme forms	2
+184	hodgepodge	hodgepodge : assorted :: row : ?	jumbled / random / orderly / messy / mixed	orderly	orderly	True	False	thing and its typical quality	3
+185	facilitate	ramp : facilitate :: barricade : ?	climb / block / guard / build / obstruct	obstruct	obstruct	True	True	purpose	3
+186	commensurate	commensurate : proportionate :: disparate : ?	different / similar / equal / equivalent / matching	different	different	True	False	same meaning	5
+187	depict	painter : depict :: author : ?	read / publish / sketch / paint / narrate	narrate	narrate	True	False	who does what	2
+188	engender	engender : cause :: stifle : ?	create / produce / suppress / generate / encourage	suppress	suppress	True	False	same meaning	4
+189	amplify	microphone : amplify :: eraser : ?	draw / efface / write / sharpen / enlarge	efface	efface	True	False	purpose	4
+190	taciturn	taciturn : speak :: lethargic : ?	rest / eat / think / sleep / move	move	move	True	False	who does what	4
+191	profound	profound : superficial :: deep : ?	flat / wide / low / shallow / narrow	shallow	shallow	True	False	opposites	1
+192	latent	seed : latent :: flower : ?	dormant / fragrant / hidden / colorful / manifest	manifest	manifest	True	False	thing and its typical quality	5
+193	feasible	feasible : done :: legible : ?	print / finish / see / read / write	read	read	True	False	definition	3
+194	incisive	scalpel : incisive :: club : ?	blunt / violent / sharp / wooden / heavy	blunt	blunt	True	False	thing and its typical quality	4
+195	bequeath	bequeath : heir :: donate : ?	will / money / wealth / gift / charity	charity	charity	True	False	action and what it acts on	3
+196	heresy	heresy : orthodoxy :: rebel : ?	conformist / leader / radical / traitor / revolutionary	conformist	conformist	True	False	opposites	4
+197	timorous	timorous : intrepid :: feeble : ?	weak / fragile / timid / robust / frail	robust	robust	True	False	opposites	4
+198	jargon	jargon : profession :: dialect : ?	slang / region / accent / grammar / country	region	region	True	False	definition	3
+199	flaccid	flaccid : limp :: rigid : ?	slack / stiff / loose / floppy / soft	stiff	stiff	True	False	same meaning	4
+200	illicit	smuggler : illicit :: merchant : ?	illegal / forbidden / profitable / secret / legal	legal	legal	True	False	thing and its typical quality	3
+201	recount	recount : story :: recite : ?	book / poet / author / rhyme / poem	poem	poem	True	False	action and what it acts on	2
+202	spurious	counterfeit : spurious :: original : ?	bogus / old / fake / authentic / valuable	authentic	authentic	True	False	thing and its typical quality	4
+203	synthesis	synthesis : combine :: analysis : ?	fuse / join / separate / merge / study	separate	separate	True	False	definition	3
+204	efface	efface : erase :: embellish : ?	simplify / remove / delete / strip / decorate	decorate	decorate	True	False	same meaning	4
+205	sarcasm	sarcasm : mock :: flattery : ?	insult / sneer / please / joke / tease	please	please	True	False	purpose	2
+206	exasperate	annoy : exasperate :: tire : ?	calm / rest / bore / exhaust / refresh	exhaust	exhaust	True	False	mild and extreme forms	3
+207	daunt	daunt : embolden :: discourage : ?	deter / scare / encourage / frighten / intimidate	encourage	encourage	True	False	opposites	3
+208	brevity	brevity : haiku :: length : ?	epic / novel / sonnet / poem / limerick	epic	epic	True	False	thing and its typical quality	4
+209	commemorate	monument : commemorate :: alarm : ?	remember / forget / ring / celebrate / warn	warn	warn	True	False	purpose	3
+210	contract	contract : expand :: shrink : ?	dwindle / swell / compress / tighten / reduce	swell	swell	True	False	opposites	2
+211	repudiate	repudiate : embrace :: reject : ?	disown / accept / refuse / deny / renounce	accept	accept	True	False	opposites	3
+212	altruistic	altruistic : volunteer :: greedy : ?	saint / giver / banker / miser / donor	miser	miser	True	False	thing and its typical quality	3
+213	subjugate	subjugate : liberate :: conquer : ?	subdue / rule / defeat / free / enslave	free	free	True	False	opposites	3
+214	underscore	underscore : emphasize :: downplay : ?	minimize / stress / feature / underline / highlight	minimize	minimize	True	False	same meaning	2
+215	prevaricate	prevaricate : witness :: fabricate : ?	document / judge / painter / copy / forger	forger	forger	True	False	who does what	5
+216	abstract	abstract : idea :: concrete : ?	rock / dream / theory / feeling / thought	rock	rock	True	False	thing and its typical quality	2
+217	diatribe	diatribe : denounce :: eulogy : ?	attack / mourn / rant / criticize / praise	praise	praise	True	False	purpose	3
+218	utilitarian	wrench : utilitarian :: tiara : ?	practical / ornamental / royal / expensive / shiny	ornamental	ornamental	True	False	thing and its typical quality	3
+219	emphatic	emphatic : forceful :: tentative : ?	firm / loud / strong / clear / hesitant	hesitant	hesitant	True	False	same meaning	4
+220	prodigal	prodigal : money :: garrulous : ?	friends / time / silence / stories / words	words	words	True	False	definition	4
+221	curtail	curtail : prolong :: shorten : ?	lengthen / trim / cut / reduce / abridge	lengthen	lengthen	True	False	opposites	2
+222	prevail	champion : prevail :: underdog : ?	win / train / struggle / compete / triumph	struggle	struggle	True	False	who does what	3
+223	concession	concession : compromise :: refusal : ?	rejection / deal / allowance / agreement / grant	rejection	rejection	True	True	same meaning	3
+224	graphic	graphic : vivid :: vague : ?	hazy / explicit / sharp / bright / clear	hazy	hazy	True	False	same meaning	2
+225	prodigy	prodigy : talent :: glutton : ?	genius / food / skill / plate / appetite	appetite	appetite	True	True	thing and its typical quality	3
+226	disposition	disposition : person :: climate : ?	season / weather / temperature / storm / region	region	region	True	False	definition	4
+227	harrowing	nightmare : harrowing :: lullaby : ?	quiet / distressing / musical / sleepy / soothing	soothing	soothing	True	False	thing and its typical quality	2
+228	bolster	bolster : buttress :: undermine : ?	boost / strengthen / support / reinforce / sabotage	sabotage	sabotage	True	False	same meaning	4
+229	revere	revere : hero :: scorn : ?	soldier / mentor / champion / coward / saint	coward	coward	True	False	action and what it acts on	2
+230	malicious	malicious : harm :: benevolent : ?	hurt / rule / help / spite / hate	help	help	True	False	who does what	2
+231	parochial	parochial : village :: cosmopolitan : ?	world / farm / town / country / city	world	city	False	False	thing and its typical quality	5
+232	coherent	coherent : understood :: audible : ?	heard / said / seen / felt / written	heard	heard	True	False	definition	3
+233	mitigate	ice pack : mitigate :: salt : ?	heal / exacerbate / season / soothe / sting	exacerbate	exacerbate	True	True	cause and effect	4
+234	enervate	heat : enervate :: coffee : ?	brew / spill / weaken / exhaust / invigorate	invigorate	invigorate	True	False	cause and effect	5
+235	emissary	emissary : message :: courier : ?	package / envoy / letter / truck / office	package	package	True	True	purpose	3
+236	homogeneous	homogeneous : uniform :: heterogeneous : ?	alike / varied / same / consistent / similar	varied	varied	True	False	same meaning	4
+237	medium	clay : medium :: hammer : ?	sculptor / tool / kiln / nail / metal	tool	tool	True	False	kind of thing	3
+238	detract	detract : enhance :: subtract : ?	diminish / reduce / add / take / remove	add	add	True	False	opposites	2
+239	erroneous	typo : erroneous :: proof : ?	complex / printed / accurate / mistaken / long	accurate	accurate	True	True	thing and its typical quality	3
+240	depreciate	car : depreciate :: antique : ?	decline / age / rust / devalue / appreciate	appreciate	appreciate	True	False	who does what	3
+241	obsequious	obsequious : servant :: domineering : ?	slave / master / butler / tyrant / king	master	tyrant	False	True	thing and its typical quality	5
+242	indulgent	indulgent : grandparent :: stern : ?	general / teacher / drill sergeant / soldier / parent	drill sergeant	drill sergeant	True	False	thing and its typical quality	3
+243	smug	smug : humble :: conceited : ?	vain / modest / proud / boastful / arrogant	modest	modest	True	False	opposites	2
+244	equivocal	equivocal : unequivocal :: ambiguous : ?	unclear / uncertain / vague / definite / evasive	definite	definite	True	False	opposites	3
+245	turmoil	hurricane : turmoil :: lullaby : ?	calm / rain / chaos / sailor / wind	calm	calm	True	False	cause and effect	4
+246	apathy	apathy : interest :: insomnia : ?	bed / sleep / night / rest / dream	sleep	sleep	True	False	lacking	3
+247	articulate	articulate : speak :: nimble : ?	write / talk / move / think / dance	move	move	True	False	who does what	3
+248	civil	civil : rude :: polite : ?	proper / impolite / gracious / courteous / kind	impolite	impolite	True	False	opposites	1
+249	aspiration	aspiration : future :: regret : ?	present / history / past / goal / mistake	past	past	True	False	definition	3
+250	brusque	brusque : gracious :: curt : ?	blunt / rude / abrupt / short / courteous	courteous	courteous	True	False	opposites	3
+251	convivial	party : convivial :: wake : ?	festive / sleepy / early / jovial / somber	somber	somber	True	False	thing and its typical quality	3
+252	err	err : human :: forgive : ?	noble / mortal / wise / divine / kind	divine	divine	True	False	definition	2
+253	meticulous	surgeon : meticulous :: toddler : ?	patient / painstaking / precise / tall / careless	careless	careless	True	False	thing and its typical quality	2
+254	orthodox	orthodox : heretical :: conventional : ?	traditional / standard / usual / normal / eccentric	eccentric	eccentric	True	False	opposites	3
+255	denounce	denounce : traitor :: acclaim : ?	villain / hero / thief / spy / coward	hero	hero	True	False	action and what it acts on	3
+256	senescent	senescent : elderly :: juvenile : ?	youthful / old / mature / aging / young	young	young	True	True	definition	5
+257	matriarchy	matriarchy : women :: monarchy : ?	people / soldiers / royalty / voters / priests	royalty	royalty	True	False	definition	3
+258	volatile	dynamite : volatile :: bedrock : ?	solid / deep / stable / heavy / explosive	stable	stable	True	False	thing and its typical quality	3
+259	apex	apex : mountain :: crest : ?	trough / surf / ocean / beach / wave	wave	wave	True	False	part and whole	2
+260	evasive	evasive : dodge :: candid : ?	deny / avoid / confess / lie / hide	confess	confess	True	False	who does what	3
+261	salubrious	salubrious : noxious :: wholesome : ?	clean / healthy / nourishing / pure / toxic	toxic	toxic	True	False	opposites	5
+262	parody	parody : mock :: tribute : ?	praise / copy / imitate / laugh / honor	honor	honor	True	True	purpose	3
+263	superficial	scratch : superficial :: gash : ?	small / deep / shallow / painful / dry	deep	deep	True	False	thing and its typical quality	2
+264	interdict	interdict : permit :: forbid : ?	allow / stop / ban / block / prohibit	allow	allow	True	False	opposites	4
+265	vigor	vigor : lethargy :: vitality : ?	sluggishness / energy / stamina / strength / zeal	sluggishness	sluggishness	True	False	opposites	3
+266	veneer	veneer : cabinet :: facade : ?	furniture / brick / paint / building / house	building	building	True	False	part and whole	4
+267	induce	induce : deter :: prompt : ?	urge / cause / prevent / provoke / persuade	prevent	prevent	True	False	opposites	3
+268	concede	concede : defeat :: claim : ?	victory / failure / race / vote / loss	victory	victory	True	False	action and what it acts on	2
+269	transparent	window : transparent :: curtain : ?	see-through / glassy / bright / opaque / clear	opaque	opaque	True	False	thing and its typical quality	1
+270	fatuous	fatuous : sensible :: inane : ?	foolish / silly / witless / wise / absurd	wise	wise	True	False	opposites	5
+271	redundant	redundant : necessary :: superfluous : ?	surplus / essential / excessive / extra / needless	essential	essential	True	False	opposites	3
+272	arbitrate	arbitrate : dispute :: referee : ?	fight / whistle / team / game / player	game	game	True	False	action and what it acts on	3
+273	temper	temper : soften :: exacerbate : ?	soothe / moderate / ease / worsen / calm	worsen	worsen	True	False	same meaning	3
+274	chronicler	chronicler : history :: cartographer : ?	book / compass / map / globe / explorer	map	map	True	False	maker and what they make or use	3
+275	noxious	noxious : fumes :: fragrant : ?	garden / flowers / weeds / smoke / garbage	flowers	flowers	True	False	thing and its typical quality	2
+276	coalesce	coalesce : disperse :: merge : ?	combine / join / unite / fuse / scatter	scatter	scatter	True	False	opposites	4
+277	deliberate	deliberate : ponder :: hasty : ?	consider / wait / rush / decide / think	rush	rush	True	False	who does what	3
+278	assert	assert : claim :: retract : ?	maintain / declare / withdraw / state / insist	withdraw	withdraw	True	False	same meaning	3
+279	humdrum	chore : humdrum :: adventure : ?	dull / routine / boring / tiring / thrilling	thrilling	thrilling	True	False	thing and its typical quality	2
+280	pugnacious	pugnacious : fight :: garrulous : ?	argue / chat / quarrel / sleep / listen	chat	chat	True	False	who does what	4
+281	renounce	renounce : throne :: resign : ?	salary / post / office / boss / crown	post	post	True	True	action and what it acts on	3
+282	disperse	disperse : crowd :: dissolve : ?	water / pebble / coffee / police / sugar cube	sugar cube	sugar cube	True	False	who does what	4
+283	conjure	magician : conjure :: chef : ?	serve / perform / cook / summon / taste	cook	cook	True	False	who does what	2
+284	privation	privation : necessities :: drought : ?	wealth / famine / rain / water / sun	water	rain	False	False	lacking	3
+285	banish	banish : exile :: welcome : ?	evict / dismiss / expel / admit / eject	admit	admit	True	False	same meaning	2
+286	pedestrian	pedestrian : original :: ordinary : ?	novel / common / usual / everyday / walking	novel	novel	True	False	opposites	4
+287	tumult	tumult : stadium :: silence : ?	library / reader / quiet / book / noise	library	library	True	False	thing and its typical quality	3
+288	extraneous	extraneous : pertinent :: irrelevant : ?	relevant / unnecessary / superfluous / extra / needless	relevant	relevant	True	False	opposites	3
+289	illuminate	lamp : illuminate :: blanket : ?	shine / glow / fold / warm / cool	warm	warm	True	False	purpose	1
+290	tenable	tenable : defended :: habitable : ?	lived in / lost / proven / torn down / broken	lived in	lived in	True	False	definition	4
+291	disclose	disclose : conceal :: divulge : ?	expose / hide / share / tell / reveal	hide	hide	True	False	opposites	3
+292	colloquy	colloquy : several people :: soliloquy : ?	no one / an audience / a crowd / two people / one person	one person	one person	True	False	definition	5
+293	stolid	stolid : excitable :: impassive : ?	reserved / placid / calm / emotional / steady	emotional	emotional	True	False	opposites	4
+294	prominent	prominent : obscure :: famous : ?	renowned / notable / celebrated / eminent / unknown	unknown	unknown	True	False	opposites	2
+295	bellicose	hawk : bellicose :: dove : ?	white / warlike / belligerent / peaceful / winged	peaceful	peaceful	True	False	thing and its typical quality	4
+296	baffle	riddle : baffle :: joke : ?	confuse / laugh / puzzle / amuse / tell	amuse	amuse	True	False	purpose	2
+297	obliging	obliging : helpful :: obstinate : ?	stubborn / accommodating / kind / willing / cooperative	stubborn	stubborn	True	False	same meaning	3
+298	garrulous	parrot : garrulous :: owl : ?	foolish / noisy / wise / colorful / talkative	wise	wise	True	False	thing and its typical quality	2
+299	zealot	zealot : fanatical :: skeptic : ?	credulous / faithful / doubtful / devoted / passionate	doubtful	doubtful	True	False	thing and its typical quality	3
+300	vanquish	vanquish : foe :: tame : ?	cage / beast / circus / enemy / trainer	beast	beast	True	False	action and what it acts on	3
+301	deference	deference : elder :: defiance : ?	ally / friend / oppressor / rebel / child	oppressor	oppressor	True	False	action and what it acts on	5
+302	allude	allude : hint :: declare : ?	announce / imply / refer / suggest / whisper	announce	announce	True	False	same meaning	3
+303	condone	condone : condemn :: excuse : ?	tolerate / overlook / pardon / forgive / punish	punish	punish	True	False	opposites	3
+304	egotist	egotist : self :: altruist : ?	others / fame / friends / family / money	others	others	True	False	definition	3
+305	somber	somber : funeral :: festive : ?	library / carnival / dentist / hospital / exam	carnival	carnival	True	False	thing and its typical quality	3
+306	atrophy	muscle : atrophy :: iron gate : ?	shine / bend / melt / rust / strengthen	rust	rust	True	False	who does what	4
+307	contravene	contravene : law :: defy : ?	soldier / rule / officer / order / court	order	order	True	True	action and what it acts on	4
+308	subtle	subtle : faint :: blatant : ?	glaring / shy / quiet / gentle / rude	glaring	glaring	True	False	same meaning	2
+309	pinnacle	pinnacle : career :: summit : ?	mountain / valley / snow / climber / peak	mountain	mountain	True	False	part and whole	3
+310	pertinent	pertinent : relevant :: extraneous : ?	applicable / related / essential / important / irrelevant	irrelevant	irrelevant	True	False	same meaning	3
+311	corroborate	witness : corroborate :: skeptic : ?	testify / verify / confirm / doubt / support	doubt	doubt	True	False	who does what	4
+312	effusive	effusive : gush :: laconic : ?	chatter / mutter / shout / sing / praise	mutter	mutter	True	False	who does what	5
+313	aggrandize	aggrandize : inflate :: belittle : ?	boost / magnify / praise / exaggerate / diminish	diminish	diminish	True	False	same meaning	4
+314	enmity	enmity : foes :: amity : ?	friends / strangers / rivals / enemies / allies	friends	friends	True	True	definition	4
+315	detrimental	junk food : detrimental :: vegetables : ?	harmful / sugary / fried / green / beneficial	beneficial	beneficial	True	False	thing and its typical quality	2
+316	eschew	eschew : avoid :: embrace : ?	shun / dodge / refuse / welcome / escape	welcome	welcome	True	False	same meaning	3
+317	respite	respite : work :: oasis : ?	water / vacation / sand / camel / the desert	the desert	the desert	True	False	definition	4
+318	quip	quip : witty :: sermon : ?	funny / solemn / silly / clever / playful	solemn	solemn	True	False	thing and its typical quality	3
+319	conformity	conformity : rebellion :: obedience : ?	compliance / defiance / agreement / submission / loyalty	defiance	defiance	True	False	opposites	3
+320	acute	acute : chronic :: sudden : ?	lasting / quick / brief / severe / sharp	lasting	lasting	True	False	opposites	4
+321	inhibit	brake : inhibit :: accelerator : ?	steer / drive / promote / slow / stop	promote	promote	True	False	purpose	3
+322	embellish	embellish : story :: garnish : ?	plate / recipe / dish / herb / chef	dish	dish	True	False	action and what it acts on	3
+323	phenomenon	phenomenon : remarkable :: commonplace : ?	ordinary / unusual / notable / strange / rare	ordinary	ordinary	True	False	definition	4
+324	debilitate	illness : debilitate :: exercise : ?	sweat / exhaust / weaken / tire / invigorate	invigorate	invigorate	True	False	cause and effect	4
+325	unprecedented	unprecedented : novel :: routine : ?	familiar / new / unique / original / unusual	familiar	familiar	True	False	same meaning	3
+326	elusive	elusive : catch :: illegible : ?	see / find / read / hold / write	read	read	True	False	definition	3
+327	abdicate	king : abdicate :: employee : ?	rule / work / retire / hire / resign	resign	resign	True	False	who does what	2
+328	inconsequential	inconsequential : crucial :: trivial : ?	slight / minor / vital / insignificant / petty	vital	vital	True	False	opposites	3
+329	allege	accuser : allege :: witness : ?	lie / judge / prove / accuse / testify	testify	testify	True	False	who does what	3
+330	cliche	cliche : trite :: proverb : ?	silly / wise / overused / foolish / hackneyed	wise	wise	True	False	thing and its typical quality	4
+331	collaborate	collaborate : teammates :: compete : ?	friends / partners / rivals / allies / colleagues	rivals	rivals	True	False	who does what	2
+332	antediluvian	antediluvian : modern :: ancient : ?	old / prehistoric / antiquated / archaic / new	new	new	True	False	opposites	4
+333	belie	belie : misrepresent :: reveal : ?	expose / disguise / mask / conceal / hide	expose	expose	True	False	same meaning	5
+334	pilfer	pilfer : steal :: nibble : ?	devour / feast / swallow / cook / eat	eat	eat	True	False	mild and extreme forms	3
+335	fluctuate	stock price : fluctuate :: mountain : ?	climb / fall / vary / rise / endure	endure	endure	True	False	who does what	3
+336	objective	objective : fact :: subjective : ?	evidence / truth / idea / belief / opinion	opinion	opinion	True	False	opposites	2
+337	astute	astute : fooled :: vigilant : ?	aware / alert / awake / calm / surprised	surprised	surprised	True	False	definition	4
+338	naive	naive : novice :: worldly : ?	expert / veteran / soldier / beginner / traveler	veteran	veteran	True	False	thing and its typical quality	3
+339	viable	viable : plan :: fertile : ?	seed / farmer / crop / barn / field	field	field	True	False	definition	4
+340	mediocre	mediocre : average :: outstanding : ?	normal / fair / excellent / adequate / ordinary	excellent	excellent	True	False	same meaning	2
+341	sustain	food : sustain :: poison : ?	feed / destroy / cure / spill / nourish	destroy	destroy	True	False	purpose	2
+342	hidebound	hidebound : progressive :: rigid : ?	stubborn / flexible / stiff / firm / inflexible	flexible	flexible	True	False	opposites	4
+343	duress	duress : coercion :: consent : ?	force / compulsion / pressure / threat / agreement	agreement	agreement	True	False	same meaning	4
+344	patron	patron : artist :: sponsor : ?	stadium / team / athlete / coach / painting	athlete	athlete	True	True	action and what it acts on	3
+345	discrepancy	discrepancy : inconsistent :: agreement : ?	different / similar / equal / consistent / mismatched	consistent	consistent	True	False	definition	4
+346	sycophant	sycophant : flatter :: critic : ?	applaud / obey / fawn / judge / praise	judge	judge	True	False	who does what	3
+347	debunk	debunk : expose :: confirm : ?	deny / doubt / refute / reveal / corroborate	corroborate	corroborate	True	False	same meaning	3
+348	abridge	abridge : book :: trim : ?	barber / scissors / page / comb / beard	beard	beard	True	False	action and what it acts on	3
+349	genre	genre : mystery :: species : ?	jungle / zoo / stripe / fur / tiger	tiger	tiger	True	False	kind of thing	4
+350	inexorable	glacier : inexorable :: butterfly : ?	relentless / heavy / slow / steady / flighty	flighty	flighty	True	False	thing and its typical quality	5
+351	matriculate	matriculate : enter :: graduate : ?	study / attend / start / finish / apply	finish	finish	True	False	definition	4
+352	tyranny	tyrant : tyranny :: democrat : ?	oppression / freedom / citizen / democracy / election	democracy	democracy	True	False	related word forms	1
+353	mercenary	mercenary : money :: patriot : ?	loot / gold / wages / pay / country	country	country	True	False	definition	3
+354	apprehension	apprehension : exam :: anticipation : ?	dread / fear / test / holiday / vacation	holiday	holiday	True	True	cause and effect	4
+355	assuage	assuage : grief :: quench : ?	thirst / hunger / water / tears / drink	thirst	thirst	True	False	action and what it acts on	4
+356	impede	roadblock : impede :: bridge : ?	block / span / cross / facilitate / build	facilitate	facilitate	True	False	purpose	3
+357	static	statue : static :: river : ?	frozen / still / rigid / dynamic / stationary	dynamic	dynamic	True	False	thing and its typical quality	3
+358	obviate	umbrella : obviate :: vaccine : ?	treat / prevent / cure / spread / inject	prevent	prevent	True	False	purpose	5
+359	caustic	acid : caustic :: balm : ?	burning / stinging / corrosive / soothing / sharp	soothing	soothing	True	False	thing and its typical quality	3
+360	nuance	nuance : subtle :: contrast : ?	slight / stark / fine / delicate / faint	stark	stark	True	False	thing and its typical quality	4
+361	foster	gardener : foster :: arsonist : ?	water / destroy / plant / burn / nurture	destroy	destroy	True	True	who does what	3
+362	expedite	expedite : delay :: hasten : ?	speed / rush / postpone / hurry / quicken	postpone	postpone	True	False	opposites	3
+363	steadfast	dog : steadfast :: cat : ?	devoted / clingy / faithful / loyal / aloof	aloof	aloof	True	False	thing and its typical quality	2
+364	dexterous	juggler : dexterous :: toddler : ?	agile / graceful / nimble / deft / clumsy	clumsy	clumsy	True	False	thing and its typical quality	2
+365	exploit	exploit : take advantage of :: protect : ?	safeguard / manipulate / cheat / use / abuse	safeguard	safeguard	True	False	same meaning	3
+366	partisan	partisan : biased :: referee : ?	one-sided / neutral / prejudiced / partial / loud	neutral	neutral	True	False	thing and its typical quality	3
+367	deride	deride : mock :: acclaim : ?	tease / praise / jeer / ridicule / scoff	praise	praise	True	False	same meaning	3
+368	surfeit	surfeit : dearth :: feast : ?	plenty / excess / famine / glut / banquet	famine	famine	True	False	opposites	4
+369	quagmire	quagmire : mud :: labyrinth : ?	prison / swamp / walls / passages / maze	passages	passages	True	False	definition	5
+370	cadence	cadence : rhythm :: melody : ?	rhyme / harmony / lyric / tune / song	tune	tune	True	False	same meaning	4
+371	enumerate	enumerate : list :: summarize : ?	story / index / count / chapter / summary	summary	summary	True	False	maker and what they make or use	3
+372	lucid	lucid : muddled :: clear : ?	confusing / simple / bright / plain / coherent	confusing	confusing	True	False	opposites	2
+373	oracle	oracle : prophecy :: judge : ?	jury / verdict / crime / court / lawyer	verdict	verdict	True	False	maker and what they make or use	3
+374	petty	petty : trivial :: grave : ?	slight / serious / small / minor / spiteful	serious	serious	True	False	same meaning	3
+375	desultory	desultory : methodical :: aimless : ?	random / purposeful / casual / haphazard / wandering	purposeful	purposeful	True	False	opposites	5
+376	acclaim	acclaim : hero :: jeer : ?	fan / champion / villain / saint / winner	villain	villain	True	False	action and what it acts on	3
+377	retract	retract : remarks :: withdraw : ?	army / troops / battle / general / claims	troops	troops	True	False	action and what it acts on	4
+378	malady	malady : doctor :: dispute : ?	argument / mediator / patient / judge / lawyer	mediator	mediator	True	True	action and what it acts on	3
+379	credence	credence : belief :: skepticism : ?	doubt / faith / credit / trust / acceptance	doubt	doubt	True	False	same meaning	4
+380	compunction	compunction : conscience :: pain : ?	heart / nerve / body / guilt / doctor	nerve	nerve	True	True	definition	5
+381	archaic	archaic : antiquated :: modern : ?	contemporary / outdated / old / ancient / obsolete	contemporary	contemporary	True	False	same meaning	3
+382	soporific	lullaby : soporific :: alarm : ?	quiet / jarring / musical / sedative / sleepy	jarring	jarring	True	False	thing and its typical quality	4
+383	convoluted	convoluted : maze :: straightforward : ?	labyrinth / tangle / garden / hallway / puzzle	hallway	hallway	True	False	thing and its typical quality	4
+384	pragmatic	pragmatic : idealistic :: practical : ?	romantic / realistic / dreamy / quixotic / sensible	romantic	dreamy	False	True	opposites	3
+385	stoic	stoic : complain :: fickle : ?	commit / waver / cry / suffer / change	commit	commit	True	False	who does what	4
+386	catharsis	catharsis : emotions :: purge : ?	feelings / doctor / soul / body / mind	body	body	True	False	definition	5
+387	mettle	mettle : soldier :: stamina : ?	runner / track / shoes / medals / race	runner	runner	True	False	thing and its typical quality	4
+388	profligate	profligate : frugal :: wasteful : ?	prodigal / lavish / extravagant / careless / thrifty	thrifty	thrifty	True	False	opposites	5
+389	verbose	verbose : words :: obese : ?	size / weight / speech / books / food	weight	weight	True	False	definition	4
+390	overt	overt : covert :: public : ?	secret / plain / visible / obvious / open	secret	secret	True	False	opposites	2
+391	fabricate	fabricate : invent :: plagiarize : ?	print / create / publish / write / copy	copy	copy	True	False	definition	4
+392	demur	demur : object :: acquiesce : ?	refuse / agree / protest / resist / hesitate	agree	agree	True	False	same meaning	5
+393	ephemeral	soap bubble : ephemeral :: pyramid : ?	temporary / fragile / fleeting / brief / enduring	enduring	enduring	True	False	thing and its typical quality	3
+394	instigate	instigate : quell :: start : ?	incite / provoke / begin / stop / spark	stop	stop	True	False	opposites	2
+395	superfluous	superfluous : needed :: redundant : ?	necessary / excessive / unnecessary / extra / surplus	necessary	necessary	True	False	opposites	3
+396	intimate	intimate : hint :: proclaim : ?	suggest / imply / announce / signal / whisper	announce	announce	True	False	same meaning	5
+397	temperate	temperate : climate :: mild : ?	spice / flame / cook / weather / oven	spice	spice	True	False	thing and its typical quality	4
+398	preclude	preclude : allow :: prevent : ?	block / forbid / stop / bar / permit	permit	permit	True	False	opposites	3
+399	desecrate	vandal : desecrate :: priest : ?	defile / deface / vandalize / destroy / consecrate	consecrate	consecrate	True	False	who does what	5
+400	profuse	profuse : sparse :: copious : ?	scant / lavish / plentiful / ample / abundant	scant	scant	True	False	opposites	4
+401	subside	flood : subside :: fever : ?	rise / spread / burn / spike / break	break	break	True	False	who does what	4
+402	quell	quell : rebellion :: extinguish : ?	army / firefighter / smoke / blaze / water	blaze	blaze	True	False	action and what it acts on	3
+403	guile	fox : guile :: ox : ?	strength / horns / cunning / farm / grass	strength	strength	True	False	thing and its typical quality	3
+404	subordinate	subordinate : boss :: private : ?	sergeant / general / army / uniform / soldier	sergeant	general	False	True	counterparts	2
+405	precedent	precedent : court :: rehearsal : ?	stage / performance / actor / audience / judge	performance	performance	True	True	definition	5
+406	decimate	locusts : decimate :: rain : ?	nourish / devour / flood / destroy / harvest	nourish	nourish	True	False	cause and effect	3
+407	foment	agitator : foment :: peacemaker : ?	provoke / incite / protest / stir / quell	quell	quell	True	False	who does what	4
+408	camaraderie	camaraderie : teammates :: rivalry : ?	competitors / friends / coaches / allies / partners	competitors	competitors	True	False	thing and its typical quality	3
+409	comprehensive	comprehensive : encyclopedia :: brief : ?	atlas / dictionary / novel / library / pamphlet	pamphlet	pamphlet	True	False	thing and its typical quality	3
+410	mogul	mogul : industry :: monarch : ?	kingdom / castle / throne / crown / subject	kingdom	kingdom	True	False	definition	3
+411	rectify	rectify : error :: heal : ?	mistake / bandage / wound / scar / doctor	wound	wound	True	False	action and what it acts on	3
+412	debase	debase : currency :: pollute : ?	mint / river / factory / coin / bank	river	river	True	False	action and what it acts on	5
+413	stagnant	puddle : stagnant :: stream : ?	flowing / muddy / motionless / murky / still	flowing	flowing	True	False	thing and its typical quality	2
+414	despondent	despondent : hope :: destitute : ?	debt / money / joy / bills / taxes	money	money	True	False	lacking	4
+415	animosity	animosity : enemies :: affection : ?	opponents / rivals / friends / foes / strangers	friends	friends	True	False	thing and its typical quality	2
+416	venerate	venerate : saint :: scorn : ?	leader / traitor / hero / priest / martyr	traitor	traitor	True	False	action and what it acts on	3
+417	glean	glean : information :: harvest : ?	library / farmer / tractor / crops / news	crops	crops	True	False	action and what it acts on	4
+418	perfidious	perfidious : traitor :: steadfast : ?	ally / rival / villain / enemy / spy	ally	ally	True	False	thing and its typical quality	4
+419	fetter	fetter : prisoner :: harness : ?	horse / cart / saddle / guard / jail	horse	horse	True	False	action and what it acts on	4
+420	plausible	plausible : implausible :: likely : ?	credible / probable / possible / unlikely / believable	unlikely	unlikely	True	False	opposites	2
+421	omniscient	omniscient : knowledge :: omnipotent : ?	time / power / everything / money / wisdom	power	power	True	False	definition	3
+422	inherent	inherent : acquired :: innate : ?	inborn / natural / basic / intrinsic / learned	learned	learned	True	False	opposites	3
+423	definitive	definitive : tentative :: final : ?	conclusive / complete / certain / provisional / official	provisional	provisional	True	False	opposites	3
+424	juxtaposition	juxtaposition : side by side :: stack : ?	in order / inside / apart / on top of each other / in a row	on top of each other	on top of each other	True	False	definition	5
+425	fallacy	fallacy : reasoning :: typo : ?	logic / math / thinking / spelling / argument	spelling	spelling	True	False	definition	3
+426	relegate	relegate : demote :: elevate : ?	promote / downgrade / dismiss / transfer / lower	promote	promote	True	False	same meaning	4
+427	adhere	glue : adhere :: oil : ?	cling / slide / harden / burn / stick	slide	slide	True	False	cause and effect	3
+428	tentative	tentative : pencil :: permanent : ?	pen / paper / eraser / ink / marker	pen	ink	False	True	thing and its typical quality	4
+429	parsimony	parsimony : miser :: extravagance : ?	saver / spendthrift / thrift / greed / banker	spendthrift	spendthrift	True	False	thing and its typical quality	4
+430	avert	avert : disaster :: dodge : ?	punch / boxer / fist / blow / fight	blow	blow	True	False	action and what it acts on	4
+431	nascent	bud : nascent :: bloom : ?	young / budding / emerging / new / mature	mature	mature	True	False	thing and its typical quality	4
+432	disdain	disdain : snob :: adoration : ?	fan / celebrity / critic / enemy / star	fan	fan	True	False	thing and its typical quality	4
+433	cite	cite : source :: credit : ?	quote / page / book / author / reader	author	author	True	False	action and what it acts on	3
+434	protege	protege : mentor :: apprentice : ?	pupil / trainee / master / novice / student	master	master	True	False	counterparts	3
+435	pliant	willow : pliant :: oak : ?	bendy / pliable / supple / rigid / flexible	rigid	rigid	True	False	thing and its typical quality	3
+436	periphery	periphery : circle :: rind : ?	orange / juice / seed / peel / core	orange	orange	True	False	part and whole	4
+437	advocate	advocate : champion :: detractor : ?	critic / backer / supporter / ally / fan	critic	critic	True	False	same meaning	3
+438	dogmatic	dogmatic : flexible :: rigid : ?	firm / stiff / strict / stubborn / pliable	pliable	pliable	True	False	opposites	3
+439	cordial	cordial : warm :: frosty : ?	polite / kind / friendly / gracious / cold	cold	cold	True	False	same meaning	3
+440	replete	replete : full :: devoid : ?	packed / filled / laden / empty / stuffed	empty	empty	True	False	definition	4
+441	scintillate	diamond : scintillate :: coal : ?	mine / shine / smolder / sparkle / glitter	smolder	smolder	True	False	who does what	5
+442	anterior	anterior : front :: posterior : ?	top / back / middle / side / bottom	back	back	True	False	opposites	3
+443	breach	breach : dam :: puncture : ?	air / tire / wheel / car / flood	tire	tire	True	False	definition	3
+444	vicarious	vicarious : firsthand :: indirect : ?	direct / shared / secondhand / borrowed / imagined	direct	direct	True	False	opposites	4
+445	eulogy	eulogy : funeral :: toast : ?	cake / hospital / bride / wedding / champagne	wedding	wedding	True	False	thing and its typical quality	2
+446	precursor	precursor : successor :: forerunner : ?	heir / herald / ancestor / pioneer / harbinger	heir	heir	True	False	opposites	4
+447	demeanor	demeanor : person :: facade : ?	building / window / roof / architect / brick	building	building	True	False	part and whole	4
+448	spendthrift	spendthrift : money :: chatterbox : ?	friends / time / words / noise / silence	words	words	True	False	definition	3
+449	exemplary	exemplary : deplorable :: admirable : ?	shameful / ideal / excellent / praiseworthy / model	shameful	shameful	True	False	opposites	3
+450	consensus	consensus : agreement :: discord : ?	harmony / vote / unity / disagreement / accord	disagreement	disagreement	True	False	same meaning	2
+451	conviction	conviction : certain :: doubt : ?	confident / unsure / sure / firm / positive	unsure	unsure	True	False	cause and effect	3
+452	innate	innate : instinct :: acquired : ?	talent / gift / skill / reflex / nature	skill	skill	True	False	thing and its typical quality	4
+453	cohesion	cohesion : team :: harmony : ?	army / mob / crowd / soloist / choir	choir	choir	True	False	thing and its typical quality	3
+454	gullible	gullible : believe :: suspicious : ?	trust / doubt / trick / accept / lie	doubt	doubt	True	False	who does what	3
+455	bourgeoisie	bourgeoisie : middle :: aristocracy : ?	lower / working / royal / upper / noble	upper	upper	True	False	kind of thing	4
+456	robust	robust : frail :: sturdy : ?	tough / solid / flimsy / strong / hardy	flimsy	flimsy	True	False	opposites	2
+457	burgeon	spring : burgeon :: autumn : ?	bloom / flourish / grow / sprout / wither	wither	wither	True	False	cause and effect	4
+458	proximity	proximity : near :: remoteness : ?	far / adjacent / next / close / beside	far	far	True	False	definition	2
+459	florid	florid : ornate :: plain : ?	showy / simple / elaborate / flowery / fancy	simple	simple	True	False	same meaning	4
+460	anthropology	anthropology : cultures :: astronomy : ?	scientist / horoscope / fossils / stars / telescope	stars	stars	True	False	definition	2
+461	congenital	congenital : birth :: posthumous : ?	age / life / illness / death / childhood	death	death	True	False	definition	5
+462	interloper	interloper : party :: stowaway : ?	sailor / ship / captain / sea / ticket	ship	ship	True	False	definition	4
+463	vindictive	vindictive : revenge :: merciful : ?	punishment / apology / justice / pity / forgiveness	forgiveness	forgiveness	True	False	who does what	3
+464	perplex	perplex : clarify :: puzzle : ?	confuse / explain / baffle / confound / bewilder	explain	explain	True	False	opposites	2
+465	indignant	insult : indignant :: compliment : ?	offended / resentful / sleepy / angry / pleased	pleased	pleased	True	False	cause and effect	2
+466	innovative	innovative : inventor :: traditional : ?	rebel / startup / rookie / child / elder	elder	elder	True	False	thing and its typical quality	4
+467	torpid	torpid : sloth :: frenetic : ?	tortoise / snail / bird / tree / hummingbird	hummingbird	hummingbird	True	False	thing and its typical quality	5
+468	elaborate	elaborate : cathedral :: simple : ?	palace / temple / hut / castle / church	hut	hut	True	False	thing and its typical quality	3
+469	vulgar	vulgar : refined :: coarse : ?	rude / elegant / rough / crude / crass	elegant	elegant	True	False	opposites	2
+470	elucidate	teacher : elucidate :: riddle : ?	explain / teach / answer / clarify / perplex	perplex	perplex	True	False	purpose	4
+471	construe	construe : misconstrue :: understand : ?	grasp / interpret / explain / know / misunderstand	misunderstand	misunderstand	True	False	related word forms	3
+472	meander	stream : meander :: arrow : ?	wind / curve / fly / wander / ramble	fly	fly	True	False	who does what	4
+473	forte	forte : strength :: foible : ?	talent / skill / gift / specialty / weakness	weakness	weakness	True	False	same meaning	5
+474	analogous	analogous : similar :: disparate : ?	equal / different / comparable / alike / like	different	different	True	False	same meaning	3
+475	antipathy	antipathy : affinity :: aversion : ?	loathing / dislike / hostility / attraction / hatred	attraction	attraction	True	False	opposites	4
+476	ardor	ardor : lover :: apathy : ?	hero / bystander / zealot / fan / victim	bystander	bystander	True	False	thing and its typical quality	4
+477	infer	infer : clues :: calculate : ?	answer / math / sum / numbers / detective	numbers	numbers	True	False	action and what it acts on	3
+478	reproach	reproach : misdeed :: reward : ?	accomplishment / prize / mistake / failure / crime	accomplishment	accomplishment	True	False	action and what it acts on	3
+479	conventional	conventional : unorthodox :: traditional : ?	radical / usual / customary / standard / normal	radical	radical	True	False	opposites	2
+480	spontaneous	spontaneous : improvise :: deliberate : ?	think / decide / hurry / act / plan	plan	plan	True	False	who does what	3
+481	decisive	decisive : vacillate :: tenacious : ?	quit / waver / try / succeed / persist	quit	quit	True	False	lacking	4
+482	ubiquitous	ubiquitous : everywhere :: nonexistent : ?	nowhere / anywhere / here / elsewhere / somewhere	nowhere	nowhere	True	False	definition	2
+483	exculpate	exculpate : incriminate :: acquit : ?	convict / release / exonerate / pardon / absolve	convict	convict	True	False	opposites	5
+484	avid	avid : eager :: apathetic : ?	ardent / enthusiastic / keen / zealous / indifferent	indifferent	indifferent	True	False	same meaning	3
+485	amiable	puppy : amiable :: hornet : ?	playful / irritable / cuddly / friendly / gentle	irritable	irritable	True	False	thing and its typical quality	2
+486	emulate	emulate : role model :: avoid : ?	mistake / bad example / leader / hero / teacher	bad example	bad example	True	False	action and what it acts on	3
+487	pristine	pristine : sullied :: clean : ?	neat / dirty / spotless / fresh / pure	dirty	dirty	True	False	opposites	3
+488	accessible	ramp : accessible :: moat : ?	open / inaccessible / welcoming / reachable / inviting	inaccessible	inaccessible	True	False	purpose	3
+489	capricious	capricious : whim :: methodical : ?	feeling / plan / mood / urge / impulse	plan	plan	True	False	definition	4
+490	defer	defer : postpone :: expedite : ?	delay / hasten / wait / hold / stall	hasten	hasten	True	False	same meaning	4
+491	ornate	ornate : palace :: spartan : ?	cathedral / throne / castle / barracks / mansion	barracks	barracks	True	False	thing and its typical quality	4
+492	hyperbole	hyperbole : exaggerate :: understatement : ?	boast / inflate / overstate / downplay / magnify	downplay	downplay	True	False	purpose	4
+493	sentimental	sentimental : keepsake :: practical : ?	heirloom / gift / photo / memory / tool	tool	tool	True	False	thing and its typical quality	4
+494	craven	craven : valiant :: cowardly : ?	fearful / brave / timid / spineless / meek	brave	brave	True	False	opposites	4
+495	regimen	regimen : athlete :: diet : ?	gym / coach / dieter / meal / food	dieter	dieter	True	False	action and what it acts on	3
+496	trepidation	trepidation : fear :: jubilation : ?	joy / dread / sorrow / calm / anger	joy	joy	True	False	kind of thing	4
+497	subjective	subjective : opinion :: objective : ?	taste / belief / measurement / feeling / guess	measurement	measurement	True	False	thing and its typical quality	3
+498	mundane	mundane : extraordinary :: ordinary : ?	common / routine / remarkable / everyday / usual	remarkable	remarkable	True	False	opposites	2
+499	lassitude	lassitude : weary :: vigor : ?	sluggish / tired / drowsy / energetic / lazy	energetic	energetic	True	False	cause and effect	5
+500	elicit	elicit : response :: extract : ?	mouth / smile / dentist / tooth / question	tooth	tooth	True	False	action and what it acts on	4
+501	complicity	complicity : collusion :: innocence : ?	guilt / crime / partnership / blamelessness / help	blamelessness	blamelessness	True	False	same meaning	5
+502	usurp	usurp : seize :: abdicate : ?	inherit / relinquish / claim / rule / assume	relinquish	relinquish	True	False	same meaning	4
+503	callous	callous : compassionate :: heartless : ?	unfeeling / kind / cold / harsh / cruel	kind	kind	True	False	opposites	2
+504	transcend	transcend : limits :: cross : ?	maps / borders / flags / guards / passports	borders	borders	True	False	action and what it acts on	4
+505	rectitude	rectitude : saint :: iniquity : ?	virtue / sinner / villain / crime / hero	sinner	villain	False	True	thing and its typical quality	5
+506	tact	tact : diplomat :: courage : ?	hose / truck / fire / uniform / firefighter	firefighter	firefighter	True	False	thing and its typical quality	2
+507	criterion	criterion : judge :: yardstick : ?	measure / count / weigh / build / compare	measure	measure	True	False	purpose	4
+508	stifle	stifle : smother :: unleash : ?	suppress / choke / hush / release / silence	release	release	True	False	same meaning	4
+509	glutton	glutton : food :: miser : ?	fame / sleep / meals / praise / money	money	money	True	False	definition	2
+510	zenith	zenith : nadir :: peak : ?	top / valley / apex / summit / pinnacle	valley	valley	True	False	opposites	3
+511	notorious	outlaw : notorious :: hero : ?	wicked / infamous / renowned / feared / villainous	renowned	renowned	True	False	thing and its typical quality	3
+512	prolific	prolific : fruitful :: barren : ?	busy / fertile / unproductive / creative / productive	unproductive	unproductive	True	False	same meaning	3
+513	rigorous	boot camp : rigorous :: vacation : ?	grueling / demanding / harsh / relaxed / strict	relaxed	relaxed	True	False	thing and its typical quality	2
+514	desiccate	desiccate : dry :: saturate : ?	bake / wither / drain / parch / soak	soak	soak	True	False	definition	4
+515	obscure	fog : obscure :: spotlight : ?	darken / dim / illuminate / blind / hide	illuminate	illuminate	True	False	who does what	3
+516	discreet	confidant : discreet :: gossip : ?	quiet / loyal / indiscreet / secret / friendly	indiscreet	indiscreet	True	False	thing and its typical quality	4
+517	mesmerize	hypnotist : mesmerize :: comedian : ?	captivate / amuse / frighten / bore / enthrall	amuse	amuse	True	False	who does what	3
+518	irk	mosquito : irk :: kitten : ?	delight / sting / annoy / bite / bother	delight	delight	True	False	cause and effect	2
+519	explicit	explicit : stated :: implicit : ?	plain / spoken / clear / implied / definite	implied	implied	True	False	definition	3
+520	discredit	scandal : discredit :: award : ?	shame / honor / win / disgrace / punish	honor	honor	True	False	cause and effect	3
+521	subsequent	subsequent : previous :: later : ?	next / after / future / earlier / following	earlier	earlier	True	False	opposites	2
+522	squander	squander : savings :: waste : ?	calendar / watch / alarm / clock / time	time	time	True	False	action and what it acts on	4
+523	founder	ship : founder :: plane : ?	sail / crash / sink / land / fly	crash	crash	True	False	who does what	4
+524	dissent	dissent : concur :: object : ?	protest / argue / disagree / agree / differ	agree	agree	True	False	opposites	3
+525	conducive	conducive : helps :: detrimental : ?	waits / heals / blocks / grows / hurts	hurts	hurts	True	False	definition	3
+526	propaganda	propaganda : persuade :: news : ?	convince / publish / inform / entertain / deceive	inform	inform	True	False	purpose	3
+527	dilemma	dilemma : choose :: riddle : ?	worry / laugh / solve / ask / guess	solve	solve	True	False	purpose	3
+528	voracious	voracious : eater :: avid : ?	page / reader / library / writer / book	reader	reader	True	False	thing and its typical quality	3
+529	pugilist	pugilist : boxing :: fencer : ?	swordplay / ring / armor / gloves / horse	swordplay	swordplay	True	False	who does what	4
+530	authoritarian	authoritarian : obedience :: democrat : ?	loyalty / control / consent / power / voting	consent	consent	True	False	who does what	5
+531	hierarchy	hierarchy : ranking :: equality : ?	level / parity / order / class / status	parity	parity	True	False	same meaning	4
+532	urbane	urbane : boorish :: polished : ?	sophisticated / suave / crude / elegant / refined	crude	crude	True	False	opposites	4
+533	tractable	tractable : intractable :: manageable : ?	docile / obedient / unruly / tame / compliant	unruly	unruly	True	False	opposites	3
+534	anecdote	anecdote : story :: quip : ?	novel / lecture / speech / remark / essay	remark	remark	True	False	kind of thing	3
+535	remorse	crime : remorse :: victory : ?	defeat / pride / guilt / sorrow / shame	pride	pride	True	False	cause and effect	3
+536	gourmand	gourmand : food :: bookworm : ?	reading / school / writing / library / glasses	reading	reading	True	False	thing and its typical quality	3
+537	aspersion	aspersion : reputation :: graffiti : ?	vandal / owner / property / crime / police	property	property	True	False	cause and effect	5
+538	transient	tourist : transient :: resident : ?	fleeting / permanent / foreign / temporary / traveling	permanent	permanent	True	False	thing and its typical quality	3
+539	substantiate	substantiate : claim :: refute : ?	lawyer / debate / evidence / proof / argument	argument	argument	True	False	action and what it acts on	5
+540	delineate	cartographer : delineate :: surveyor : ?	draw / measure / dig / map / build	measure	measure	True	False	who does what	4
+541	culpable	culpable : blame :: laudable : ?	shame / punishment / guilt / praise / reward	praise	praise	True	False	definition	4
+542	virtuoso	novice : virtuoso :: beginner : ?	expert / master / prodigy / student / amateur	expert	master	False	True	opposites	3
+543	iconoclast	iconoclast : tradition :: heretic : ?	priest / doctrine / rebel / church / belief	doctrine	doctrine	True	False	who does what	5
+544	castigate	scold : castigate :: nudge : ?	poke / shove / pat / tap / touch	shove	shove	True	False	mild and extreme forms	4
+545	evince	evince : conceal :: display : ?	exhibit / hide / show / present / reveal	hide	hide	True	False	opposites	4
+546	destitute	destitute : pauper :: affluent : ?	peasant / thief / beggar / orphan / tycoon	tycoon	tycoon	True	False	thing and its typical quality	3
+547	prevalent	prevalent : common :: rare : ?	frequent / scarce / popular / usual / widespread	scarce	scarce	True	False	same meaning	2
+548	maverick	maverick : herd :: rebel : ?	horse / army / rules / cowboy / leader	rules	rules	True	True	who does what	4
+549	belligerent	belligerent : brawler :: conciliatory : ?	soldier / coward / boxer / judge / peacemaker	peacemaker	peacemaker	True	False	thing and its typical quality	4
+550	sanction	sanction : approve :: veto : ?	reject / endorse / permit / allow / sign	reject	reject	True	False	same meaning	4
+551	doctrine	doctrine : church :: constitution : ?	flag / law / citizen / nation / president	nation	nation	True	False	purpose	3
+552	warrant	warrant : justify :: forbid : ?	prohibit / allow / deserve / merit / permit	prohibit	prohibit	True	False	same meaning	3
+553	intrepid	intrepid : explorer :: timid : ?	mouse / hole / cheese / cat / lion	mouse	mouse	True	False	thing and its typical quality	2
+554	reticent	reticent : speak :: stingy : ?	earn / whisper / listen / save / spend	spend	spend	True	False	who does what	3
+555	placid	placid : lake :: turbulent : ?	boat / storm / wave / waterfall / sail	waterfall	waterfall	True	False	thing and its typical quality	4
+556	hackneyed	hackneyed : phrase :: worn : ?	word / foot / shine / shoe / polish	shoe	shoe	True	False	thing and its typical quality	4
+557	aesthetic	aesthetic : beauty :: ethical : ?	morality / truth / goodness / law / art	morality	morality	True	False	definition	3
+558	lament	lament : loss :: celebrate : ?	party / trophy / defeat / victory / game	victory	victory	True	False	action and what it acts on	2
+559	refute	refute : claim :: rebut : ?	evidence / argument / lawyer / debate / proof	argument	argument	True	False	action and what it acts on	4
+560	miser	miser : hoard :: spendthrift : ?	invest / earn / squander / save / budget	squander	squander	True	False	who does what	3
+561	exhort	coach : exhort :: referee : ?	score / train / cheer / urge / penalize	penalize	penalize	True	False	who does what	4
+562	enigma	enigma : puzzling :: truism : ?	hidden / strange / simple / obvious / mysterious	obvious	obvious	True	False	thing and its typical quality	4
+563	hamper	mud pit : hamper :: tailwind : ?	blow / slow / stall / propel / dry	propel	propel	True	False	cause and effect	3
+564	differentiate	differentiate : distinguish :: confuse : ?	compare / contrast / muddle / clarify / separate	muddle	muddle	True	False	same meaning	3
+565	juggernaut	juggernaut : unstoppable :: pushover : ?	easy / huge / powerful / strong / tall	easy	easy	True	False	thing and its typical quality	3
+566	propitious	propitious : favorable :: ominous : ?	auspicious / hopeful / promising / lucky / threatening	threatening	threatening	True	False	same meaning	5
+567	querulous	querulous : complain :: jovial : ?	cry / whine / sulk / grumble / laugh	laugh	laugh	True	False	who does what	4
+568	compound	compound : combine :: separate : ?	mix / join / divide / blend / merge	divide	divide	True	False	same meaning	2
+569	anathema	anathema : loathed :: idol : ?	cursed / hated / feared / famous / adored	adored	adored	True	False	thing and its typical quality	5
+570	rescind	rescind : revoke :: enact : ?	establish / annul / cancel / void / repeal	establish	establish	True	False	same meaning	4
+571	pittance	pittance : fortune :: drop : ?	rain / trickle / flood / puddle / bucket	flood	flood	True	False	mild and extreme forms	4
+572	ignominious	ignominious : shameful :: glorious : ?	humiliating / degrading / disgraceful / honorable / embarrassing	honorable	honorable	True	False	same meaning	4
+573	august	august : cathedral :: humble : ?	temple / cottage / palace / castle / church	cottage	cottage	True	False	thing and its typical quality	5
+574	glib	glib : salesman :: earnest : ?	pastor / church / store / sermon / customer	pastor	pastor	True	False	thing and its typical quality	5
+575	implicate	fingerprint : implicate :: alibi : ?	convict / incriminate / accuse / exonerate / arrest	exonerate	exonerate	True	False	purpose	4
+576	chicanery	chicanery : swindler :: integrity : ?	crime / judge / thief / court / jury	judge	judge	True	False	thing and its typical quality	5
+577	baleful	baleful : glare :: benign : ?	face / frown / eye / smile / stare	smile	smile	True	False	thing and its typical quality	4
+578	decorous	decorous : seemly :: unseemly : ?	dignified / correct / proper / polite / improper	improper	improper	True	False	same meaning	5
+579	iniquity	iniquity : virtue :: injustice : ?	wickedness / sin / evil / fairness / crime	fairness	fairness	True	False	opposites	4
+580	staid	staid : banker :: flamboyant : ?	concert / rock star / guitar / accountant / librarian	rock star	rock star	True	False	thing and its typical quality	4
+581	fervid	lukewarm : fervid :: drizzle : ?	sprinkle / mist / cloud / puddle / downpour	downpour	downpour	True	False	mild and extreme forms	5
+582	palliate	palliate : symptoms :: cure : ?	doctor / disease / medicine / patient / hospital	disease	disease	True	False	action and what it acts on	5
+583	wily	fox : wily :: owl : ?	sly / foolish / cunning / wise / noisy	wise	wise	True	False	thing and its typical quality	2
+584	upbraid	upbraid : scold :: extol : ?	chide / criticize / berate / praise / rebuke	praise	praise	True	False	same meaning	5
+585	auspicious	rainbow : auspicious :: black cat : ?	hopeful / favorable / cheerful / lucky / ominous	ominous	ominous	True	False	thing and its typical quality	3
+586	cumbersome	piano : cumbersome :: pocketknife : ?	clumsy / awkward / handy / heavy / bulky	handy	handy	True	False	thing and its typical quality	3
+587	egregious	egregious : flagrant :: minor : ?	glaring / outrageous / slight / shocking / blatant	slight	slight	True	False	same meaning	3
+588	feign	feign : pretend :: divulge : ?	act / reveal / bluff / fake / imitate	reveal	reveal	True	False	same meaning	3
+589	boon	boon : bane :: blessing : ?	curse / benefit / godsend / gift / favor	curse	curse	True	False	opposites	4
+590	recant	recant : belief :: retract : ?	apology / statement / faith / promise / church	statement	statement	True	False	action and what it acts on	5
+591	sophistry	sophistry : reasoning :: counterfeit : ?	bank / vault / gold / forger / money	money	money	True	False	kind of thing	5
+592	unruly	unruly : mob :: orderly : ?	queue / line-cutter / riot / crowd / police	queue	queue	True	False	thing and its typical quality	3
+593	pundit	pundit : commentary :: critic : ?	reviews / movie / audience / newspaper / ticket	reviews	reviews	True	False	maker and what they make or use	4
+594	rankle	insult : rankle :: compliment : ?	annoy / offend / gratify / irk / sting	gratify	gratify	True	False	cause and effect	5
+595	inveterate	inveterate : habitual :: occasional : ?	persistent / lifelong / infrequent / chronic / confirmed	infrequent	infrequent	True	False	same meaning	4
+596	disparage	disparage : belittle :: extol : ?	criticize / mock / glorify / deride / insult	glorify	glorify	True	False	same meaning	4
+597	schism	schism : church :: divorce : ?	marriage / priest / ring / cake / wedding	marriage	marriage	True	False	action and what it acts on	4
+598	mores	mores : society :: rules : ?	board / game / player / team / score	game	game	True	False	part and whole	4
+599	revile	revile : villain :: lionize : ?	thief / enemy / coward / hero / traitor	hero	hero	True	False	action and what it acts on	5
+600	circumspect	circumspect : diplomat :: rash : ?	ambassador / librarian / pilot / daredevil / athlete	daredevil	daredevil	True	False	thing and its typical quality	4
+601	circumscribe	fence : circumscribe :: bridge : ?	limit / build / cross / connect / surround	connect	connect	True	False	purpose	5
+602	novel	novel : invention :: hackneyed : ?	patent / cliche / innovation / discovery / breakthrough	cliche	cliche	True	False	thing and its typical quality	3
+603	intractable	intractable : stubborn :: tractable : ?	obstinate / manageable / unruly / difficult / defiant	manageable	manageable	True	False	same meaning	3
+604	berate	berate : scold :: laud : ?	praise / rebuke / yell / criticize / chide	praise	praise	True	False	same meaning	3
+605	indigenous	indigenous : native :: exotic : ?	foreign / natural / original / domestic / local	foreign	foreign	True	False	same meaning	3
+606	recondite	recondite : specialist :: elementary : ?	scholar / expert / professor / beginner / library	beginner	beginner	True	False	thing and its typical quality	5
+607	hermetic	hermetic : airtight :: porous : ?	shut / leaky / tight / sealed / closed	leaky	leaky	True	False	same meaning	4
+608	malaise	malaise : unease :: contentment : ?	illness / pain / discomfort / worry / ease	ease	ease	True	False	same meaning	4
+609	reprehensible	reprehensible : condemn :: laudable : ?	criticize / applaud / punish / blame / ignore	applaud	applaud	True	False	cause and effect	4
+610	denigrate	denigrate : praise :: shrink : ?	reduce / enlarge / contract / belittle / diminish	enlarge	enlarge	True	False	opposites	4
+611	antiquated	quill pen : antiquated :: laptop : ?	modern / outdated / feathered / old-fashioned / antique	modern	modern	True	False	thing and its typical quality	2
+612	rapacious	rapacious : wolf :: gentle : ?	lamb / shepherd / tiger / hawk / fox	lamb	lamb	True	False	thing and its typical quality	4
+613	kindle	kindle : fire :: douse : ?	flame / water / wood / bucket / smoke	flame	flame	True	False	action and what it acts on	3
+614	epicure	epicure : food :: connoisseur : ?	critic / chef / museum / painter / art	art	art	True	False	thing and its typical quality	4
+615	nonchalant	nonchalant : shrug :: anxious : ?	fidget / wait / smile / yawn / relax	fidget	fidget	True	False	who does what	3
+616	galvanize	galvanize : rouse :: lull : ?	soothe / inspire / stir / excite / spur	soothe	soothe	True	False	same meaning	4
+617	supersede	supersede : replace :: precede : ?	succeed / outlast / come before / follow / exceed	come before	come before	True	False	same meaning	4
+618	clemency	clemency : pardon :: severity : ?	lawyer / maximum sentence / jury / judge / appeal	maximum sentence	maximum sentence	True	False	cause and effect	5
+619	fulsome	praise : fulsome :: decoration : ?	useful / modest / plain / gaudy / sparse	gaudy	gaudy	True	False	mild and extreme forms	5
+620	imbue	imbue : infuse :: drain : ?	empty / color / fill / pour / instill	empty	empty	True	False	same meaning	4
+621	hedonist	hedonist : pleasure :: ascetic : ?	self-denial / luxury / comfort / indulgence / wealth	self-denial	self-denial	True	False	who does what	4
+622	discursive	discursive : rambling :: succinct : ?	long / brief / wordy / winding / digressive	brief	brief	True	False	same meaning	5
+623	purloin	purloin : steal :: bestow : ?	pilfer / give / filch / take / grab	give	give	True	False	same meaning	4
+624	dichotomy	dichotomy : two :: trilogy : ?	four / many / pair / one / three	three	three	True	False	definition	4
+625	patronize	patronize : condescend :: respect : ?	insult / esteem / scorn / belittle / mock	esteem	esteem	True	False	same meaning	4
+626	abstruse	abstruse : lucid :: murky : ?	clear / vague / recondite / esoteric / obscure	clear	clear	True	False	opposites	5
+627	acme	acme : peak :: nadir : ?	summit / trough / height / top / crest	trough	trough	True	False	same meaning	4
+628	alacrity	alacrity : eager :: reluctance : ?	hesitant / happy / ready / willing / quick	hesitant	hesitant	True	False	related word forms	4
+629	obtuse	obtuse : acute :: blunt : ?	dull / thick / slow / dense / sharp	sharp	sharp	True	False	opposites	3
+630	despot	despot : oppress :: liberator : ?	enslave / rule / govern / conquer / free	free	free	True	False	who does what	3
+631	illusory	mirage : illusory :: oasis : ?	deceptive / real / false / imaginary / fake	real	real	True	False	thing and its typical quality	3
+632	maelstrom	maelstrom : sea :: tornado : ?	wind / sky / cloud / storm / rain	wind	sky	False	True	definition	4
+633	austere	austere : monk :: lavish : ?	priest / emperor / palace / hermit / beggar	emperor	emperor	True	False	thing and its typical quality	4
+634	perennial	perennial : annual :: permanent : ?	enduring / yearly / lasting / seasonal / temporary	temporary	temporary	True	False	opposites	5
+635	abstemious	abstemious : indulgent :: moderate : ?	restrained / temperate / frugal / excessive / sober	excessive	excessive	True	False	opposites	5
+636	capitulate	capitulate : surrender :: persevere : ?	resign / quit / yield / persist / submit	persist	persist	True	False	same meaning	4
+637	fallacious	fallacious : argument :: counterfeit : ?	wallet / vault / bank / forger / bill	bill	bill	True	False	thing and its typical quality	5
+638	wry	wry : droll :: sullen : ?	sulky / dry / amused / witty / ironic	sulky	sulky	True	False	same meaning	4
+639	discordant	discordant : clashing :: harmonious : ?	harsh / blended / conflicting / jarring / off-key	blended	blended	True	False	same meaning	4
+640	abeyance	abeyance : temporary pause :: termination : ?	short break / delay / suspension / final end / halt	final end	final end	True	False	same meaning	5
+641	lionize	lionize : celebrity :: shun : ?	star / fan / hero / outcast / idol	outcast	outcast	True	False	action and what it acts on	4
+642	precipitate	precipitate : haste :: circumspect : ?	hurry / risk / danger / speed / caution	caution	caution	True	False	related word forms	5
+643	serendipity	serendipity : luck :: diligence : ?	chance / fortune / effort / accident / fate	effort	effort	True	False	definition	4
+644	disinterested	disinterested : referee :: biased : ?	umpire / scale / fan / judge / juror	fan	fan	True	False	thing and its typical quality	5
+645	pejorative	pejorative : insulting :: complimentary : ?	rude / vulgar / flattering / mocking / harsh	flattering	flattering	True	False	thing and its typical quality	4
+646	circumlocution	circumlocution : detour :: directness : ?	maze / roundabout / bridge / shortcut / map	shortcut	shortcut	True	False	kind of thing	5
+647	inert	inert : motion :: mute : ?	speech / voice / energy / sound / noise	speech	speech	True	True	lacking	4
+648	inundate	inundate : flood :: trickle : ?	soak / drown / swamp / pour / drip	drip	drip	True	False	same meaning	4
+649	nebulous	fog : nebulous :: diamond : ?	hazy / murky / vague / clear / cloudy	clear	clear	True	False	thing and its typical quality	4
+650	eminent	eminent : obscure :: famous : ?	notable / renowned / unknown / prominent / distinguished	unknown	unknown	True	False	opposites	2
+651	buttress	buttress : cathedral :: spine : ?	stone / brain / arch / bone / body	body	body	True	False	purpose	4
+652	circumvent	circumvent : bypass :: confront : ?	evade / skirt / avoid / face / dodge	face	face	True	False	same meaning	4
+653	adept	adept : inept :: skillful : ?	capable / clumsy / expert / proficient / able	clumsy	clumsy	True	False	opposites	2
+654	malinger	malinger : illness :: bluff : ?	weakness / strength / doctor / poker / cards	strength	strength	True	False	action and what it acts on	5
+655	collusion	collusion : conspirators :: cooperation : ?	teammates / opponents / enemies / rivals / strangers	teammates	teammates	True	False	thing and its typical quality	5
+656	effigy	effigy : person :: model : ?	glue / ocean / toy / sailor / ship	ship	ship	True	False	definition	4
+657	unctuous	unctuous : flatterer :: blunt : ?	courtier / critic / fan / friend / review	critic	critic	True	False	thing and its typical quality	5
+658	cache	cache : squirrel :: hive : ?	wasp / tree / honey / nest / bee	bee	bee	True	False	part and whole	4
+659	callow	callow : youth :: seasoned : ?	intern / rookie / child / beginner / veteran	veteran	veteran	True	False	thing and its typical quality	4
+660	fracas	fracas : brawl :: truce : ?	battle / ceasefire / fight / quarrel / war	ceasefire	ceasefire	True	False	same meaning	4
+661	goad	spurs : goad :: reins : ?	feed / prod / ride / gallop / restrain	restrain	restrain	True	False	purpose	4
+662	confound	confound : baffle :: enlighten : ?	inform / puzzle / stump / confuse / mystify	inform	inform	True	False	same meaning	3
+663	disseminate	disseminate : information :: sow : ?	news / seeds / plow / farmer / soil	seeds	seeds	True	False	action and what it acts on	4
+664	ponderous	elephant : ponderous :: gazelle : ?	sluggish / clumsy / heavy / nimble / lumbering	nimble	nimble	True	False	thing and its typical quality	3
+665	cavalier	cavalier : conscientious :: careless : ?	casual / dismissive / careful / reckless / offhand	careful	careful	True	False	opposites	4
+666	insidious	termite : insidious :: earthquake : ?	sudden / gradual / subtle / hidden / slow	sudden	sudden	True	False	thing and its typical quality	5
+667	polemic	polemic : attack :: panegyric : ?	debate / argument / praise / essay / speech	praise	praise	True	False	definition	5
+668	indolent	indolent : industrious :: sluggish : ?	energetic / idle / lethargic / lazy / slothful	energetic	energetic	True	False	opposites	3
+669	incredulous	incredulous : believe :: impatient : ?	wait / hurry / listen / doubt / trust	wait	wait	True	False	lacking	3
+670	mendacious	liar : mendacious :: truth-teller : ?	crime / jury / veracious / judge / lawyer	veracious	veracious	True	False	thing and its typical quality	5
+671	leery	leery : stranger :: trusting : ?	friend / thief / con man / rival / enemy	friend	friend	True	True	thing and its typical quality	3
+672	exonerate	exonerate : innocent :: convict : ?	free / guilty / acquitted / freed / pardoned	guilty	guilty	True	False	definition	3
+673	miscreant	miscreant : punishment :: benefactor : ?	jail / charity / gratitude / money / crime	gratitude	gratitude	True	False	cause and effect	4
+674	contiguous	contiguous : touching :: distant : ?	joined / near / adjacent / apart / bordering	apart	apart	True	False	same meaning	4
+675	empirical	empirical : experiment :: theoretical : ?	lab / test / data / hypothesis / scientist	hypothesis	hypothesis	True	False	thing and its typical quality	4
+676	amorphous	cloud : amorphous :: crystal : ?	hard / shapeless / shiny / geometric / clear	geometric	geometric	True	False	thing and its typical quality	5
+677	perpetuate	perpetuate : continue :: abolish : ?	maintain / end / keep / extend / preserve	end	end	True	False	same meaning	3
+678	digress	digress : topic :: detour : ?	speech / map / car / road sign / route	route	route	True	False	action and what it acts on	4
+679	wizened	raisin : wizened :: grape : ?	shriveled / wrinkled / plump / dried / withered	plump	plump	True	False	thing and its typical quality	3
+680	decry	decry : corruption :: applaud : ?	scandal / crime / greed / honesty / bribery	honesty	honesty	True	False	action and what it acts on	4
+681	gauche	gauche : urbane :: clumsy : ?	graceful / tactless / ungainly / rude / awkward	graceful	graceful	True	False	opposites	4
+682	cerebral	cerebral : chess :: physical : ?	checkers / wrestling / puzzle / crossword / board	wrestling	wrestling	True	False	thing and its typical quality	4
+683	thwart	goalie : thwart :: striker : ?	defend / save / score / block / kick	score	score	True	False	who does what	3
+684	peruse	skim : peruse :: glance : ?	see / blink / stare / look / peek	stare	stare	True	False	mild and extreme forms	4
+685	diurnal	diurnal : eagle :: nocturnal : ?	hawk / owl / moon / rooster / bat	owl	owl	True	True	thing and its typical quality	3
+686	dearth	desert : dearth :: rainforest : ?	rain / heat / abundance / trees / shortage	abundance	abundance	True	False	thing and its typical quality	3
+687	multifarious	multifarious : uniform :: many : ?	some / one / several / few / none	few	one	False	True	definition	5
+688	debacle	debacle : triumph :: disaster : ?	fiasco / collapse / failure / success / defeat	success	success	True	False	opposites	3
+689	indefatigable	indefatigable : tired :: invincible : ?	strong / defeated / proud / victorious / rested	defeated	defeated	True	False	lacking	4
+690	confluence	confluence : rivers :: intersection : ?	sidewalk / cars / bridge / streets / traffic	streets	streets	True	False	definition	4
+691	bombast	bombast : speech :: stuffing : ?	pillow / seam / cotton / sleep / feather	pillow	pillow	True	False	part and whole	5
+692	oust	oust : leader :: evict : ?	tenant / landlord / house / rent / apartment	tenant	tenant	True	False	action and what it acts on	3
+693	ostentatious	gaudy mansion : ostentatious :: small cabin : ?	grand / flashy / showy / lavish / modest	modest	modest	True	False	thing and its typical quality	3
+694	dictum	dictum : authority :: rumor : ?	king / judge / law / decree / gossip	gossip	gossip	True	False	definition	5
+695	gratuitous	gratuitous : justified :: needless : ?	free / unwarranted / excessive / extra / necessary	necessary	necessary	True	False	opposites	4
+696	expedient	expedient : convenient :: principled : ?	handy / fast / easy / practical / right	right	right	True	False	same meaning	5
+697	legerdemain	legerdemain : magician :: eloquence : ?	audience / orator / juggler / wizard / mime	orator	orator	True	False	thing and its typical quality	5
+698	mar	mar : spoil :: enhance : ?	improve / scar / damage / ruin / deface	improve	improve	True	False	same meaning	4
+699	hapless	hapless : luck :: penniless : ?	friends / money / time / sleep / patience	money	money	True	False	lacking	3
+700	palpable	palpable : touched :: audible : ?	tasted / heard / felt / spoken / seen	heard	heard	True	False	what the quality allows	4
+701	felicitous	felicitous : apt :: awkward : ?	suitable / happy / clumsy / fitting / proper	clumsy	clumsy	True	False	same meaning	5
+702	glower	glower : anger :: beam : ?	surprise / joy / sorrow / boredom / fear	joy	joy	True	False	expression and the feeling it shows	3
+703	ostracize	ostracize : outcast :: crown : ?	throne / subject / monarch / castle / rebel	monarch	monarch	True	False	action and the result it makes	4
+704	tome	tome : pamphlet :: mansion : ?	shack / estate / manor / palace / castle	shack	shack	True	False	grand version and humble version	4
+705	covert	spy : covert :: herald : ?	sneaky / quiet / hidden / secret / public	public	public	True	False	worker and the nature of the work	4
+706	impudent	impudent : insolent :: courteous : ?	polite / bold / rude / brash / cheeky	polite	polite	True	False	same meaning	4
+707	xenophobia	xenophobia : foreigners :: claustrophobia : ?	crowds / tight spaces / strangers / heights / spiders	tight spaces	tight spaces	True	False	fear and what is feared	3
+708	bilk	swindler : bilk :: burglar : ?	lock / pay / cheat / guard / rob	rob	rob	True	False	wrongdoer and the wrong they do	4
+709	tantamount	tantamount : equivalent :: disparate : ?	similar / different / comparable / equal / identical	different	different	True	False	same meaning	5
+710	oscillate	pendulum : oscillate :: wheel : ?	sway / rotate / bounce / swing / slide	rotate	rotate	True	False	thing and its characteristic motion	3
+711	malleable	clay : malleable :: stone : ?	pliable / soft / hard / bendy / squishy	hard	hard	True	False	material and its quality	2
+712	abase	abase : humble :: exalt : ?	degrade / glorify / lower / demean / shame	glorify	glorify	True	False	same meaning	5
+713	vacuous	vacuous : thought :: barren : ?	rocks / sand / heat / water / life	life	life	True	False	lacking	5
+714	vindicate	vindicate : accused :: acquit : ?	guilty / jury / defendant / judge / lawyer	defendant	defendant	True	False	action and who receives it	4
+715	rancor	rancor : grudge :: affection : ?	sneer / glare / hug / shove / frown	hug	hug	True	False	feeling and how it shows	5
+716	adulterate	adulterate : purity :: dilute : ?	water / weakness / strength / volume / juice	strength	strength	True	False	action and what it takes away	5
+717	amalgamate	amalgamate : merge :: disperse : ?	scatter / blend / combine / fuse / unite	scatter	scatter	True	False	same meaning	4
+718	indict	indict : charge :: acquit : ?	convict / clear / sentence / accuse / arrest	clear	clear	True	False	same meaning	4
+719	surly	surly : snub :: cordial : ?	scold / rush / ignore / overcharge / greet	greet	greet	True	False	temperament and typical action	4
+720	furtive	furtive : peek :: fixed : ?	squint / blink / glance / wink / stare	stare	stare	True	False	manner and the look it gives	5
+721	egalitarian	egalitarian : equality :: elitist : ?	sharing / justice / fairness / equity / privilege	privilege	privilege	True	False	outlook and what it values	4
+722	charlatan	charlatan : doctor :: counterfeit : ?	bank / coin / bill / forger / money	money	bill	False	True	fake version of the real thing	4
+723	preempt	vaccine : preempt :: medicine : ?	catch / spread / cause / prevent / cure	cure	cure	True	False	thing and what it does to a problem	5
+724	constraint	cage : constraint :: open sky : ?	perch / nest / feather / freedom / flight	freedom	freedom	True	False	thing and what it means for a bird	4
+725	jingoism	jingoism : patriotism :: fanaticism : ?	reason / doubt / logic / science / faith	faith	faith	True	False	extreme form	5
+726	clandestine	clandestine : covert :: public : ?	private / open / sly / secret / hidden	open	open	True	False	same meaning	4
+727	badger	badger : pester :: soothe : ?	bother / nag / harass / annoy / calm	calm	calm	True	False	same meaning	3
+728	renege	renege : promise :: default : ?	loan / branch / teller / bank / vault	loan	loan	True	False	failure and what is broken	4
+729	libertine	libertine : restraint :: glutton : ?	hunger / moderation / pleasure / food / appetite	moderation	moderation	True	False	person and what they lack	5
+730	vestige	vestige : empire :: ember : ?	match / fire / smoke / spark / heat	fire	fire	True	False	remnant and what it remains from	5
+731	acerbic	lemon : acerbic :: sugar : ?	bitter / sour / salty / tart / sweet	sweet	sweet	True	False	thing and its taste	3
+732	pithy	proverb : pithy :: sermon : ?	concise / short / terse / brief / long-winded	long-winded	long-winded	True	False	thing and its typical quality	4
+733	adamant	adamant : yield :: indecisive : ?	insist / choose / resist / argue / waver	choose	choose	True	False	temperament and what it rules out	5
+734	consternation	consternation : shock :: contentment : ?	worry / alarm / satisfaction / surprise / fear	satisfaction	satisfaction	True	False	feeling and what it is	5
+735	adroit	adroit : juggler :: clumsy : ?	acrobat / dancer / oaf / magician / athlete	oaf	oaf	True	False	quality and who has it	3
+736	raze	raze : building :: fell : ?	axe / stump / tree / lumberjack / log	tree	tree	True	False	action and what it brings down	4
+737	specious	specious : argument :: forged : ?	desk / pen / paper / signature / ink	signature	signature	True	False	quality and what it describes	5
+738	proclivity	proclivity : tendency :: aversion : ?	talent / liking / dislike / penchant / habit	dislike	dislike	True	False	same meaning	5
+739	blatant	blatant : subtle :: glaring : ?	flagrant / faint / obvious / bold / clear	faint	faint	True	False	opposites	3
+740	garner	garner : votes :: harvest : ?	farmer / speeches / seeds / crops / tractor	crops	crops	True	False	gathering and what is gathered	4
+741	immutable	immutable : changed :: invisible : ?	moved / seen / heard / broken / hidden	seen	seen	True	False	quality and what it rules out	4
+742	ironic	ironic : sarcastic :: earnest : ?	mocking / sincere / bitter / dry / witty	sincere	sincere	True	False	same meaning	4
+743	importune	importune : beggar :: plead : ?	verdict / judge / court / defendant / jury	defendant	defendant	True	False	action and who does it	5
+744	sentient	sentient : dog :: inanimate : ?	bird / rock / cat / horse / fish	rock	rock	True	False	quality and an example of it	4
+745	rhetoric	rhetoric : speaker :: choreography : ?	stage / music / ballet / dancer / costume	dancer	dancer	True	False	art and who practices it	4
+746	scrupulous	accountant : scrupulous :: con man : ?	dishonest / careful / truthful / honest / sincere	dishonest	dishonest	True	False	person and expected quality	3
+747	impetuous	impetuous : leap :: cautious : ?	jump / look / stop / wait / run	look	look	True	False	temperament and typical action	4
+748	ameliorate	medicine : ameliorate :: poison : ?	heal / worsen / cure / help / improve	worsen	worsen	True	False	thing and its effect	4
+749	malevolent	witch : malevolent :: fairy godmother : ?	benevolent / cruel / evil / spiteful / wicked	benevolent	benevolent	True	False	character and typical quality	3
+750	genial	genial : host :: surly : ?	club / greeter / party / guest / bouncer	bouncer	bouncer	True	False	quality and who often shows it	4
+751	consummate	consummate : professional :: rank : ?	expert / amateur / champion / worker / player	amateur	amateur	True	False	intensifier and noun	5
+752	remiss	remiss : duty :: truant : ?	school / class / teacher / lesson / bus	school	school	True	False	neglect and what is neglected	5
+753	officious	officious : meddle :: reticent : ?	speak / advise / hide / help / withdraw	speak	withdraw	False	False	temperament and typical action	5
+754	incipient	incipient : dawn :: waning : ?	morning / noon / sunrise / dusk / midday	dusk	dusk	True	False	stage and time it fits	5
+755	predilection	predilection : preference :: aversion : ?	habit / fondness / taste / choice / distaste	distaste	distaste	True	False	same meaning	5
+756	elude	fugitive : elude :: detective : ?	pursue / flee / escape / hide / run	pursue	pursue	True	False	role and what it tries to do	4
+757	provincial	provincial : village :: cosmopolitan : ?	town / cottage / hamlet / metropolis / farm	metropolis	metropolis	True	False	outlook and the place it fits	5
+758	equanimity	equanimity : composure :: agitation : ?	peace / poise / calm / unrest / serenity	unrest	unrest	True	False	same meaning	5
+759	insular	island : insular :: hub : ?	isolated / remote / sandy / connected / small	connected	connected	True	False	place and its quality	5
+760	impute	impute : blame :: award : ?	prize / credit / guilt / medal / fault	credit	credit	True	False	action and what it assigns	5
+761	avarice	avarice : gold :: gluttony : ?	fame / wealth / food / jewels / money	food	food	True	False	vice and what it craves	4
+762	stymie	roadblock : stymie :: tailwind : ?	delay / blow / slow / speed / stop	speed	speed	True	False	thing and its effect	4
+763	perspicacious	perspicacious : insight :: eagle-eyed : ?	hearing / hands / memory / speech / sight	sight	sight	True	False	trait and the keen faculty	5
+764	euphemism	euphemism : softens :: exaggeration : ?	inflates / tells / states / hides / denies	inflates	inflates	True	False	figure of speech and what it does	4
+765	flout	flout : defy :: observe : ?	break / scorn / challenge / ignore / obey	obey	obey	True	False	same meaning	4
+766	recalcitrant	mule : recalcitrant :: retriever : ?	unruly / obedient / defiant / stubborn / obstinate	obedient	obedient	True	False	animal and its typical temperament	4
+767	maudlin	maudlin : sentimental :: truculent : ?	combative / gushing / romantic / emotional / tearful	combative	combative	True	False	same meaning	5
+768	cacophony	cacophony : ear :: glare : ?	nose / skin / sound / tongue / eye	eye	eye	True	False	harsh sensation and the sense it hits	4
+769	misanthrope	misanthrope : people :: misogynist : ?	women / men / strangers / animals / children	women	women	True	False	hater and what is hated	5
+770	encumber	encumber : burden :: relieve : ?	load / weigh / saddle / hinder / unload	unload	unload	True	False	same meaning	4
+771	neophyte	neophyte : veteran :: sapling : ?	seed / oak / forest / leaf / acorn	oak	oak	True	False	early stage and later stage	4
+772	umbrage	insult : umbrage :: gift : ?	cover / thanks / revenge / offense / delight	thanks	delight	False	True	cause and the feeling it brings	5
+773	jocular	jester : jocular :: judge : ?	silly / merry / solemn / jokey / playful	solemn	solemn	True	False	role and expected manner	3
+774	malapropism	malapropism : word :: typo : ?	sentence / pen / spelling / book / letter	spelling	letter	False	False	error and what goes wrong	5
+775	invective	invective : insult :: accolade : ?	taunt / jeer / abuse / slur / honor	honor	honor	True	False	same meaning	5
+776	machination	villain : machination :: architect : ?	blueprint / building / plot / scheme / pencil	blueprint	blueprint	True	False	maker and the plan they make	5
+777	supplant	supplant : replace :: sustain : ?	maintain / displace / supersede / remove / oust	maintain	maintain	True	False	same meaning	4
+778	discrete	discrete : staircase :: continuous : ?	ladder / slope / step / ramp / hill	ramp	ramp	True	False	kind of change and its shape	5
+779	hegemony	hegemony : empire :: monopoly : ?	company / customer / rival / price / market	market	company	False	False	dominance and who holds it	5
+780	impervious	raincoat : impervious :: sponge : ?	waterproof / sealed / impermeable / dry / absorbent	absorbent	absorbent	True	False	thing and how it handles water	3
+781	attenuate	attenuate : signal :: dim : ?	volume / light / switch / window / noise	light	light	True	False	weakening and what is weakened	5
+782	intransigent	intransigent : compromise :: stubborn : ?	argue / fight / yield / resist / insist	yield	yield	True	False	temperament and what it refuses	5
+783	acumen	acumen : business :: agility : ?	chess / gymnastics / balance / speed / money	gymnastics	gymnastics	True	False	ability and where it matters	4
+784	effrontery	effrontery : shameless :: humility : ?	rude / modest / timid / bold / proud	modest	modest	True	False	noun and adjective	5
+785	implacable	implacable : appeased :: incurable : ?	healed / broken / sick / calmed / treated	healed	healed	True	False	quality and what it rules out	5
+786	magnanimous	magnanimous : forgive :: petty : ?	resent / praise / excuse / help / pardon	resent	resent	True	False	character and how it treats others	4
+787	assiduous	assiduous : beaver :: indolent : ?	hummingbird / squirrel / ant / sloth / bee	sloth	sloth	True	False	trait and animal that has it	4
+788	proliferate	rabbits : proliferate :: pandas : ?	grow / breed / dwindle / multiply / spread	dwindle	dwindle	True	False	population trend	4
+789	surreptitious	surreptitious : tiptoe :: overt : ?	sneak / run / creep / stomp / dance	stomp	stomp	True	False	manner and action that fits it	4
+790	pernicious	pernicious : rust :: sudden : ?	lightning / mold / termites / decay / erosion	lightning	lightning	True	False	kind of harm and example	5
+791	impugn	impugn : honesty :: question : ?	shoes / weather / answer / face / motives	motives	motives	True	False	challenge and what is challenged	5
+792	phlegmatic	phlegmatic : tortoise :: excitable : ?	turtle / snail / sloth / koala / squirrel	squirrel	squirrel	True	False	temperament and animal that fits	5
+793	endemic	endemic : native :: exotic : ?	natural / wild / local / foreign / rare	foreign	foreign	True	False	same meaning	5
+794	lampoon	cartoonist : lampoon :: portraitist : ?	draw / flatter / paint / sketch / mock	flatter	flatter	True	False	artist and how they treat their subject	5
+795	anachronism	anachronism : time :: misfit : ?	place / era / date / room / history	place	place	True	False	thing and where it doesn't belong	4
+796	abjure	abjure : renounce :: affirm : ?	uphold / deny / forswear / reject / abandon	uphold	uphold	True	False	same meaning	5
+797	adulation	adulation : idol :: derision : ?	fan / circus / star / clown / joke	clown	clown	True	False	treatment and who gets it	5
+798	halcyon	halcyon : calm :: turbulent : ?	stormy / peaceful / serene / happy / golden	stormy	stormy	True	False	same meaning	5
+799	disingenuous	disingenuous : insincere :: candid : ?	naive / frank / innocent / open / honest	frank	frank	True	True	same meaning	5
+800	limpid	limpid : crystal :: murky : ?	glass / sand / mud / snow / ice	mud	mud	True	False	clarity and image	5
+801	fastidious	cat : fastidious :: pig : ?	messy / clean / fussy / neat / tidy	messy	messy	True	False	animal and reputation	3
+802	laudable	laudable : praise :: culpable : ?	punishment / fault / shame / blame / guilt	blame	blame	True	False	quality and what it deserves	4
+803	obstreperous	obstreperous : rowdy :: quiescent : ?	still / loud / unruly / wild / noisy	still	still	True	False	same meaning	5
+804	quiescent	dormant volcano : quiescent :: erupting volcano : ?	quiet / calm / still / dormant / active	active	active	True	False	state	5
+805	cataclysm	cataclysm : mishap :: tsunami : ?	ripple / splash / current / wave / tide	ripple	ripple	True	False	great and small of the same kind	5
+806	verisimilitude	verisimilitude : documentary :: whimsy : ?	fairy tale / history / biography / newspaper / textbook	fairy tale	fairy tale	True	False	quality and what is full of it	5
+807	fortuitous	fortuitous : chance :: deliberate : ?	plan / fate / luck / accident / design	design	design	True	True	how something happens	5
+808	temerity	temerity : rash :: timidity : ?	bold / shy / daring / fearless / brave	shy	shy	True	False	noun and adjective	5
+809	subterfuge	subterfuge : spy :: candor : ?	traitor / agent / friend / secret / enemy	friend	friend	True	False	method and who uses it	5
+810	itinerant	itinerant : nomad :: sedentary : ?	explorer / wanderer / sailor / homebody / traveler	homebody	homebody	True	False	way of life and who lives it	5
+811	pariah	pariah : shunned :: celebrity : ?	rejected / adored / scorned / avoided / ignored	adored	adored	True	False	person and how they're treated	4
+812	lachrymose	lachrymose : tears :: garrulous : ?	yawns / words / sighs / naps / silence	words	words	True	False	trait and what overflows	5
+813	noisome	noisome : skunk :: fragrant : ?	weed / sewer / thorn / rose / garbage	rose	rose	True	False	quality and an example of it	5
+814	fractious	fractious : quarrel :: docile : ?	play / obey / sleep / fight / cry	obey	obey	True	False	temperament and typical action	5
+815	unconscionable	unconscionable : conscience :: boundless : ?	border / rules / space / edge / limits	limits	limits	True	False	what is exceeded	5
+816	ersatz	ersatz : coffee :: artificial : ?	milk / sugar / honey / sweetener / tea	sweetener	sweetener	True	False	substitute	5
+817	calumny	calumny : reputation :: arson : ?	fame / fire / match / house / name	house	house	True	False	wrong and what it destroys	5
+818	abscond	abscond : loot :: elope : ?	money / luggage / a lover / family / wedding	a lover	a lover	True	False	secret flight and what goes along	5
+819	munificent	munificent : philanthropist :: miserly : ?	saint / Santa / elf / Scrooge / beggar	Scrooge	Scrooge	True	False	quality and who embodies it	4
+820	perfunctory	perfunctory : nod :: effusive : ?	embrace / wave / handshake / salute / glance	embrace	embrace	True	False	manner and gesture	5
+821	tortuous	tortuous : winding :: direct : ?	crooked / curvy / twisty / snaking / straight	straight	straight	True	False	same meaning	4
+822	sardonic	sardonic : smirk :: sincere : ?	pout / sneer / frown / scowl / smile	smile	smile	True	False	tone and expression	5
+823	balk	balk : refuse :: proceed : ?	pause / stop / resist / continue / hesitate	continue	continue	True	False	same meaning	4
+824	juxtapose	juxtapose : side by side :: stack : ?	in order / on top of each other / in a row / inside / apart	on top of each other	on top of each other	True	False	action and arrangement	4
+825	tawdry	tawdry : rhinestone :: elegant : ?	diamond / tin / glass / paste / plastic	diamond	diamond	True	False	quality and example	5
+826	irascible	irascible : hornet :: placid : ?	cow / bull / wasp / bee / tiger	cow	cow	True	False	temperament and animal	5
+827	paragon	paragon : model :: pariah : ?	outcast / saint / hero / ideal / example	outcast	outcast	True	False	same meaning	5
+828	morose	morose : sulk :: jovial : ?	mope / pout / scowl / weep / chuckle	chuckle	chuckle	True	False	temperament and typical action	4
+829	trenchant	trenchant : razor :: vague : ?	fog / sword / knife / blade / hammer	fog	fog	True	False	style and image	5
+830	panacea	panacea : ills :: skeleton key : ?	doctors / problems / locks / keys / teeth	locks	locks	True	False	universal solution	5
+831	maxim	maxim : wisdom :: pun : ?	humor / joke / rhyme / truth / wordplay	humor	wordplay	False	True	saying and what it relies on	5
+832	uncanny	uncanny : eerie :: ordinary : ?	strange / weird / spooky / mundane / odd	mundane	mundane	True	False	same meaning	4
+833	terse	telegram : terse :: love letter : ?	concise / brief / short / curt / effusive	effusive	effusive	True	False	kind of message and its style	4
+834	sagacious	sagacious : sage :: ignorant : ?	fool / scholar / professor / philosopher / genius	fool	fool	True	False	quality and who has it	4
+835	solicitous	solicitous : attentive :: neglectful : ?	kind / inattentive / concerned / thoughtful / caring	inattentive	inattentive	True	False	same meaning	4
+836	dissemble	dissemble : liar :: confess : ?	judge / audience / priest / penitent / critic	penitent	penitent	True	False	action and who does it	5
+837	ebullient	ebullient : fizzy :: glum : ?	cold / sweet / flat / bubbly / sour	flat	flat	True	False	mood and matching drink	5
+838	inchoate	inchoate : sketch :: finished : ?	artist / canvas / painting / brush / frame	painting	painting	True	False	stage of completion	5
+839	obdurate	obdurate : granite :: pliant : ?	oak / stone / rock / iron / willow	willow	willow	True	False	quality and example	5
+840	ostensible	ostensible : apparent :: actual : ?	stated / supposed / seeming / official / real	real	real	True	False	same meaning	5
+841	dilatory	dilatory : snail :: prompt : ?	slug / glacier / sloth / turtle / alarm clock	alarm clock	alarm clock	True	False	pace and example	5
+842	voluble	voluble : chatterbox :: taciturn : ?	parrot / clam / magpie / radio / jay	clam	clam	True	False	trait and nickname	5
+843	martinet	martinet : strict :: pushover : ?	rigid / harsh / severe / stern / lenient	lenient	lenient	True	False	person and defining trait	5
+844	sanctimonious	sanctimonious : preach :: humble : ?	lecture / sermonize / listen / boast / judge	listen	listen	True	False	temperament and typical action	5
+845	facetious	facetious : joking :: grave : ?	serious / witty / playful / glib / flippant	serious	serious	True	False	same meaning	4
+846	banal	banal : platitude :: striking : ?	cliche / rerun / epigram / truism / bromide	epigram	epigram	True	False	quality and example	5
+847	obfuscate	obfuscate : clarity :: muffle : ?	truth / noise / sound / volume / light	sound	sound	True	False	action and what it reduces	5
+848	evanescent	evanescent : rainbow :: enduring : ?	mist / snowflake / cloud / mountain / bubble	mountain	mountain	True	False	quality and example	5
+849	haughty	haughty : sneer :: humble : ?	smirk / scoff / bow / sniff / strut	bow	bow	True	False	temperament and typical gesture	3
+850	humane	humane : kind :: cruel : ?	gentle / merciful / brutal / caring / decent	brutal	brutal	True	False	same meaning	2
+851	imminent	imminent : moments :: distant : ?	seconds / minutes / years / hours / days	years	years	True	False	how near in time	4
+852	lenient	lenient : substitute teacher :: strict : ?	janitor / visitor / principal / classmate / student	principal	principal	True	False	manner and who tends to have it	3
+853	lethargic	lethargic : sloth :: energetic : ?	koala / turtle / snail / slug / squirrel	squirrel	squirrel	True	False	trait and animal that has it	2
+854	bombastic	bombastic : pompous :: plain : ?	loud / boastful / simple / showy / grand	simple	simple	True	False	same meaning	3
+855	novice	novice : apprentice :: veteran : ?	pupil / beginner / expert / student / master	master	master	True	True	same meaning	2
+856	nimble	nimble : mountain goat :: clumsy : ?	gymnast / deer / cat / acrobat / newborn foal	newborn foal	newborn foal	True	False	quality and example	3
+857	perilous	tightrope : perilous :: sidewalk : ?	narrow / dangerous / high / safe / risky	safe	safe	True	False	activity and its risk	2
+858	prosper	prosper : thrive :: founder : ?	win / flourish / grow / fail / succeed	fail	fail	True	False	same meaning	3
+859	rash	rash : leap :: prudent : ?	look / dive / run / jump / plunge	look	look	True	False	temperament and first move	3
+860	rebuke	rebuke : misbehavior :: applaud : ?	crime / mistake / insult / failure / performance	performance	performance	True	False	response and what it responds to	3
+861	veracity	veracity : witness :: accuracy : ?	liar / poet / rumor / guess / clock	clock	clock	True	False	desired quality and who should have it	4
+862	sparse	desert : sparse :: jungle : ?	barren / thin / dense / scattered / scanty	dense	dense	True	False	place and its quality	2
+863	acknowledge	acknowledge : mistake :: deny : ?	award / accusation / gift / compliment / praise	accusation	accusation	True	False	response and what it responds to	4
+864	affluent	affluent : mansion :: impoverished : ?	villa / shanty / palace / castle / estate	shanty	shanty	True	False	wealth and home	3
+865	aloof	aloof : cat :: affectionate : ?	lizard / spider / puppy / goldfish / snake	puppy	puppy	True	False	temperament and example	2
+866	bleak	bleak : winter :: bright : ?	dusk / midnight / summer / night / fog	summer	summer	True	False	mood and season	2
+867	boisterous	boisterous : playground :: quiet : ?	stadium / concert / fairground / library / arcade	library	library	True	False	noise level and place	2
+868	brittle	brittle : glass :: flexible : ?	brick / stone / metal / rubber / iron	rubber	rubber	True	False	material and its quality	2
+869	parsimonious	parsimonious : miser :: lavish : ?	penny-pincher / beggar / banker / spendthrift / saver	spendthrift	spendthrift	True	False	quality and who embodies it	4
+870	coerce	bully : coerce :: diplomat : ?	persuade / threaten / command / force / bribe	persuade	persuade	True	False	person and their method	3
+871	commend	commend : hero :: condemn : ?	traitor / mentor / saint / champion / winner	traitor	traitor	True	False	response and who earns it	2
+872	compel	law : compel :: invitation : ?	oblige / encourage / force / demand / require	encourage	encourage	True	False	thing and how strongly it pushes	4
+873	comply	soldier : comply :: rebel : ?	follow / defy / obey / salute / march	defy	defy	True	False	role and response to orders	2
+874	credible	credible : witness :: reliable : ?	guess / snooze / rumor / liar / alarm clock	alarm clock	alarm clock	True	False	trustworthy quality and what has it	5
+875	crucial	crucial : trivial :: vital : ?	essential / key / minor / critical / important	minor	minor	True	False	opposites	2
+876	deplete	deplete : replenish :: drain : ?	empty / use up / exhaust / spend / refill	refill	refill	True	False	opposites	2
+877	desolate	ghost town : desolate :: marketplace : ?	abandoned / empty / deserted / silent / bustling	bustling	bustling	True	False	place and its feel	2
+878	devious	fox : devious :: dove : ?	crafty / innocent / sly / cunning / sneaky	innocent	innocent	True	False	animal and its storybook character	2
+879	dormant	bear : dormant :: rooster : ?	awake / asleep / sleepy / drowsy / hibernating	awake	awake	True	False	animal and its state at dawn	3
+880	fervent	fervent : ardent :: halfhearted : ?	eager / passionate / lukewarm / zealous / intense	lukewarm	lukewarm	True	False	same meaning	3
+881	forlorn	forlorn : abandoned puppy :: joyful : ?	lost puppy / new puppy / sleeping puppy / wagging puppy / hungry puppy	wagging puppy	wagging puppy	True	True	mood and image	3
+882	haphazard	haphazard : pile :: orderly : ?	heap / mess / stack / jumble / library	stack	stack	True	False	arrangement and its result	3
+883	inept	inept : bungler :: adept : ?	expert / fool / novice / beginner / amateur	expert	expert	True	False	quality and who has it	2
+884	irate	annoyed : irate :: chilly : ?	cool / frozen / mild / damp / warm	frozen	frozen	True	False	mild and extreme forms	3
+885	keen	keen : razor :: dull : ?	blade / axe / scissors / butter knife / sword	butter knife	butter knife	True	False	sharpness and example	4
+886	persevere	persevere : marathoner :: quit : ?	coach / dropout / winner / runner / student	dropout	dropout	True	False	action and who does it	3
+887	potent	potent : espresso :: weak : ?	double shot / decaf / cold brew / cola / energy drink	decaf	decaf	True	False	strength and example	3
+888	precarious	Jenga tower : precarious :: pyramid : ?	unsteady / shaky / stable / teetering / wobbly	stable	stable	True	False	structure and how steady it is	3
+889	predicament	predicament : escape :: puzzle : ?	solve / buy / avoid / lose / make	solve	solve	True	False	problem and what you do with it	3
+890	procrastinate	procrastinate : later :: hurry : ?	eventually / never / tomorrow / someday / now	now	now	True	False	timing of an action	2
+891	provoke	provoke : enrage :: console : ?	bother / annoy / tease / comfort / irritate	comfort	comfort	True	False	same meaning	2
+892	reconcile	reconcile : estranged :: mend : ?	whole / torn / sewn / new / folded	torn	torn	True	False	repair and what needs it	5
+893	reprimand	reprimand : misbehavior :: reward : ?	achievement / effort / punishment / prize / failure	achievement	achievement	True	False	response and what earns it	3
+894	resolute	resolute : oak :: wavering : ?	anchor / boulder / pillar / mountain / reed	reed	reed	True	False	steadiness and image	4
+895	restrain	leash : restrain :: whistle : ?	feed / pet / summon / control / walk	summon	summon	True	False	tool and its use	3
+896	rigid	steel bar : rigid :: rubber band : ?	stiff / stretchy / solid / hard / brittle	stretchy	stretchy	True	False	object and its quality	1
+897	ruthless	ruthless : pity :: fearless : ?	fear / courage / joy / anger / danger	fear	fear	True	False	lacking	3
+898	shrewd	shrewd : bargainer :: gullible : ?	seller / merchant / mark / buyer / customer	mark	mark	True	False	quality and role	5
+899	sluggish	sluggish : snail :: brisk : ?	turtle / worm / slug / sloth / rabbit	rabbit	rabbit	True	False	speed and animal	1
+900	stern	stern : frown :: warm : ?	smile / scowl / pout / sneer / glare	smile	smile	True	False	manner and expression	2
+901	strenuous	strenuous : hike :: leisurely : ?	trek / stroll / run / march / climb	stroll	stroll	True	False	effort and activity	2
+902	tangible	tangible : stone :: intangible : ?	brick / rock / idea / table / coin	idea	idea	True	False	quality and example	3
+903	thrifty	thrifty : coupon :: wasteful : ?	splurge / discount / budget / bargain / sale	splurge	splurge	True	False	habit and what goes with it	4
+904	turbulent	turbulent : whirlpool :: calm : ?	flood / waterfall / rapids / ocean / pond	pond	pond	True	False	quality and example	2
+905	unanimous	unanimous : undivided :: split : ?	solid / whole / united / agreed / divided	divided	divided	True	False	same meaning	2
+906	valiant	valiant : knight :: cowardly : ?	princess / lion / dragon / king / hero	lion	lion	True	True	trait and famous character	3
+907	versatile	Swiss Army knife : versatile :: butter knife : ?	all-purpose / limited / adaptable / multipurpose / flexible	limited	limited	True	False	tool and how many uses it has	2
+908	zealous	zealous : fan :: indifferent : ?	zealot / cheerleader / bystander / fanatic / booster	bystander	bystander	True	False	enthusiasm and role	3
+909	admonish	admonish : warn :: praise : ?	advise / scold / criticize / applaud / caution	applaud	applaud	True	False	same meaning	3
+910	ambivalent	ambivalent : shrug :: decisive : ?	nod / wave / frown / sigh / yawn	nod	nod	True	False	attitude and gesture	4
+911	arid	desert : arid :: rainforest : ?	parched / dry / dusty / humid / barren	humid	humid	True	False	place and climate	1
+912	barren	barren : wasteland :: fertile : ?	orchard / dune / desert / glacier / quarry	orchard	orchard	True	False	quality and example	3
+913	captivate	magician : captivate :: lullaby : ?	entertain / bore / wake / soothe / amaze	soothe	soothe	True	False	performance and its effect	3
+914	chronic	chronic : years :: acute : ?	weeks / days / seconds / minutes / forever	days	days	True	True	illness type and how long it lasts	4
+915	competent	competent : pilot :: incompetent : ?	captain / bumbler / driver / steward / passenger	bumbler	bumbler	True	False	quality and role	4
+916	conform	conform : sheep :: rebel : ?	maverick / shepherd / leader / horse / wolf	maverick	maverick	True	False	behavior and its nickname	4
+917	contradict	contradict : deny :: confirm : ?	dispute / reject / refute / question / affirm	affirm	affirm	True	False	same meaning	3
+918	convey	convey : message :: carry : ?	ship / truck / letter / cargo / sailor	cargo	cargo	True	False	carrying and what is carried	4
+919	counterfeit	counterfeit : forger :: genuine : ?	purse / pocket / wallet / thief / mint	mint	mint	True	False	thing and where it is made	4
+920	debris	debris : explosion :: ash : ?	heat / wood / flame / smoke / fire	fire	fire	True	False	aftermath and its cause	3
+921	decipher	decipher : code :: translate : ?	pencil / dictionary / speaker / language / teacher	language	language	True	False	action and what it unlocks	3
+922	deduce	detective : deduce :: scientist : ?	pray / experiment / wish / guess / gamble	experiment	experiment	True	False	role and method	4
+923	defiant	defiant : rebel :: obedient : ?	tyrant / servant / boss / master / king	servant	servant	True	False	trait and role	2
+924	deficient	deficient : lacking :: sufficient : ?	missing / short / scarce / enough / poor	enough	enough	True	False	same meaning	2
+925	discern	discern : notice :: overlook : ?	detect / see / miss / spot / find	miss	miss	True	False	same meaning	3
+926	dispel	dispel : rumor :: extinguish : ?	fire / smoke / water / truth / wood	fire	fire	True	False	action and what it ends	4
+927	dwindle	dwindle : shrink :: swell : ?	grow / decrease / fade / wane / ebb	grow	grow	True	False	same meaning	3
+928	daunting	Mount Everest : daunting :: the bunny slope : ?	grueling / treacherous / steep / perilous / easy	easy	easy	True	False	challenge and how it feels	3
+929	eradicate	eradicate : weeds :: exterminate : ?	pests / garden / poison / farmer / flowers	pests	pests	True	False	elimination and what is eliminated	3
+930	evade	evade : question :: duck : ?	fist / glove / punch / answer / boxer	punch	punch	True	False	dodging and what is dodged	3
+931	exhilarate	roller coaster : exhilarate :: lecture : ?	bore / dazzle / frighten / excite / thrill	bore	bore	True	False	thing and its effect	2
+932	exorbitant	exorbitant : outrageous :: reasonable : ?	fair / high / costly / steep / pricey	fair	fair	True	False	same meaning	3
+933	exquisite	exquisite : Faberge egg :: crude : ?	bowl / clay pot / teacup / plate / vase	clay pot	clay pot	True	False	quality and example	4
+934	exuberant	exuberant : cheerleader :: gloomy : ?	clown / comedian / party guest / mourner / fan	mourner	mourner	True	False	mood and role	3
+935	famished	hungry : famished :: thirsty : ?	quenched / full / parched / dry / sweaty	parched	parched	True	False	mild and extreme forms	2
+936	fortify	fortify : castle :: reinforce : ?	moat / bridge / toll / knight / river	bridge	bridge	True	False	strengthening and what is strengthened	3
+937	grievance	grievance : complaint :: boon : ?	blessing / protest / injury / wrong / grudge	blessing	blessing	True	False	same meaning	3
+938	grim	grim : undertaker :: jolly : ?	doctor / priest / clown / judge / ghost	clown	clown	True	False	expected look and role	3
+939	heed	heed : mind :: disregard : ?	obey / follow / respect / ignore / note	ignore	ignore	True	False	same meaning	3
+940	hypocrite	hypocrite : sincere :: fraud : ?	false / fake / clever / sneaky / genuine	genuine	genuine	True	False	person and what they are not	3
+941	illusion	mirage : illusion :: oasis : ?	sand / reality / palm / water / dream	reality	reality	True	False	thing and what it really is	2
+942	implore	implore : ask :: sprint : ?	stroll / run / rest / walk / jog	run	run	True	False	mild and extreme forms	3
+943	incite	incite : provoke :: quell : ?	rouse / subdue / spark / inflame / stir	subdue	subdue	True	False	same meaning	3
+944	infamous	infamous : pirate :: famous : ?	ship / treasure / anchor / explorer / sea	explorer	explorer	True	False	reputation and role	3
+945	insolent	insolent : sass :: respectful : ?	as if / whatever / make me / so what / yes, ma'am	yes, ma'am	yes, ma'am	True	False	manner and an example of it	3
+946	jovial	jovial : laugh :: sullen : ?	smile / giggle / sulk / cheer / grin	sulk	sulk	True	False	temperament and typical action	2
+947	judicious	judicious : sage :: rash : ?	jury / king / scholar / hothead / judge	hothead	hothead	True	False	trait and who has it	4
+948	languid	languid : cat :: frantic : ?	squirrel / koala / snail / sloth / tortoise	squirrel	squirrel	True	False	energy and animal	4
+949	lofty	lofty : skyscraper :: lowly : ?	basement / roof / tower / attic / penthouse	basement	basement	True	False	height and example	3
+950	lucrative	lucrative : gold mine :: unprofitable : ?	treasure / fortune / money pit / bank / jackpot	money pit	money pit	True	False	profitability and image	3
+951	luminous	luminous : firefly :: dark : ?	candle / lamp / moth / cave / star	cave	cave	True	False	brightness and example	3
+952	melancholy	melancholy : rainy day :: cheerful : ?	gray day / stormy day / sunny day / foggy day / cloudy day	sunny day	sunny day	True	False	mood and weather	3
+953	negligent	negligent : neglect :: diligent : ?	work / effort / diligence / duty / care	care	diligence	False	True	adjective and its noun	2
+954	nurture	gardener : nurture :: sculptor : ?	shape / plant / weed / grow / water	shape	shape	True	False	worker and their main action	3
+955	opulent	opulent : palace :: humble : ?	castle / villa / mansion / manor / cottage	cottage	cottage	True	False	luxury and example	3
+956	merit	merit : reward :: fault : ?	credit / prize / applause / blame / praise	blame	blame	True	False	quality and what it earns	3
+957	obliterate	obliterate : eraser :: print : ?	bleach / solvent / sponge / stamp / towel	stamp	stamp	True	False	action and tool	4
+958	painstaking	painstaking : watchmaker :: hasty : ?	scribbler / writer / jeweler / painter / clock	scribbler	scribbler	True	False	care and example	4
+959	paltry	paltry : penny :: substantial : ?	nickel / dime / coin / fortune / cent	fortune	fortune	True	False	amount and example	3
+960	paramount	paramount : king :: secondary : ?	star / actor / understudy / queen / prince	understudy	understudy	True	False	importance and example	5
+961	passive	passive : spectator :: active : ?	viewer / fan / audience / ticket / player	player	player	True	False	involvement and role	2
+962	perceptive	perceptive : detective :: oblivious : ?	sleepwalker / hawk / guard / sentry / spy	sleepwalker	sleepwalker	True	False	awareness and example	4
+963	plight	plight : rescue :: victory : ?	grieve / help / save / mourn / celebrate	celebrate	celebrate	True	False	situation and the response it calls for	4
+964	prestige	prestige : trophy :: disgrace : ?	award / medal / scandal / honor / prize	scandal	scandal	True	False	cause and what it brings	4
+965	quaint	quaint : cottage :: sleek : ?	shack / hut / condo / barn / cabin	condo	condo	True	False	style and example	3
+966	quench	quench : thirst :: satisfy : ?	food / water / meal / drink / hunger	hunger	hunger	True	False	easing and what is eased	2
+967	quest	quest : knight :: voyage : ?	sword / sailor / sea / dragon / camel	sailor	sailor	True	False	journey and who takes it	3
+968	proficient	proficient : skill :: fluent : ?	teacher / word / book / dictionary / language	language	language	True	False	mastery and what is mastered	4
+969	rampant	rampant : wildfire :: contained : ?	campfire / blaze / conflagration / inferno / forest fire	campfire	campfire	True	False	control and example	3
+970	raucous	raucous : crow :: sweet : ?	raven / parrot / goose / vulture / songbird	songbird	songbird	True	False	sound and bird	4
+971	recede	tide : recede :: wave : ?	melt / crash / freeze / rise / sink	crash	crash	True	False	thing and what it does	4
+972	reiterate	reiterate : repeat :: paraphrase : ?	echo / recite / copy / reword / quote	reword	reword	True	False	same meaning	4
+973	renown	renown : celebrity :: obscurity : ?	influencer / hermit / fan / actor / star	hermit	hermit	True	False	fame and who has it	4
+974	replenish	replenish : pantry :: refuel : ?	driver / road / tire / gas / car	car	car	True	False	refilling and what is refilled	3
+975	revoke	revoke : license :: repeal : ?	court / law / statue / judge / lawyer	law	law	True	False	taking away and from what	4
+976	rudimentary	rudimentary : crayon drawing :: sophisticated : ?	sketch / portrait / oil painting / doodle / canvas	oil painting	oil painting	True	False	skill level and example	4
+977	relinquish	relinquish : grip :: release : ?	rope / hand / fist / hold / catch	hold	hold	True	False	letting go and what you let go of	4
+978	resent	resent : insult :: appreciate : ?	favor / jab / snub / enemy / slight	favor	favor	True	False	feeling and what causes it	3
+979	rebuff	rebuff : advance :: accept : ?	guest / host / invitation / party / envelope	invitation	invitation	True	False	response and what it responds to	4
+980	rejuvenate	nap : rejuvenate :: all-nighter : ?	energize / wake / exhaust / refresh / revive	exhaust	exhaust	True	False	thing and its effect	3
+981	salvage	salvage : shipwreck :: rescue : ?	diver / ocean / ship / boat / survivor	survivor	survivor	True	False	saving and what is saved	4
+982	scorn	scorn : sneer :: admiration : ?	shrug / yawn / frown / cheer / scowl	cheer	cheer	True	False	feeling and how it shows	3
+983	solace	solace : comfort :: anguish : ?	joy / ease / relief / torment / peace	torment	torment	True	False	same meaning	3
+984	spurn	spurn : reject :: embrace : ?	rebuff / refuse / snub / welcome / ignore	welcome	welcome	True	False	same meaning	3
+985	stamina	stamina : marathon :: speed : ?	nap / debate / hike / chess / sprint	sprint	sprint	True	False	quality and the race it wins	3
+986	strife	strife : war :: harmony : ?	battle / fight / feud / peace / brawl	peace	peace	True	False	condition and when it happens	2
+987	staunch	staunch : ally :: fickle : ?	enemy / best friend / fair-weather friend / rival / teammate	fair-weather friend	fair-weather friend	True	False	loyalty and example	4
+988	stealthy	stealthy : ninja :: noisy : ?	marching band / mime / cat burglar / librarian / spy	marching band	marching band	True	False	quality and example	2
+989	succinct	succinct : tweet :: verbose : ?	haiku / telegram / slogan / text message / encyclopedia	encyclopedia	encyclopedia	True	False	length and example	3
+990	sullen	sullen : pout :: sunny : ?	glare / sneer / scowl / frown / grin	grin	grin	True	False	mood and expression	2
+991	tactful	tactful : diplomat :: blunt : ?	ambassador / therapist / counselor / host / drill sergeant	drill sergeant	drill sergeant	True	False	manner and role	3
+992	conscientious	conscientious : homework :: negligent : ?	tests / books / excuses / grades / answers	excuses	excuses	True	True	diligence and what it produces	4
+993	harmony	harmony : choir :: rhythm : ?	singer / song / drummer / guitar / melody	drummer	drummer	True	False	musical element and who provides it	4
+994	cryptic	cryptic : riddle :: plain : ?	mystery / clue / puzzle / road sign / code	road sign	road sign	True	False	clarity and example	3
+995	curt	curt : nod :: courteous : ?	snort / glare / shrug / eye roll / bow	bow	bow	True	False	manner and gesture	3
+996	censure	censure : condemn :: commend : ?	criticize / rebuke / scold / blame / praise	praise	praise	True	False	same meaning	3
+997	contrite	contrite : apology :: defiant : ?	plea / promise / excuse / confession / gift	excuse	excuse	True	True	attitude and what it offers	4
+998	cognizant	cognizant : aware :: oblivious : ?	unaware / blind / alert / ignorant / careless	unaware	unaware	True	False	same meaning	3
+999	equitable	equitable : even split :: unfair : ?	lion's share / piece / portion / share / half	lion's share	lion's share	True	False	fairness and example	4
+1000	extol	extol : virtues :: lament : ?	victories / triumphs / wins / gains / losses	losses	losses	True	False	response and what it responds to	4
+1001	fidelity	fidelity : dog :: treachery : ?	snake / cat / dove / lamb / lion	snake	snake	True	False	quality and animal symbol	4
+1002	exempt	exempt : tax :: immune : ?	money / doctor / vaccine / disease / law	disease	disease	True	False	protection and what you're protected from	4
+1003	enthrall	storyteller : enthrall :: lullaby : ?	scare / teach / soothe / wake / bore	soothe	soothe	True	False	thing and its effect	3
+1004	delude	mirage : delude :: map : ?	mislead / guide / trick / confuse / fool	guide	guide	True	False	thing and what it does to a traveler	4
+1005	demean	demean : degrade :: elevate : ?	exalt / belittle / insult / humble / shame	exalt	exalt	True	False	same meaning	4
+1006	diverge	diverge : fork :: converge : ?	bridge / curve / junction / exit / tunnel	junction	junction	True	False	motion and place	4
+1007	accommodate	accommodate : make room :: refuse : ?	admit / turn away / welcome / help / invite	turn away	turn away	True	False	same meaning	4
+1008	antagonize	poke : antagonize :: pet : ?	feed / soothe / provoke / annoy / walk	soothe	soothe	True	False	action and effect on an animal	3
+1009	buoyant	cork : buoyant :: anchor : ?	rising / bobbing / floating / drifting / sinking	sinking	sinking	True	False	object and how it acts in water	2
+1010	uphold	judge : uphold :: criminal : ?	enforce / break / obey / follow / write	break	break	True	False	role and relation to the law	3
+1011	vex	puzzle : vex :: joke : ?	tire / annoy / amuse / confuse / bore	amuse	amuse	True	False	thing and its effect	3
+1012	withdrawn	withdrawn : turtle :: outgoing : ?	snail / puppy / hermit crab / clam / owl	puppy	puppy	True	False	temperament and animal	3
+1013	wrath	wrath : thunderstorm :: calm : ?	tornado / rain / clear sky / lightning / hail	clear sky	clear sky	True	False	mood and weather	3
+1014	yearn	yearn : homesick :: crave : ?	tired / hungry / sleepy / sad / full	hungry	hungry	True	False	longing and the feeling behind it	4
+1015	zeal	zeal : fanatic :: apathy : ?	zealot / activist / hero / fan / bystander	bystander	bystander	True	False	feeling and who has it	3
+1016	burly	burly : lumberjack :: slight : ?	ballerina / boxer / linebacker / wrestler / sumo wrestler	ballerina	ballerina	True	False	build and role	3
+1017	garble	garble : words :: scramble : ?	chef / eggs / toast / omelet / bacon	eggs	eggs	True	False	mixing up and what is mixed	4
+1018	garish	garish : neon :: subdued : ?	beige / glitter / sunset / rainbow / gold	beige	beige	True	False	loudness of color	4
+1019	gratify	applause : gratify :: boos : ?	delight / deflate / please / thrill / inspire	deflate	deflate	True	False	cause and effect on a performer	4
+1020	haggard	haggard : all-nighter :: refreshed : ?	marathon / vacation / party / workout / exam	vacation	vacation	True	False	state and its cause	4
+1021	irksome	irksome : mosquito :: soothing : ?	bee / gnat / wasp / fly / breeze	breeze	breeze	True	False	quality and example	3
+1022	jeer	jeer : villain :: cheer : ?	hero / referee / rival / traitor / cheater	hero	hero	True	False	crowd response and who gets it	2
+1023	nomad	nomad : tent :: farmer : ?	field / barn / silo / tractor / farmhouse	farmhouse	farmhouse	True	False	person and home	3
+1024	palatable	palatable : dessert :: unpalatable : ?	cream / fresh milk / cheese / spoiled milk / yogurt	spoiled milk	spoiled milk	True	False	taste and example	3
+1025	penitent	penitent : confession :: defiant : ?	denial / trial / alibi / lawyer / verdict	denial	denial	True	False	attitude and what it gives	4
+1026	plunder	pirates : plunder :: bees : ?	sail / pollinate / loot / steal / rob	pollinate	pollinate	True	False	creature and what it does	4
+1027	pungent	pungent : garlic :: bland : ?	pepper / rice / onion / ginger / curry	rice	rice	True	False	flavor and example	3
+1028	rancid	rancid : spoiled :: fresh : ?	stale / sour / rotten / foul / new	new	new	True	False	same meaning	4
+1029	ratify	ratify : treaty :: veto : ?	president / bill / capitol / senate / vote	bill	bill	True	False	official decision and its subject	4
+1030	servile	servile : doormat :: domineering : ?	servant / butler / bully / pushover / follower	bully	bully	True	False	trait and nickname	4
+1031	sporadic	sporadic : gunfire :: steady : ?	applause / cannon / a drumbeat / thunder / rain	a drumbeat	a drumbeat	True	False	regularity and example	4
+1032	supple	supple : gymnast :: stiff : ?	athlete / robot / acrobat / yogi / dancer	robot	robot	True	False	flexibility and example	2
+1033	swindle	swindle : con artist :: heal : ?	doctor / thief / hospital / patient / medicine	doctor	doctor	True	False	action and who does it	3
+1034	submissive	submissive : servant :: domineering : ?	peasant / tyrant / follower / subject / slave	tyrant	tyrant	True	False	trait and role	3
+1035	pompous	pompous : peacock :: humble : ?	eagle / sparrow / rooster / flamingo / swan	sparrow	sparrow	True	False	trait and bird	3
+1036	dainty	dainty : teacup :: clumsy : ?	mug / saucer / wineglass / thimble / flute	mug	mug	True	True	delicacy and example	3
+1037	unbiased	unbiased : umpire :: biased : ?	scale / referee / fan / juror / judge	fan	fan	True	False	fairness and role	2
+1038	insouciant	insouciant : whistle :: anxious : ?	sing / hum / relax / dance / fret	fret	fret	True	False	temperament and typical action	5
