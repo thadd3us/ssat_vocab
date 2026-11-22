@@ -138,6 +138,22 @@ the same part of speech as the answer (when it's in the list, so we know), so gr
 their definitions). Options that would also be correct (same definition, listed synonyms, or each word's
 `near_synonyms`, which list the words close enough in meaning that either could be called right) are never offered together.
 
+**Synonyms** and **Antonyms** show the word and ask for one of its listed `synonyms` (or `antonyms`), 5 options:
+one wrong option is the classic trap (an antonym in Synonyms, a synonym in Antonyms), one is a look-alike from
+`distractors`, two are random words from the group. Nothing offered can also be right (a near-synonym of the
+answer, or another opposite, listed either way). A word with no antonyms gets a Synonyms question instead.
+
+**Analogies** use each word's `analogies` list (one each for now): `terms` is *A is to B as C is to D* (the word
+is one of the four), `pos` is D's part of speech, `difficulty` runs 1–5, `relation` names the relationship in
+a few words ("opposites", "tool and its use", "mood and weather"), and `rule` is a defining sentence with `{A}`
+and `{B}` in it that both pairs plug into ("A {A} is famously {B}." gives "A mule is famously obstinate." and
+"A lamb is famously docile."). The quiz shows A, B, C and asks for D; of the 4 wrong options, 3 come from the
+analogy's curated `distractors` (related words that don't fit the relationship, or fit it backwards) and one is a
+random word with D's part of speech. After the answer, the feedback shows the rule filled in for both pairs.
+
+After a miss or "I don't know", the feedback panel restates the question with the answer filled in, so the
+question isn't lost under the panel.
+
 ## Layout
 
 - `web/` — the app: Vue 3 (global build, templates compiled in the browser), GSAP animations, Tone.js sounds,

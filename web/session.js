@@ -4,7 +4,7 @@
 "use strict";
 const WB = (globalThis.WB ||= {});
 
-const { StudyQueue, Stage, MODES, WORD_TO_DEF, newId } = WB;
+const { StudyQueue, Stage, MODES, WORD_TO_DEF, ANALOGY, fillRule, newId } = WB;
 
 // group REVIEW: no fixed group; the session drills an explicit word list (see reviewWords).
 const REVIEW = 0;
@@ -75,10 +75,11 @@ class Session {
   }
 
   // What the page shows: no answer, no part of speech (a hint), and the target
-  // word only when it's the prompt (word_to_def).
+  // word only when it's the prompt (word_to_def). An analogy shows its first three words.
   get question() {
-    const { mode, prompt, options, word } = this.q;
-    return { seq: this.seq, mode, prompt, options, ...(mode === WORD_TO_DEF ? { word } : {}) };
+    const { mode, prompt, options, word, analogy } = this.q;
+    return { seq: this.seq, mode, prompt, options, ...(mode === WORD_TO_DEF ? { word } : {}),
+             ...(mode === ANALOGY ? { analogy: { terms: analogy.terms.slice(0, 3) } } : {}) };
   }
 
   // choice: index into the options, or null for "I don't know".
@@ -103,16 +104,26 @@ class Session {
       chosen: unknown ? null : q.options[choice], prompt: q.prompt, options: q.options,
       stage_before: t.stageBefore, stage_after: t.stageAfter,
       detail: { chosen_word: chosenWord, slot: t.slot, seq: this.seq, session_mode: this.mode,
+                ...(q.answerWord ? { answer_word: q.answerWord } : {}),
+                ...(q.analogy ? { analogy: q.analogy.terms, relation: q.analogy.relation } : {}),
                 ...(coin ? { coin: coin.id } : {}) },
     });
     const entry = this.vocab.get(q.word);
     const chosen = chosenWord && this.vocab.get(chosenWord);
     this.q = null;
+    const an = q.analogy;
     return {
       correct,
       unknown,
       coin,
+      mode: q.mode,
+      prompt: q.prompt,
       answer_index: q.answerIndex,
+      answer_text: q.options[q.answerIndex],
+      // The relationship, written as its rule filled in for each pair.
+      analogy: an ? { terms: [...an.terms], relation: an.relation,
+                      rule: [fillRule(an.rule, an.terms[0], an.terms[1]), fillRule(an.rule, an.terms[2], an.terms[3])] }
+                  : null,
       word: entry.word,
       pos: entry.pos,
       definition: entry.definition,
