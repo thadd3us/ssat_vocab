@@ -152,8 +152,10 @@ and `{B}` in it that both pairs plug into ("A {A} is famously {B}." gives "A mul
 analogy's curated `distractors` (related words that don't fit the relationship, or fit it backwards) and one is a
 random word with D's part of speech. After the answer, the feedback shows the rule filled in for both pairs.
 
-After a miss or "I don't know", the feedback panel restates the question with the answer filled in, so the
-question isn't lost under the panel.
+After any answer, the feedback panel covers the answer choices, just under the question, and starts with
+the target word. Fill-the-blank and analogy questions fill the answer into the blank. For the other question
+types, after a miss or "I don't know", the panel restates the question with the answer filled in, since the
+choices are hidden under it.
 
 ## Layout
 

@@ -343,10 +343,9 @@ const Practice = {
     let shown = 0; // counts answers shown and dismissed, so a late coin landing can tell it's stale
     let scrolledFrom = null; // where the page was before revealFeedback scrolled it
     let scrollTween = null;
-    // A miss or "I don't know" shows its explanation centered on screen, and it can't be
-    // dismissed for a while, so it actually gets read instead of skipped.
+    // After a miss or "I don't know", the explanation can't be dismissed for a while, so it
+    // actually gets read instead of skipped.
     const LOCK_MS = 10000;
-    const MISS_DELAY_MS = 900; // let the red X play before the panel covers it
     const locked = ref(false); // Got it is grayed out (no countdown: eyes belong on the explanation)
     let lockTimer = null;
     function startLock(ms) {
@@ -356,7 +355,7 @@ const Practice = {
     }
 
     // On a phone the feedback panel lands below the fold. Once the answer's animation is done
-    // (the coin and the red X are pinned to where things were on screen), scroll just far
+    // (the coin is pinned to where things were on screen), scroll just far
     // enough to show it, keeping its top on screen if it's taller than the screen. Does nothing
     // when it's already in view. (GSAP drives the scroll so next() can cancel it mid-way.)
     function revealFeedback(delay) {
@@ -394,13 +393,11 @@ const Practice = {
             if (shown === showing) revealFeedback(0);
           });
           // No auto-advance: the panel waits for Next (or Enter / Space).
-        } else if (!r.unknown) { // "I don't know" gets no buzzer: it's not a miss
-          fx.buzzer(r.word);
-          fx.redX(optionEls.value[i]);
-          startLock(MISS_DELAY_MS + LOCK_MS);
         } else {
-          fx.sayWord(r.word);
+          if (r.unknown) fx.sayWord(r.word); // "I don't know" gets no buzzer: it's not a miss
+          else fx.buzzer(r.word);
           startLock(LOCK_MS);
+          revealFeedback(250);
         }
         if (r.just_completed && !celebrated.value) {
           celebrated.value = true;
@@ -533,6 +530,8 @@ const Practice = {
       </div>
     </div>
 
+    <div class="answer-area">
+    <div>
     <ol class="options" :class="[question.mode, { words: wordOptions }]">
       <li v-for="(opt, i) in question.options" :key="question.seq + ':' + i">
         <button :ref="el => optionEls[i] = el" :class="optionClass(i)" @click="choose(i)" :disabled="!!result">
@@ -541,10 +540,15 @@ const Practice = {
       </li>
     </ol>
     <button class="idk" @click="choose(null)" :disabled="!!result" title="Shortcut: ?">🤷 I don't know</button>
+    </div>
 
-    <div v-if="result" :class="{ 'feedback-overlay': !result.correct, late: !result.correct && !result.unknown }">
-    <div ref="feedbackEl" class="feedback" :class="result.correct ? 'good' : result.unknown ? 'idk' : 'bad'" @click="next">
-      <div v-if="!result.correct" class="recap">
+    <div v-if="result" ref="feedbackEl" class="feedback" @click="next"
+         :class="result.correct ? 'good' : result.unknown ? 'unknown' : 'bad'">
+      <div class="headword">
+        <b class="word">{{ result.word }}</b><button class="say" @click.stop="sayWord" title="Say it again" aria-label="Say it again">🔊</button>
+        <i>{{ result.pos }}</i> — {{ result.definition }}
+      </div>
+      <div v-if="!result.correct && result.mode !== 'sentence' && result.mode !== 'analogy'" class="recap">
         <div class="kind">{{ KIND[result.mode] }}</div>
         <div v-if="result.mode === 'sentence'" class="sentence">{{ blankParts[0] }}<b class="answer">{{ result.word }}</b>{{ blankParts[1] }}</div>
         <div v-else-if="result.mode === 'analogy'"><b>{{ result.analogy.terms[0] }}</b> is to <b>{{ result.analogy.terms[1] }}</b>
@@ -558,20 +562,16 @@ const Practice = {
       </div>
       <div v-else-if="result.mode === 'synonym'" class="relation"><b>{{ result.answer_text }}</b> means about the same as <b>{{ result.word }}</b>.</div>
       <div v-else-if="result.mode === 'antonym'" class="relation"><b>{{ result.answer_text }}</b> is the opposite of <b>{{ result.word }}</b>.</div>
-      <div>
-        <b>{{ result.word }}</b><button class="say" @click.stop="sayWord" title="Say it again" aria-label="Say it again">🔊</button>
-        <i>{{ result.pos }}</i> — {{ result.definition }}
-      </div>
-      <div v-if="result.synonyms.length" class="syn">≈ Similar: {{ result.synonyms.join(', ') }}</div>
+      <div v-if="result.synonyms.length" class="syn">Synonyms: <template v-for="(w, i) in result.synonyms" :key="w"><template v-if="i">, </template><b>{{ w }}</b></template></div>
       <div v-if="result.mode !== 'sentence'" class="in-context">“{{ result.sentence[0] }}<b class="answer">{{ result.word }}</b>{{ result.sentence[1] }}”</div>
       <div v-if="result.explanation" class="explain">💡 {{ result.explanation }}</div>
-      <div v-if="result.antonyms.length" class="ant">≠ Opposite: {{ result.antonyms.join(', ') }}</div>
-      <div v-if="result.unknown" class="chosen">That's OK. You'll see <b>{{ result.word }}</b> again in a moment.</div>
+      <div v-if="result.antonyms.length" class="ant">Antonyms: <template v-for="(w, i) in result.antonyms" :key="w"><template v-if="i">, </template><b>{{ w }}</b></template></div>
+      <div v-if="result.unknown" class="chosen">That's OK. You'll see <b class="word">{{ result.word }}</b> again in a moment.</div>
       <div v-if="!result.correct && !result.unknown && result.chosen_word !== result.word" class="chosen">
         You picked
         <template v-if="question.mode !== 'word_to_def'"><b>{{ result.chosen_word }}</b><span v-if="result.chosen_definition">, which means “{{ result.chosen_definition }}”</span>.</template>
         <template v-else>the meaning of <b>{{ result.chosen_word }}</b>.</template>
-        You'll see <b>{{ result.word }}</b> again in a moment.
+        You'll see <b class="word">{{ result.word }}</b> again in a moment.
       </div>
       <button class="primary" @click.stop="next" :disabled="locked">
         <template v-if="result.correct">Next ⏎</template>
