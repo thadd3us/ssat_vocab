@@ -265,6 +265,19 @@ test("\"I don't know\" re-drills like a miss but is logged and scored separately
   assert.equal(scoreRows(vocab, log.tallies("Ada")).find((x) => x.word === first).unknown, 1);
 });
 
+test("an answer carries what the feedback panel shows: sentence (split at the blank), synonyms, antonyms", () => {
+  const { log } = setup();
+  const s = Session.start({ vocab, log, user: "Ada", group: 1, mode: WORD_TO_DEF, rng: seededRandom(3) });
+  for (const right of [true, false]) {
+    const entry = vocab.get(s.queue.current);
+    const r = s.answer(right ? s.q.answerIndex : (s.q.answerIndex + 1) % s.q.options.length, 900);
+    assert.equal(r.sentence.length, 2);
+    assert.equal(r.sentence.join("___"), entry.sentence);
+    assert.deepEqual(r.synonyms, entry.synonyms);
+    assert.deepEqual(r.antonyms, entry.antonyms);
+  }
+});
+
 test("each student gets their own tab, and a fresh device loads it", async () => {
   const { script, log } = setup();
   const a = Session.start({ vocab, log, user: "Ada", group: 1, mode: WORD_TO_DEF, rng: seededRandom(4) });
