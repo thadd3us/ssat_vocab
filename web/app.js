@@ -566,9 +566,11 @@ const Practice = {
       <div>
         <b>{{ result.word }}</b><button class="say" @click.stop="sayWord" title="Say it again" aria-label="Say it again">🔊</button>
         <i>{{ result.pos }}</i> — {{ result.definition }}
-        <span v-if="result.synonyms.length" class="syn">(like {{ result.synonyms.join(', ') }})</span>
       </div>
+      <div v-if="result.synonyms.length" class="syn">≈ Similar: {{ result.synonyms.join(', ') }}</div>
+      <div v-if="result.mode !== 'sentence'" class="in-context">“{{ result.sentence[0] }}<b class="answer">{{ result.word }}</b>{{ result.sentence[1] }}”</div>
       <div v-if="result.explanation" class="explain">💡 {{ result.explanation }}</div>
+      <div v-if="result.antonyms.length" class="ant">≠ Opposite: {{ result.antonyms.join(', ') }}</div>
       <div v-if="result.unknown" class="chosen">That's OK. You'll see <b>{{ result.word }}</b> again in a moment.</div>
       <div v-if="!result.correct && !result.unknown && result.chosen_word !== result.word" class="chosen">
         You picked
