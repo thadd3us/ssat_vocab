@@ -571,12 +571,12 @@ const Practice = {
       <div v-if="result.mode !== 'sentence'" class="in-context">“{{ result.sentence[0] }}<b class="answer">{{ result.word }}</b>{{ result.sentence[1] }}”</div>
       <div v-if="result.explanation" class="explain">💡 {{ result.explanation }}</div>
       <div v-if="result.antonyms.length" class="ant">Antonyms: <template v-for="(w, i) in result.antonyms" :key="w"><template v-if="i">, </template><b>{{ w }}</b></template></div>
-      <div v-if="result.unknown" class="chosen">That's OK. You'll see <b>{{ result.word }}</b> again in a moment.</div>
+      <div v-if="result.unknown" class="chosen">That's OK. You'll see <b class="word">{{ result.word }}</b> again in a moment.</div>
       <div v-if="!result.correct && !result.unknown && result.chosen_word !== result.word" class="chosen">
         You picked
         <template v-if="question.mode !== 'word_to_def'"><b>{{ result.chosen_word }}</b><span v-if="result.chosen_definition">, which means “{{ result.chosen_definition }}”</span>.</template>
         <template v-else>the meaning of <b>{{ result.chosen_word }}</b>.</template>
-        You'll see <b>{{ result.word }}</b> again in a moment.
+        You'll see <b class="word">{{ result.word }}</b> again in a moment.
       </div>
       <button class="primary" @click.stop="next" :disabled="locked">
         <template v-if="result.correct">Next ⏎</template>

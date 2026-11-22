@@ -199,6 +199,7 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
 .feedback .headword .word { font: 700 1.5rem Georgia, "Times New Roman", serif;
   color: var(--green); background: var(--green-soft); padding: 0 4px; border-radius: 6px; }
 .feedback .chosen { font-size: .95rem; }
+.feedback .chosen .word { color: var(--green); background: var(--green-soft); padding: 0 3px; border-radius: 4px; }
 .feedback .recap { font-size: 1.05rem; padding-bottom: 8px; border-bottom: 1px solid var(--line); font-family: Georgia, serif; }
 .feedback .recap .kind { font: .75rem system-ui; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 2px; }
 .feedback .recap .answer { color: var(--green); }
