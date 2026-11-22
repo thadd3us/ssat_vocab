@@ -128,7 +128,10 @@ class Session {
       pos: entry.pos,
       definition: entry.definition,
       synonyms: [...entry.synonyms],
+      antonyms: [...entry.antonyms],
       explanation: entry.explanation,
+      // The fill-in-the-blank sentence, split at the blank, so the word can be shown in context.
+      sentence: entry.sentence.split("___"),
       chosen_word: chosenWord,
       chosen_definition: correct || !chosen ? null : chosen.definition,
       stage_after: t.stageAfter,

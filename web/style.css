@@ -186,12 +186,15 @@ button.ghost { background: none; border: 2px solid var(--line); border-radius: 1
 }
 .idk:not(:disabled):hover { border-color: var(--accent); color: var(--ink); }
 .idk:disabled { opacity: .4; cursor: default; }
-.feedback .syn { color: var(--muted); }
+.feedback .syn { color: var(--muted); font-size: .95rem; }
+.feedback .ant { color: var(--red); font-size: .95rem; }
 .feedback .chosen { font-size: .95rem; }
 .feedback .recap { font-size: 1.05rem; padding-bottom: 8px; border-bottom: 1px solid var(--line); font-family: Georgia, serif; }
 .feedback .recap .kind { font: .75rem system-ui; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 2px; }
 .feedback .recap .answer { color: var(--green); }
 .feedback .relation { font-size: .95rem; line-height: 1.45; }
+.feedback .in-context { font-size: 1rem; line-height: 1.5; font-family: Georgia, "Times New Roman", serif; }
+.feedback .in-context .answer { color: var(--green); background: var(--green-soft); padding: 0 3px; border-radius: 4px; }
 .feedback .explain { font-size: .95rem; line-height: 1.45; padding: 8px 12px; border-radius: 8px; background: var(--card); }
 .feedback button { justify-self: end; }
 .feedback button.say {

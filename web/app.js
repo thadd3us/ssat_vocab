@@ -339,7 +339,6 @@ const Practice = {
     const bankEl = ref(null);
     const feedbackEl = ref(null);
     const celebrated = ref(progress.value.complete);
-    let advanceTimer = null;
     let revealTimer = null;
     let shown = 0; // counts answers shown and dismissed, so a late coin landing can tell it's stale
     let scrolledFrom = null; // where the page was before revealFeedback scrolled it
@@ -392,10 +391,9 @@ const Practice = {
           const coin = r.coin; // the session banked it, so a reload mid-flight keeps it
           fx.flyCoin(coin, r.word, optionEls.value[i], bankEl.value, () => {
             earned.value = [...s.earned];
-            if (r.explanation && shown === showing) revealFeedback(0);
+            if (shown === showing) revealFeedback(0);
           });
-          // With an explanation to read, wait for Next; otherwise move on by itself.
-          if (!r.explanation) advanceTimer = setTimeout(next, 1700);
+          // No auto-advance: the panel waits for Next (or Enter / Space).
         } else if (!r.unknown) { // "I don't know" gets no buzzer: it's not a miss
           fx.buzzer(r.word);
           fx.redX(optionEls.value[i]);
@@ -416,7 +414,6 @@ const Practice = {
     }
 
     function next() {
-      clearTimeout(advanceTimer);
       clearTimeout(revealTimer);
       if (!result.value || locked.value) return;
       shown++;
@@ -434,7 +431,6 @@ const Practice = {
 
     function sayWord() {
       if (!result.value) return;
-      clearTimeout(advanceTimer); // they want to listen, so don't move on under them
       fx.sayWord(result.value.word, { force: true });
     }
 
@@ -454,7 +450,6 @@ const Practice = {
     }
 
     function end() {
-      clearTimeout(advanceTimer);
       emit("end", { ...s.end(), coins: [...s.earned] });
     }
 
@@ -472,7 +467,7 @@ const Practice = {
       if (i >= 0 && i < question.value.options.length) choose(i);
     }
     onMounted(() => window.addEventListener("keydown", onKey));
-    onUnmounted(() => { window.removeEventListener("keydown", onKey); clearTimeout(advanceTimer); clearTimeout(revealTimer); clearTimeout(lockTimer); });
+    onUnmounted(() => { window.removeEventListener("keydown", onKey); clearTimeout(revealTimer); clearTimeout(lockTimer); });
 
     function optionClass(i) {
       if (!result.value) return {};
@@ -566,9 +561,11 @@ const Practice = {
       <div>
         <b>{{ result.word }}</b><button class="say" @click.stop="sayWord" title="Say it again" aria-label="Say it again">🔊</button>
         <i>{{ result.pos }}</i> — {{ result.definition }}
-        <span v-if="result.synonyms.length" class="syn">(like {{ result.synonyms.join(', ') }})</span>
       </div>
+      <div v-if="result.synonyms.length" class="syn">≈ Similar: {{ result.synonyms.join(', ') }}</div>
+      <div v-if="result.mode !== 'sentence'" class="in-context">“{{ result.sentence[0] }}<b class="answer">{{ result.word }}</b>{{ result.sentence[1] }}”</div>
       <div v-if="result.explanation" class="explain">💡 {{ result.explanation }}</div>
+      <div v-if="result.antonyms.length" class="ant">≠ Opposite: {{ result.antonyms.join(', ') }}</div>
       <div v-if="result.unknown" class="chosen">That's OK. You'll see <b>{{ result.word }}</b> again in a moment.</div>
       <div v-if="!result.correct && !result.unknown && result.chosen_word !== result.word" class="chosen">
         You picked
