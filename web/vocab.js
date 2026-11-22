@@ -203,8 +203,9 @@ class Vocab {
   // wrong word must be the same part of speech when we know it, so grammar
   // alone doesn't give the answer away.
   //
-  // MIXED never picks SENTENCE on a word's first try (`firstTry`): the sentence
-  // is a harder, context-only clue, so it's saved for words already seen.
+  // MIXED picks any type the word has: Word→Meaning, Meaning→Word, Synonyms, Antonyms
+  // (if it has antonyms), and, except on a word's first try (`firstTry`), Fill the blank
+  // and Analogies: those are harder, context-only clues, so they're saved for words already seen.
   //
   // SYNONYM and ANTONYM ask for one of the target's listed synonyms (or antonyms). Of the
   // four wrong answers, one is an antonym (or a synonym: the classic trap), one a look-alike
@@ -214,7 +215,11 @@ class Vocab {
   // don't fit the relationship (or fit it backwards), and one more option is a random word.
   buildQuestion(target, mode, rng = Math.random, pool = null, { firstTry = false } = {}) {
     if (mode === MIXED) {
-      const modes = target.sentence && !firstTry ? [WORD_TO_DEF, DEF_TO_WORD, SENTENCE] : [WORD_TO_DEF, DEF_TO_WORD];
+      const modes = [WORD_TO_DEF, DEF_TO_WORD];
+      if (target.synonyms.length) modes.push(SYNONYM);
+      if (target.antonyms.length) modes.push(ANTONYM);
+      if (!firstTry && target.sentence) modes.push(SENTENCE);
+      if (!firstTry && target.analogies.length) modes.push(ANALOGY);
       mode = modes[Math.floor(rng() * modes.length)];
     }
     if (mode === ANTONYM && !target.antonyms.length) mode = SYNONYM;

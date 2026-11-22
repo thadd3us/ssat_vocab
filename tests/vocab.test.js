@@ -84,15 +84,17 @@ test("answer position is shuffled", () => {
 
 test("mixed resolves to a concrete mode", () => {
   const rng = seededRandom(3);
-  const modes = new Set(Array.from({ length: 50 }, () => vocab.buildQuestion(vocab.entries[0], MIXED, rng).mode));
-  assert.deepEqual(modes, new Set([WORD_TO_DEF, DEF_TO_WORD, SENTENCE]));
+  const modes = new Set(Array.from({ length: 100 }, () => vocab.buildQuestion(vocab.entries[0], MIXED, rng).mode));
+  assert.deepEqual(modes, new Set([WORD_TO_DEF, DEF_TO_WORD, SENTENCE, SYNONYM, ANTONYM, ANALOGY]));
+  const noAntonyms = vocab.entries.find((e) => !e.antonyms.length);
+  for (let k = 0; k < 50; k++) assert.notEqual(vocab.buildQuestion(noAntonyms, MIXED, rng).mode, ANTONYM);
 });
 
-test("mixed never picks the sentence on a word's first try", () => {
+test("mixed never picks the sentence or an analogy on a word's first try", () => {
   const rng = seededRandom(3);
-  const modes = new Set(Array.from({ length: 50 }, () =>
+  const modes = new Set(Array.from({ length: 100 }, () =>
     vocab.buildQuestion(vocab.entries[0], MIXED, rng, null, { firstTry: true }).mode));
-  assert.deepEqual(modes, new Set([WORD_TO_DEF, DEF_TO_WORD]));
+  assert.deepEqual(modes, new Set([WORD_TO_DEF, DEF_TO_WORD, SYNONYM, ANTONYM]));
 });
 
 test("definitions are unique", () => {

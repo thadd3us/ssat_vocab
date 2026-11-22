@@ -129,7 +129,8 @@ The ranking is `reviewWords` in `web/session.js`, tested in `tests/review.test.j
 as a miss; on the Scores page it has its own column and counts against accuracy.
 
 Word→Meaning questions have 5 options; Meaning→Word has 6, in a single list; Fill the blank shows the
-word's `sentence` and 8 words to pick from. "Mix it up" picks one of the three for each question. The
+word's `sentence` and 8 words to pick from. "Mix it up" picks any of the six types for each question
+(Antonyms only for words that have antonyms), except that Fill the blank and Analogies are never a word's first question. The
 buttons above the question switch type mid-session: the word on screen is re-asked the new way (or, if the
 answer is showing, the next one is), and nothing else about the session changes. Keys:
 letters A–H, or 1–8. About half the wrong options come from the word's curated `distractors` (4 of the 7
