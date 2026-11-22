@@ -398,9 +398,11 @@ const Practice = {
           fx.buzzer(r.word);
           fx.redX(optionEls.value[i]);
           startLock(MISS_DELAY_MS + LOCK_MS);
+          revealFeedback(MISS_DELAY_MS + 250);
         } else {
           fx.sayWord(r.word);
           startLock(LOCK_MS);
+          revealFeedback(250);
         }
         if (r.just_completed && !celebrated.value) {
           celebrated.value = true;
@@ -534,7 +536,7 @@ const Practice = {
     </div>
 
     <div class="answer-area">
-    <div class="choices" :class="{ covered: result && result.correct }">
+    <div>
     <ol class="options" :class="[question.mode, { words: wordOptions }]">
       <li v-for="(opt, i) in question.options" :key="question.seq + ':' + i">
         <button :ref="el => optionEls[i] = el" :class="optionClass(i)" @click="choose(i)" :disabled="!!result">
@@ -545,13 +547,13 @@ const Practice = {
     <button class="idk" @click="choose(null)" :disabled="!!result" title="Shortcut: ?">🤷 I don't know</button>
     </div>
 
-    <div v-if="result" :class="{ 'feedback-overlay': !result.correct, 'feedback-cover': result.correct, late: !result.correct && !result.unknown }">
-    <div ref="feedbackEl" class="feedback" :class="result.correct ? 'good' : result.unknown ? 'idk' : 'bad'" @click="next">
+    <div v-if="result" ref="feedbackEl" class="feedback" @click="next"
+         :class="result.correct ? 'good' : result.unknown ? 'unknown' : 'bad late'">
       <div class="headword">
         <b class="word">{{ result.word }}</b><button class="say" @click.stop="sayWord" title="Say it again" aria-label="Say it again">🔊</button>
         <i>{{ result.pos }}</i> — {{ result.definition }}
       </div>
-      <div v-if="!result.correct" class="recap">
+      <div v-if="!result.correct && result.mode !== 'sentence' && result.mode !== 'analogy'" class="recap">
         <div class="kind">{{ KIND[result.mode] }}</div>
         <div v-if="result.mode === 'sentence'" class="sentence">{{ blankParts[0] }}<b class="answer">{{ result.word }}</b>{{ blankParts[1] }}</div>
         <div v-else-if="result.mode === 'analogy'"><b>{{ result.analogy.terms[0] }}</b> is to <b>{{ result.analogy.terms[1] }}</b>
@@ -580,7 +582,6 @@ const Practice = {
         <template v-if="result.correct">Next ⏎</template>
         <template v-else>Got it ⏎</template>
       </button>
-    </div>
     </div>
     </div>
 
