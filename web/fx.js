@@ -200,21 +200,6 @@ function flyCoin(coin, word, fromEl, toEl, onLanded) {
     }, "<");
 }
 
-// Pop a big red X over `el` and shake it.
-function redX(el) {
-  if (!gsap || !el) return;
-  const x = document.createElement("div");
-  x.className = "red-x";
-  x.textContent = "✕";
-  document.body.appendChild(x);
-  const r = el.getBoundingClientRect();
-  gsap.timeline({ onComplete: () => x.remove() })
-    .set(x, { left: r.left + r.width / 2, top: r.top + r.height / 2, xPercent: -50, yPercent: -50 })
-    .fromTo(x, { scale: 3, opacity: 0, rotation: -30 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.25, ease: "back.out(3)" })
-    .to(x, { opacity: 0, scale: 0.8, duration: 0.4 }, "+=0.7");
-  gsap.fromTo(el, { x: -10 }, { x: 0, duration: 0.5, ease: "elastic.out(1.2, 0.25)" });
-}
-
 function celebrate() {
   const end = Date.now() + 1200;
   (function frame() {
@@ -224,5 +209,5 @@ function celebrate() {
   })();
 }
 
-WB.fx = { isMuted, setMuted, kaching, buzzer, sayWord, flyCoin, redX, celebrate };
+WB.fx = { isMuted, setMuted, kaching, buzzer, sayWord, flyCoin, celebrate };
 })();

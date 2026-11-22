@@ -343,10 +343,9 @@ const Practice = {
     let shown = 0; // counts answers shown and dismissed, so a late coin landing can tell it's stale
     let scrolledFrom = null; // where the page was before revealFeedback scrolled it
     let scrollTween = null;
-    // A miss or "I don't know" shows its explanation centered on screen, and it can't be
-    // dismissed for a while, so it actually gets read instead of skipped.
+    // After a miss or "I don't know", the explanation can't be dismissed for a while, so it
+    // actually gets read instead of skipped.
     const LOCK_MS = 10000;
-    const MISS_DELAY_MS = 900; // let the red X play before the panel covers it
     const locked = ref(false); // Got it is grayed out (no countdown: eyes belong on the explanation)
     let lockTimer = null;
     function startLock(ms) {
@@ -356,7 +355,7 @@ const Practice = {
     }
 
     // On a phone the feedback panel lands below the fold. Once the answer's animation is done
-    // (the coin and the red X are pinned to where things were on screen), scroll just far
+    // (the coin is pinned to where things were on screen), scroll just far
     // enough to show it, keeping its top on screen if it's taller than the screen. Does nothing
     // when it's already in view. (GSAP drives the scroll so next() can cancel it mid-way.)
     function revealFeedback(delay) {
@@ -394,13 +393,9 @@ const Practice = {
             if (shown === showing) revealFeedback(0);
           });
           // No auto-advance: the panel waits for Next (or Enter / Space).
-        } else if (!r.unknown) { // "I don't know" gets no buzzer: it's not a miss
-          fx.buzzer(r.word);
-          fx.redX(optionEls.value[i]);
-          startLock(MISS_DELAY_MS + LOCK_MS);
-          revealFeedback(MISS_DELAY_MS + 250);
         } else {
-          fx.sayWord(r.word);
+          if (r.unknown) fx.sayWord(r.word); // "I don't know" gets no buzzer: it's not a miss
+          else fx.buzzer(r.word);
           startLock(LOCK_MS);
           revealFeedback(250);
         }
@@ -548,7 +543,7 @@ const Practice = {
     </div>
 
     <div v-if="result" ref="feedbackEl" class="feedback" @click="next"
-         :class="result.correct ? 'good' : result.unknown ? 'unknown' : 'bad late'">
+         :class="result.correct ? 'good' : result.unknown ? 'unknown' : 'bad'">
       <div class="headword">
         <b class="word">{{ result.word }}</b><button class="say" @click.stop="sayWord" title="Say it again" aria-label="Say it again">🔊</button>
         <i>{{ result.pos }}</i> — {{ result.definition }}
